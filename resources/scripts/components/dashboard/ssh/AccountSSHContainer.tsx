@@ -34,9 +34,7 @@ export default () => {
                 <ContentBox title={'SSH 密钥'} css={tw`flex-1 overflow-hidden mt-8 md:mt-0 md:ml-8`}>
                     <SpinnerOverlay visible={!data && isValidating} />
                     {!data || !data.length ? (
-                        <p css={tw`text-center text-sm`}>
-                            {!data ? '加载中...' : '此账户下无可用 SSH 密钥.'}
-                        </p>
+                        <p css={tw`text-center text-sm`}>{!data ? '加载中...' : '此账户下无可用 SSH 密钥.'}</p>
                     ) : (
                         data.map((key, index) => (
                             <GreyRowBox

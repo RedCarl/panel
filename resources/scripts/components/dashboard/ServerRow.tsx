@@ -1,8 +1,8 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEthernet, faHdd, faMemory, faMicrochip, faServer } from '@fortawesome/free-solid-svg-icons';
+import { PlayIcon, StopIcon, RefreshIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
-import { Server } from '@/api/server/getServer';
 import getServerResourceUsage, { ServerPowerState, ServerStats } from '@/api/server/getServerResourceUsage';
 import { bytesToString, ip, mbToBytes } from '@/lib/formatters';
 import tw from 'twin.macro';
@@ -10,6 +10,11 @@ import GreyRowBox from '@/components/elements/GreyRowBox';
 import Spinner from '@/components/elements/Spinner';
 import styled from 'styled-components/macro';
 import isEqual from 'react-fast-compare';
+import { GroupedServer } from '@/lib/serverGrouping';
+import { sendPowerAction, PowerAction } from '@/api/server/power';
+import { httpErrorToHuman } from '@/api/http';
+
+// 优化后的组件结构和样式设计
 
 // Determines if the current value is in an alarm threshold so we can show it in red rather
 // than the more faded default style.
@@ -22,37 +27,121 @@ const Icon = memo(
     isEqual
 );
 
-const IconDescription = styled.p<{ $alarm: boolean }>`
-    ${tw`text-sm ml-2`};
-    ${(props) => (props.$alarm ? tw`text-white` : tw`text-neutral-400`)};
-`;
-
 const StatusIndicatorBox = styled(GreyRowBox)<{ $status: ServerPowerState | undefined }>`
-    ${tw`grid grid-cols-12 gap-4 relative`};
+    ${tw`flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 p-4 lg:p-6 rounded-lg border border-neutral-600 hover:border-neutral-500 transition-all duration-200 hover:shadow-md relative`};
+    background: ${tw`bg-neutral-700`};
 
     & .status-bar {
-        ${tw`w-2 bg-red-500 absolute right-0 z-20 rounded-full m-1 opacity-50 transition-all duration-150`};
-        height: calc(100% - 0.5rem);
+        ${tw`w-1 absolute left-0 top-0 z-20 transition-all duration-300 rounded-r`};
+        height: 100%;
 
         ${({ $status }) =>
             !$status || $status === 'offline'
-                ? tw`bg-red-500`
+                ? tw`bg-red-400`
                 : $status === 'running'
-                ? tw`bg-green-500`
-                : tw`bg-yellow-500`};
+                ? tw`bg-green-400`
+                : tw`bg-yellow-400`};
     }
 
-    &:hover .status-bar {
-        ${tw`opacity-75`};
+    &:hover {
+        ${tw`border-neutral-400`};
+
+        & .status-bar {
+            ${tw`w-1.5`};
+        }
     }
+`;
+
+const ActionButton = styled.button<{ variant?: 'start' | 'stop' | 'restart' }>`
+    ${tw`px-3 py-2 rounded text-sm font-medium transition-all duration-200 flex items-center space-x-1.5 min-w-[80px] justify-center`}
+
+    &:hover {
+        ${tw`shadow-md`};
+    }
+
+    &:disabled {
+        ${tw`opacity-50 cursor-not-allowed`};
+    }
+
+    ${(props) => {
+        switch (props.variant) {
+            case 'start':
+                return tw`bg-green-600 hover:bg-green-500 text-white`;
+            case 'stop':
+                return tw`bg-red-600 hover:bg-red-500 text-white`;
+            case 'restart':
+                return tw`bg-yellow-600 hover:bg-yellow-500 text-white`;
+            default:
+                return tw`bg-neutral-600 hover:bg-neutral-500 text-neutral-200`;
+        }
+    }}
+`;
+
+const ActionContainer = styled.div`
+    ${tw`flex items-center space-x-2`}
+`;
+
+const ServerInfoContainer = styled.div`
+    ${tw`flex items-center space-x-4`}
+`;
+
+const ServerIcon = styled.div`
+    ${tw`flex items-center justify-center w-10 h-10 rounded bg-blue-600 text-white flex-shrink-0`}
+`;
+
+const ServerDetails = styled.div`
+    ${tw`flex-1 min-w-0`}
+`;
+
+const ServerName = styled.h3`
+    ${tw`text-lg font-semibold text-neutral-50 truncate mb-1`}
+`;
+
+const ServerDescription = styled.p`
+    ${tw`text-sm text-neutral-400 line-clamp-2 leading-relaxed`}
+`;
+
+const ResourceMetric = styled.div`
+    ${tw`flex flex-col items-center space-y-1 p-2 rounded bg-neutral-600 min-w-[80px]`}
+`;
+
+const MetricHeader = styled.div`
+    ${tw`flex items-center space-x-2`}
+`;
+
+const MetricValue = styled.span<{ $alarm?: boolean }>`
+    ${tw`text-sm font-medium`}
+    ${(props) => (props.$alarm ? tw`text-red-400` : tw`text-neutral-50`)}
+`;
+
+const MetricLimit = styled.span`
+    ${tw`text-xs text-neutral-400`}
 `;
 
 type Timer = ReturnType<typeof setInterval>;
 
-export default ({ server, className }: { server: Server; className?: string }) => {
+export default ({ server, className }: { server: GroupedServer; className?: string }) => {
     const interval = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const [isSuspended, setIsSuspended] = useState(server.status === 'suspended');
     const [stats, setStats] = useState<ServerStats | null>(null);
+    const [isPerformingAction, setIsPerformingAction] = useState(false);
+
+    const handlePowerAction = async (action: PowerAction, e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (isPerformingAction) return;
+
+        setIsPerformingAction(true);
+        try {
+            await sendPowerAction(server.uuid, action);
+            console.log(`Successfully ${action}ed server ${server.name}`);
+        } catch (error) {
+            console.error(`Failed to ${action} server:`, httpErrorToHuman(error));
+        } finally {
+            setIsPerformingAction(false);
+        }
+    };
 
     const getStats = () =>
         getServerResourceUsage(server.uuid)
@@ -90,21 +179,22 @@ export default ({ server, className }: { server: Server; className?: string }) =
 
     return (
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
-            <div css={tw`flex items-center col-span-12 sm:col-span-5 lg:col-span-6`}>
-                <div className={'icon mr-4'}>
-                    <FontAwesomeIcon icon={faServer} />
-                </div>
-                <div>
-                    <p css={tw`text-lg break-words`}>{server.name}</p>
-                    {!!server.description && (
-                        <p css={tw`text-sm text-neutral-300 break-words line-clamp-2`}>{server.description}</p>
-                    )}
-                </div>
+            <div className='status-bar' />
+            <div css={tw`lg:col-span-2 order-1`}>
+                <ServerInfoContainer>
+                    <ServerIcon>
+                        <FontAwesomeIcon icon={faServer} />
+                    </ServerIcon>
+                    <ServerDetails>
+                        <ServerName>{server.parsedInfo?.displayName || server.name}</ServerName>
+                        {!!server.description && <ServerDescription>{server.description}</ServerDescription>}
+                    </ServerDetails>
+                </ServerInfoContainer>
             </div>
-            <div css={tw`flex-1 ml-4 lg:block lg:col-span-2 hidden`}>
-                <div css={tw`flex justify-center`}>
-                    <FontAwesomeIcon icon={faEthernet} css={tw`text-neutral-500`} />
-                    <p css={tw`text-sm text-neutral-400 ml-2`}>
+            <div css={tw`lg:col-span-3 order-3 lg:order-2 hidden lg:flex items-center justify-center`}>
+                <div css={tw`flex items-center space-x-2 p-2 rounded bg-neutral-600 text-sm`}>
+                    <FontAwesomeIcon icon={faEthernet} css={tw`text-blue-400`} />
+                    <span css={tw`text-neutral-100 font-medium`}>
                         {server.allocations
                             .filter((alloc) => alloc.isDefault)
                             .map((allocation) => (
@@ -112,20 +202,20 @@ export default ({ server, className }: { server: Server; className?: string }) =
                                     {allocation.alias || ip(allocation.ip)}:{allocation.port}
                                 </React.Fragment>
                             ))}
-                    </p>
+                    </span>
                 </div>
             </div>
-            <div css={tw`hidden col-span-7 lg:col-span-4 sm:flex items-baseline justify-center`}>
+            <div css={tw`lg:col-span-4 order-2 lg:order-3 flex items-center justify-center space-x-3`}>
                 {!stats || isSuspended ? (
                     isSuspended ? (
                         <div css={tw`flex-1 text-center`}>
-                            <span css={tw`bg-red-500 rounded px-2 py-1 text-red-100 text-xs`}>
+                            <span css={tw`bg-red-600 rounded px-3 py-1.5 text-red-50 text-sm font-medium`}>
                                 {server.status === 'suspended' ? '已冻结' : '连接错误'}
                             </span>
                         </div>
                     ) : server.isTransferring || server.status ? (
                         <div css={tw`flex-1 text-center`}>
-                            <span css={tw`bg-neutral-500 rounded px-2 py-1 text-neutral-100 text-xs`}>
+                            <span css={tw`bg-neutral-600 rounded px-3 py-1.5 text-neutral-100 text-sm font-medium`}>
                                 {server.isTransferring
                                     ? '转移中'
                                     : server.status === 'installing'
@@ -136,41 +226,88 @@ export default ({ server, className }: { server: Server; className?: string }) =
                             </span>
                         </div>
                     ) : (
-                        <Spinner size={'small'} />
+                        <div css={tw`flex items-center space-x-2`}>
+                            <Spinner size={'small'} />
+                            <span css={tw`text-sm text-neutral-400`}>加载中...</span>
+                        </div>
                     )
                 ) : (
                     <React.Fragment>
-                        <div css={tw`flex-1 ml-4 sm:block hidden`}>
-                            <div css={tw`flex justify-center`}>
+                        <ResourceMetric>
+                            <MetricHeader>
                                 <Icon icon={faMicrochip} $alarm={alarms.cpu} />
-                                <IconDescription $alarm={alarms.cpu}>
-                                    {stats.cpuUsagePercent.toFixed(2)} %
-                                </IconDescription>
-                            </div>
-                            <p css={tw`text-xs text-neutral-600 text-center mt-1`}>of {cpuLimit}</p>
-                        </div>
-                        <div css={tw`flex-1 ml-4 sm:block hidden`}>
-                            <div css={tw`flex justify-center`}>
+                                <MetricValue $alarm={alarms.cpu}>{stats.cpuUsagePercent.toFixed(1)}%</MetricValue>
+                            </MetricHeader>
+                            <MetricLimit>/ {cpuLimit}</MetricLimit>
+                        </ResourceMetric>
+                        <ResourceMetric>
+                            <MetricHeader>
                                 <Icon icon={faMemory} $alarm={alarms.memory} />
-                                <IconDescription $alarm={alarms.memory}>
+                                <MetricValue $alarm={alarms.memory}>
                                     {bytesToString(stats.memoryUsageInBytes)}
-                                </IconDescription>
-                            </div>
-                            <p css={tw`text-xs text-neutral-600 text-center mt-1`}>of {memoryLimit}</p>
-                        </div>
-                        <div css={tw`flex-1 ml-4 sm:block hidden`}>
-                            <div css={tw`flex justify-center`}>
+                                </MetricValue>
+                            </MetricHeader>
+                            <MetricLimit>/ {memoryLimit}</MetricLimit>
+                        </ResourceMetric>
+                        <ResourceMetric>
+                            <MetricHeader>
                                 <Icon icon={faHdd} $alarm={alarms.disk} />
-                                <IconDescription $alarm={alarms.disk}>
-                                    {bytesToString(stats.diskUsageInBytes)}
-                                </IconDescription>
-                            </div>
-                            <p css={tw`text-xs text-neutral-600 text-center mt-1`}>of {diskLimit}</p>
-                        </div>
+                                <MetricValue $alarm={alarms.disk}>{bytesToString(stats.diskUsageInBytes)}</MetricValue>
+                            </MetricHeader>
+                            <MetricLimit>/ {diskLimit}</MetricLimit>
+                        </ResourceMetric>
                     </React.Fragment>
                 )}
             </div>
-            <div className={'status-bar'} />
+            <div css={tw`lg:col-span-3 order-4 flex items-center justify-center lg:justify-end`}>
+                <ActionContainer>
+                    <ActionButton
+                        variant='start'
+                        onClick={(e) => handlePowerAction('start', e)}
+                        disabled={isPerformingAction || stats?.status === 'running'}
+                        title='启动服务器'
+                    >
+                        {isPerformingAction ? (
+                            <Spinner size='small' />
+                        ) : (
+                            <>
+                                <PlayIcon className='w-4 h-4' />
+                                <span>启动</span>
+                            </>
+                        )}
+                    </ActionButton>
+                    <ActionButton
+                        variant='stop'
+                        onClick={(e) => handlePowerAction('stop', e)}
+                        disabled={isPerformingAction || stats?.status === 'offline'}
+                        title='停止服务器'
+                    >
+                        {isPerformingAction ? (
+                            <Spinner size='small' />
+                        ) : (
+                            <>
+                                <StopIcon className='w-4 h-4' />
+                                <span>停止</span>
+                            </>
+                        )}
+                    </ActionButton>
+                    <ActionButton
+                        variant='restart'
+                        onClick={(e) => handlePowerAction('restart', e)}
+                        disabled={isPerformingAction}
+                        title='重启服务器'
+                    >
+                        {isPerformingAction ? (
+                            <Spinner size='small' />
+                        ) : (
+                            <>
+                                <RefreshIcon className='w-4 h-4' />
+                                <span>重启</span>
+                            </>
+                        )}
+                    </ActionButton>
+                </ActionContainer>
+            </div>
         </StatusIndicatorBox>
     );
 };

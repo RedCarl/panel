@@ -76,12 +76,8 @@ const GSLTokenModalFeature = () => {
                 <FlashMessageRender key={'feature:gslToken'} css={tw`mb-4`} />
                 <Form>
                     <h2 css={tw`text-2xl mb-4 text-neutral-100`}>无效的 GSL 令牌！</h2>
-                    <p css={tw`mt-4`}>
-                        您的 Gameserver 登录令牌（GSL 令牌）似乎无效或已过期。
-                    </p>
-                    <p css={tw`mt-4`}>
-                        您可以生成一个新的并在下面输入，也可以将该字段留空以完全删除它。
-                    </p>
+                    <p css={tw`mt-4`}>您的 Gameserver 登录令牌（GSL 令牌）似乎无效或已过期。</p>
+                    <p css={tw`mt-4`}>您可以生成一个新的并在下面输入，也可以将该字段留空以完全删除它。</p>
                     <div css={tw`sm:flex items-center mt-4`}>
                         <Field
                             name={'gslToken'}

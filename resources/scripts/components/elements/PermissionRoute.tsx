@@ -17,9 +17,7 @@ export default ({ permission, children, ...props }: Props) => (
             <Can
                 matchAny
                 action={permission}
-                renderOnError={
-                    <ServerError title={'拒绝访问'} message={'您无权访问此页面。'} />
-                }
+                renderOnError={<ServerError title={'拒绝访问'} message={'您无权访问此页面。'} />}
             >
                 {children}
             </Can>

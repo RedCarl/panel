@@ -58,12 +58,7 @@ export default () => {
                     <Form css={tw`m-0`}>
                         <Field id={'current_email'} type={'email'} name={'email'} label={'邮箱'} />
                         <div css={tw`mt-6`}>
-                            <Field
-                                id={'confirm_password'}
-                                type={'password'}
-                                name={'password'}
-                                label={'确认密码'}
-                            />
+                            <Field id={'confirm_password'} type={'password'} name={'password'} label={'确认密码'} />
                         </div>
                         <div css={tw`mt-6`}>
                             <Button disabled={isSubmitting || !isValid}>更新邮箱地址</Button>
