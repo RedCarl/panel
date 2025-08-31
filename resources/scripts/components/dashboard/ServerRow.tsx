@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEthernet, faHdd, faMemory, faMicrochip, faServer } from '@fortawesome/free-solid-svg-icons';
-import { PlayIcon, StopIcon, RefreshIcon } from '@heroicons/react/outline';
+import { faHdd, faMemory, faMicrochip, faPlay, faStop, faRedo } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import getServerResourceUsage, { ServerPowerState, ServerStats } from '@/api/server/getServerResourceUsage';
 import { bytesToString, ip, mbToBytes } from '@/lib/formatters';
@@ -28,11 +27,11 @@ const Icon = memo(
 );
 
 const StatusIndicatorBox = styled(GreyRowBox)<{ $status: ServerPowerState | undefined }>`
-    ${tw`flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 p-4 lg:p-6 rounded-lg border border-neutral-600 hover:border-neutral-500 transition-all duration-200 hover:shadow-md relative`};
+    ${tw`flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 p-2 lg:p-2 rounded-lg border border-neutral-600 hover:border-neutral-500 transition-all duration-200 hover:shadow-md relative`};
     background: ${tw`bg-neutral-700`};
 
     & .status-bar {
-        ${tw`w-1 absolute left-0 top-0 z-20 transition-all duration-300 rounded-r`};
+        ${tw`w-1 absolute right-0 top-0 z-20 transition-all duration-300 rounded-l`};
         height: 100%;
 
         ${({ $status }) =>
@@ -53,7 +52,7 @@ const StatusIndicatorBox = styled(GreyRowBox)<{ $status: ServerPowerState | unde
 `;
 
 const ActionButton = styled.button<{ variant?: 'start' | 'stop' | 'restart' }>`
-    ${tw`px-3 py-2 rounded text-sm font-medium transition-all duration-200 flex items-center space-x-1.5 min-w-[80px] justify-center`}
+    ${tw`p-2 rounded text-sm font-medium transition-all duration-200 flex items-center space-x-1.5 justify-center`}
 
     &:hover {
         ${tw`shadow-md`};
@@ -81,33 +80,7 @@ const ActionContainer = styled.div`
     ${tw`flex items-center space-x-2`}
 `;
 
-const ServerInfoContainer = styled.div`
-    ${tw`flex items-center space-x-4`}
-`;
 
-const ServerIcon = styled.div`
-    ${tw`flex items-center justify-center w-10 h-10 rounded bg-blue-600 text-white flex-shrink-0`}
-`;
-
-const ServerDetails = styled.div`
-    ${tw`flex-1 min-w-0`}
-`;
-
-const ServerName = styled.h3`
-    ${tw`text-lg font-semibold text-neutral-50 truncate mb-1`}
-`;
-
-const ServerDescription = styled.p`
-    ${tw`text-sm text-neutral-400 line-clamp-2 leading-relaxed`}
-`;
-
-const ResourceMetric = styled.div`
-    ${tw`flex flex-col items-center space-y-1 p-2 rounded bg-neutral-600 min-w-[80px]`}
-`;
-
-const MetricHeader = styled.div`
-    ${tw`flex items-center space-x-2`}
-`;
 
 const MetricValue = styled.span<{ $alarm?: boolean }>`
     ${tw`text-sm font-medium`}
@@ -179,22 +152,12 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
 
     return (
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
-            <div className='status-bar' />
-            <div css={tw`lg:col-span-2 order-1`}>
-                <ServerInfoContainer>
-                    <ServerIcon>
-                        <FontAwesomeIcon icon={faServer} />
-                    </ServerIcon>
-                    <ServerDetails>
-                        <ServerName>{server.parsedInfo?.displayName || server.name}</ServerName>
-                        {!!server.description && <ServerDescription>{server.description}</ServerDescription>}
-                    </ServerDetails>
-                </ServerInfoContainer>
-            </div>
-            <div css={tw`lg:col-span-3 order-3 lg:order-2 hidden lg:flex items-center justify-center`}>
-                <div css={tw`flex items-center space-x-2 p-2 rounded bg-neutral-600 text-sm`}>
-                    <FontAwesomeIcon icon={faEthernet} css={tw`text-blue-400`} />
-                    <span css={tw`text-neutral-100 font-medium`}>
+            <div css={tw`lg:col-span-4 order-1 flex items-center space-x-6`}>
+                <div css={tw`flex items-center space-x-3`}>
+                    <span css={tw`text-sm text-neutral-400 font-mono`}>
+                        {server.id}
+                    </span>
+                    <span css={tw`text-sm text-neutral-300 font-mono bg-neutral-600 px-2 py-1 rounded`}>
                         {server.allocations
                             .filter((alloc) => alloc.isDefault)
                             .map((allocation) => (
@@ -205,7 +168,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                     </span>
                 </div>
             </div>
-            <div css={tw`lg:col-span-4 order-2 lg:order-3 flex items-center justify-center space-x-3`}>
+            <div css={tw`lg:col-span-5 order-2 flex items-center justify-center space-x-3`}>
                 {!stats || isSuspended ? (
                     isSuspended ? (
                         <div css={tw`flex-1 text-center`}>
@@ -232,31 +195,35 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                         </div>
                     )
                 ) : (
-                    <React.Fragment>
-                        <ResourceMetric>
-                            <MetricHeader>
-                                <Icon icon={faMicrochip} $alarm={alarms.cpu} />
-                                <MetricValue $alarm={alarms.cpu}>{stats.cpuUsagePercent.toFixed(1)}%</MetricValue>
-                            </MetricHeader>
-                            <MetricLimit>/ {cpuLimit}</MetricLimit>
-                        </ResourceMetric>
-                        <ResourceMetric>
-                            <MetricHeader>
-                                <Icon icon={faMemory} $alarm={alarms.memory} />
-                                <MetricValue $alarm={alarms.memory}>
-                                    {bytesToString(stats.memoryUsageInBytes)}
-                                </MetricValue>
-                            </MetricHeader>
-                            <MetricLimit>/ {memoryLimit}</MetricLimit>
-                        </ResourceMetric>
-                        <ResourceMetric>
-                            <MetricHeader>
-                                <Icon icon={faHdd} $alarm={alarms.disk} />
-                                <MetricValue $alarm={alarms.disk}>{bytesToString(stats.diskUsageInBytes)}</MetricValue>
-                            </MetricHeader>
-                            <MetricLimit>/ {diskLimit}</MetricLimit>
-                        </ResourceMetric>
-                    </React.Fragment>
+                    <div css={tw`flex items-center space-x-4 text-sm`}>
+                        <div css={tw`flex items-center space-x-1`}>
+                            <Icon icon={faMicrochip} $alarm={alarms.cpu} />
+                            <MetricValue $alarm={alarms.cpu}>
+                                {cpuLimit === '无限制' 
+                                    ? `${stats.cpuUsagePercent.toFixed(0)}%`
+                                    : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`
+                                }
+                            </MetricValue>
+                        </div>
+                        <div css={tw`flex items-center space-x-1`}>
+                            <Icon icon={faMemory} $alarm={alarms.memory} />
+                            <MetricValue $alarm={alarms.memory}>
+                                {memoryLimit === '无限制' 
+                                    ? bytesToString(stats.memoryUsageInBytes)
+                                    : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`
+                                }
+                            </MetricValue>
+                        </div>
+                        <div css={tw`flex items-center space-x-1`}>
+                            <Icon icon={faHdd} $alarm={alarms.disk} />
+                            <MetricValue $alarm={alarms.disk}>
+                                {diskLimit === '无限制' 
+                                    ? bytesToString(stats.diskUsageInBytes)
+                                    : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`
+                                }
+                            </MetricValue>
+                        </div>
+                    </div>
                 )}
             </div>
             <div css={tw`lg:col-span-3 order-4 flex items-center justify-center lg:justify-end`}>
@@ -271,7 +238,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                             <Spinner size='small' />
                         ) : (
                             <>
-                                <PlayIcon className='w-4 h-4' />
+                                <FontAwesomeIcon icon={faPlay} />
                                 <span>启动</span>
                             </>
                         )}
@@ -286,7 +253,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                             <Spinner size='small' />
                         ) : (
                             <>
-                                <StopIcon className='w-4 h-4' />
+                                <FontAwesomeIcon icon={faStop} />
                                 <span>停止</span>
                             </>
                         )}
@@ -301,13 +268,14 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                             <Spinner size='small' />
                         ) : (
                             <>
-                                <RefreshIcon className='w-4 h-4' />
+                                <FontAwesomeIcon icon={faRedo} />
                                 <span>重启</span>
                             </>
                         )}
                     </ActionButton>
                 </ActionContainer>
             </div>
+            <div className='status-bar' />
         </StatusIndicatorBox>
     );
 };

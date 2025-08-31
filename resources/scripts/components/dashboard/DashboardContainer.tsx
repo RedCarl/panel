@@ -32,7 +32,7 @@ export default () => {
 
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
         ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
-        () => getServers({ page })
+        () => getServers({ page, type: 'admin-all' })
     );
 
     // 分组服务器数据

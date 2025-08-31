@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
-import { default as Dropdown } from '@/components/elements/dropdown/Dropdown';
-import { ChevronDownIcon } from '@heroicons/react/solid';
 import { ServerIcon } from '@heroicons/react/outline';
-import classNames from 'classnames';
 import tw from 'twin.macro';
 import styled from 'styled-components/macro';
 import { PowerAction } from '@/api/server/power';
@@ -17,16 +14,32 @@ interface Props {
 }
 
 const Container = styled.div`
-    ${tw`flex items-center justify-between bg-neutral-700 rounded-lg p-4 mb-6`}
+    ${tw`flex items-center justify-between bg-gradient-to-r from-neutral-800 to-neutral-700 rounded-xl p-2 mb-3 shadow-lg border border-neutral-600/50`}
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+        ${tw`shadow-xl border-neutral-500/70`}
+        transform: translateY(-1px);
+    }
 `;
 
-const SelectorContainer = styled.div`
-    ${tw`flex items-center space-x-4`}
+const LeftContainer = styled.div`
+    ${tw`flex items-center space-x-3`}
 `;
 
-const ServerCount = styled.span`
-    ${tw`text-sm text-neutral-400 flex items-center space-x-1`}
+const RightContainer = styled.div`
+    ${tw`flex items-center space-x-3`}
 `;
+
+const ServerInfo = styled.div`
+    ${tw`flex items-center space-x-2 bg-neutral-600/50 rounded-lg px-3 py-2`}
+`;
+
+const DomainLabel = styled.label`
+    ${tw`text-neutral-300 text-sm font-medium`}
+`;
+
+
 
 // Cookie操作函数
 const DOMAIN_COOKIE_KEY = 'pterodactyl_selected_domain';
@@ -48,6 +61,18 @@ const getCookie = (name: string): string | null => {
     return null;
 };
 
+const DomainSelect = styled.select`
+    ${tw`bg-neutral-600 hover:bg-neutral-500 text-neutral-100 px-3 py-2 rounded-lg border border-neutral-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition-all duration-200 text-sm`}
+    
+    &:hover {
+        ${tw`border-neutral-400`}
+    }
+    
+    option {
+        ${tw`bg-neutral-700 text-neutral-100 py-2`}
+    }
+`;
+
 const DomainSelector: React.FC<Props> = ({
     domains,
     selectedDomain,
@@ -65,54 +90,33 @@ const DomainSelector: React.FC<Props> = ({
     }, [domains]);
 
     // 当域选择改变时保存到cookie
-    const handleDomainChange = (domain: string) => {
+    const handleDomainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const domain = e.target.value;
         setCookie(DOMAIN_COOKIE_KEY, domain);
         onDomainChange(domain);
     };
 
     return (
         <Container className={className}>
-            <SelectorContainer>
-                <Dropdown>
-                    <Dropdown.Button className='bg-neutral-600 hover:bg-neutral-500 text-neutral-200 px-4 py-2 rounded flex items-center space-x-2'>
-                        <ServerIcon className='w-4 h-4' />
-                        <span>域: {selectedDomain}</span>
-                        <ChevronDownIcon className='w-4 h-4' />
-                    </Dropdown.Button>
+            <LeftContainer>
+                <ServerInfo>
+                    <ServerIcon className='w-5 h-5 text-blue-400' />
+                    <span className="text-neutral-200 text-sm font-medium">
+                        {serverCount} 台服务器
+                    </span>
+                </ServerInfo>
+            </LeftContainer>
+            
+            <RightContainer>
+                <DomainLabel>域:</DomainLabel>
+                <DomainSelect value={selectedDomain} onChange={handleDomainChange}>
                     {domains.map((domain) => (
-                        <Dropdown.Item
-                            key={domain}
-                            onClick={() => handleDomainChange(domain)}
-                            className={classNames({
-                                'bg-neutral-600': domain === selectedDomain,
-                            })}
-                        >
+                        <option key={domain} value={domain}>
                             {domain}
-                        </Dropdown.Item>
+                        </option>
                     ))}
-                </Dropdown>
-                <ServerCount>
-                    <ServerIcon className='w-4 h-4' />
-                    <span>{serverCount} 台服务器</span>
-                </ServerCount>
-            </SelectorContainer>
-
-            {/* {onBulkAction && (
-                <ActionContainer>
-                    <ActionButton variant='start' onClick={() => handleBulkAction('start')} title='启动所有服务器'>
-                        <PlayIcon className='w-4 h-4' />
-                        <span>启动</span>
-                    </ActionButton>
-                    <ActionButton variant='stop' onClick={() => handleBulkAction('stop')} title='停止所有服务器'>
-                        <StopIcon className='w-4 h-4' />
-                        <span>停止</span>
-                    </ActionButton>
-                    <ActionButton variant='restart' onClick={() => handleBulkAction('restart')} title='重启所有服务器'>
-                        <RefreshIcon className='w-4 h-4' />
-                        <span>重启</span>
-                    </ActionButton>
-                </ActionContainer>
-            )} */}
+                </DomainSelect>
+            </RightContainer>
         </Container>
     );
 };

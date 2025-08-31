@@ -17,7 +17,7 @@ interface Props {
 }
 
 const GroupContainer = styled.div<{ level: number }>`
-    margin-left: ${(props) => props.level * 1}rem;
+    ${tw`mb-2`}
 `;
 
 const GroupHeader = styled.div`
@@ -58,7 +58,7 @@ const ActionButton = styled.button<{ variant?: 'start' | 'stop' | 'restart' }>`
 `;
 
 const ContentContainer = styled.div<{ isExpanded: boolean }>`
-    ${tw`overflow-hidden transition-all duration-200`}
+    ${tw`overflow-hidden transition-all duration-200 ml-2`}
     max-height: ${(props) => (props.isExpanded ? '1000px' : '0')};
 `;
 
@@ -139,8 +139,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({ groupNode, level, onBulkActio
                             onClick={(e) => handleBulkAction('start', e)}
                             title='启动组内所有服务器'
                         >
-                            <PlayIcon className='w-3 h-3' />
-                            <span>启动</span>
+                            <span>启动所有</span>
                         </ActionButton>
 
                         <ActionButton
@@ -148,8 +147,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({ groupNode, level, onBulkActio
                             onClick={(e) => handleBulkAction('stop', e)}
                             title='停止组内所有服务器'
                         >
-                            <StopIcon className='w-3 h-3' />
-                            <span>停止</span>
+                            <span>停止所有</span>
                         </ActionButton>
 
                         <ActionButton
@@ -157,14 +155,22 @@ const CollapsibleServerGroup: React.FC<Props> = ({ groupNode, level, onBulkActio
                             onClick={(e) => handleBulkAction('restart', e)}
                             title='重启组内所有服务器'
                         >
-                            <RefreshIcon className='w-3 h-3' />
-                            <span>重启</span>
+                            <span>重启所有</span>
                         </ActionButton>
                     </ActionContainer>
                 )}
             </GroupHeader>
 
             <ContentContainer isExpanded={isExpanded}>
+                {/* 渲染直属服务器 */}
+                {groupNode.servers.length > 0 && (
+                    <ServersContainer>
+                        {groupNode.servers.map((groupedServer) => (
+                            <ServerRow key={groupedServer.uuid} server={groupedServer} />
+                        ))}
+                    </ServersContainer>
+                )}
+
                 {/* 渲染子组 */}
                 {groupNode.children.size > 0 && (
                     <ChildGroupsContainer>
@@ -177,15 +183,6 @@ const CollapsibleServerGroup: React.FC<Props> = ({ groupNode, level, onBulkActio
                             />
                         ))}
                     </ChildGroupsContainer>
-                )}
-
-                {/* 渲染直属服务器 */}
-                {groupNode.servers.length > 0 && (
-                    <ServersContainer>
-                        {groupNode.servers.map((groupedServer) => (
-                            <ServerRow key={groupedServer.uuid} server={groupedServer} />
-                        ))}
-                    </ServersContainer>
                 )}
             </ContentContainer>
         </GroupContainer>

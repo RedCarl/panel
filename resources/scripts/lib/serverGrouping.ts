@@ -51,14 +51,15 @@ export interface DomainGroup {
 
 /**
  * 解析服务器名称
- * 格式: [域名]#[序号]@[服务器组1]:[服务器组2]:[服务器组3]
- * 例如: example.com#001@web[1]:frontend[2]:nginx[3]
+ * 格式: 域#分组[权重]:分组[权重]
+ * 例如: example.com#web[1]:frontend[2]
+ * 权重如果没写，默认为999
  */
 export function parseServerName(serverName: string): ParsedServerInfo {
     const defaultInfo: ParsedServerInfo = {
         domain: 'default',
         groups: [],
-        sequence: serverName,
+        sequence: '0',
         originalName: serverName,
         displayName: serverName,
     };
@@ -67,104 +68,46 @@ export function parseServerName(serverName: string): ParsedServerInfo {
         // 调试：打印解析过程
         console.log('正在解析服务器名称:', serverName);
 
-        // 匹配格式: [域名]#[序号]@[分组信息]
-        const match = serverName.match(/^([^#]*)#([^@]+)@(.+)$/);
+        // 匹配新格式: 域#分组[权重]:分组[权重]
+        const match = serverName.match(/^([^#]+)#(.+)$/);
         console.log('正则匹配结果:', match);
 
         if (!match) {
-            console.log('匹配失败，尝试解析纯分组格式');
-            // 尝试匹配纯分组格式: GROUP[priority]:GROUP[priority]
-            const groupOnlyMatch = serverName.match(/^([A-Z]+\[\d+\](?::[A-Z]+\[\d+\])*)$/);
-            if (groupOnlyMatch) {
-                console.log('匹配到纯分组格式:', groupOnlyMatch);
-                const groups: ServerGroup[] = [];
-                const groupParts = serverName.split(':');
-
-                // 只处理第一个分组作为主分组
-                let serverDisplayName = serverName;
-                if (groupParts.length > 0 && groupParts[0].trim()) {
-                    const firstGroupPart = groupParts[0].trim();
-                    const groupMatch = firstGroupPart.match(/^([^[]+)(?:\[(\d+)\])?$/);
-                    if (groupMatch) {
-                        const [, groupName, priorityStr] = groupMatch;
-                        const priority = priorityStr ? parseInt(priorityStr, 10) : 999;
-                        groups.push({
-                            name: groupName.trim(),
-                            priority,
-                            level: 0,
-                        });
-                    }
-                }
-
-                // 如果有第二个分组，将其作为服务器显示名称
-                if (groupParts.length > 1 && groupParts[1].trim()) {
-                    const secondGroupPart = groupParts[1].trim();
-                    const nameMatch = secondGroupPart.match(/^([^[]+)/);
-                    if (nameMatch) {
-                        serverDisplayName = nameMatch[1].trim();
-                    }
-                }
-
-                const result = {
-                    domain: 'default',
-                    groups,
-                    sequence: '0',
-                    originalName: serverName,
-                    displayName: serverDisplayName,
-                };
-                console.log('纯分组格式解析结果:', result);
-                return result;
-            }
-
-            console.log('完全匹配失败，返回默认信息');
+            console.log('匹配失败，返回默认信息');
             return defaultInfo;
         }
 
-        const [, domainPart, sequencePart, groupsPart] = match;
+        const [, domainPart, groupsPart] = match;
 
         // 解析域名
         const domain = domainPart.trim() || 'default';
 
-        // 解析序号
-        const sequence = sequencePart.trim();
-
-        // 解析服务器组 - 简化为只保留第一层分组
+        // 解析分组部分 - 格式: 分组名[权重]:分组名[权重]:...
         const groups: ServerGroup[] = [];
-        let serverDisplayName = serverName;
-
-        // 按冒号分割分组信息
         const groupParts = groupsPart.split(':');
-
-        // 只处理第一个分组作为主分组
-        if (groupParts.length > 0 && groupParts[0].trim()) {
-            const firstGroupPart = groupParts[0].trim();
-            const groupMatch = firstGroupPart.match(/^([^[]+)(?:\[(\d+)\])?$/);
-
+        
+        groupParts.forEach((groupPart, index) => {
+            const groupMatch = groupPart.trim().match(/^([^\[]+)(?:\[(\d+)\])?$/);
             if (groupMatch) {
                 const [, groupName, priorityStr] = groupMatch;
                 const priority = priorityStr ? parseInt(priorityStr, 10) : 999;
-
                 groups.push({
                     name: groupName.trim(),
                     priority,
-                    level: 1,
+                    level: index + 1,
                 });
             }
-        }
+        });
 
-        // 如果有第二个分组，将其作为服务器显示名称
-        if (groupParts.length > 1 && groupParts[1].trim()) {
-            const secondGroupPart = groupParts[1].trim();
-            const nameMatch = secondGroupPart.match(/^([^[]+)/);
-            if (nameMatch) {
-                serverDisplayName = nameMatch[1].trim();
-            }
-        }
+        // 使用最后一个分组作为显示名称
+        const lastGroup = groups[groups.length - 1];
+        const serverDisplayName = lastGroup ? lastGroup.name : serverName;
+        const serverPriority = lastGroup ? lastGroup.priority : 999;
 
         const result = {
             domain,
             groups,
-            sequence,
+            sequence: serverPriority.toString(),
             originalName: serverName,
             displayName: serverDisplayName,
         };
@@ -332,6 +275,6 @@ export function getGroupPath(groups: ServerGroup[]): string {
  * 检查服务器名称是否符合分组格式
  */
 export function isValidGroupedServerName(serverName: string): boolean {
-    const match = serverName.match(/^([^#]*)#([^@]+)@(.+)$/);
+    const match = serverName.match(/^([^#]+)#(.+)$/);
     return !!match;
 }
