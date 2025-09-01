@@ -99,8 +99,16 @@ export default () => {
         setExpandedGroupsArray((prev) => {
             const currentArray = prev || [];
             if (isExpanded) {
-                return currentArray.includes(groupPath) ? currentArray : [...currentArray, groupPath];
+                // 避免重复添加
+                if (currentArray.includes(groupPath)) {
+                    return currentArray;
+                }
+                return [...currentArray, groupPath];
             } else {
+                // 避免不必要的过滤操作
+                if (!currentArray.includes(groupPath)) {
+                    return currentArray;
+                }
                 return currentArray.filter(path => path !== groupPath);
             }
         });

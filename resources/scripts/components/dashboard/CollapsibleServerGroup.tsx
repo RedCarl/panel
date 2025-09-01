@@ -29,7 +29,7 @@ const GroupContainer = styled.div<{ level: number }>`
 `;
 
 const GroupHeader = styled.div`
-    ${tw`flex items-center justify-between bg-neutral-700 hover:bg-neutral-600 transition-colors duration-150 p-2 border-b border-neutral-600 cursor-pointer rounded-t-lg`}
+    ${tw`flex items-center justify-between bg-neutral-900/50 transition-colors duration-150 p-2 border-b border-neutral-600 cursor-pointer rounded-t-lg`}
 `;
 
 const GroupInfo = styled.div`
@@ -106,7 +106,6 @@ const CollapsibleServerGroup: React.FC<Props> = ({
     // 使用传入的展开状态，如果没有传入则使用本地状态
     const isExpanded = propIsExpanded !== undefined ? propIsExpanded : localIsExpanded;
 
-
     // 监听外部触发器变化
     useEffect(() => {
         if (expandAllTrigger && expandAllTrigger > 0) {
@@ -116,7 +115,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({
                 setLocalIsExpanded(true);
             }
         }
-    }, [expandAllTrigger, onExpandChange, groupPath]);
+    }, [expandAllTrigger]);
 
     useEffect(() => {
         if (collapseAllTrigger && collapseAllTrigger > 0) {
@@ -126,13 +125,14 @@ const CollapsibleServerGroup: React.FC<Props> = ({
                 setLocalIsExpanded(false);
             }
         }
-    }, [collapseAllTrigger, onExpandChange, groupPath]);
+    }, [collapseAllTrigger]);
     const totalServerCount = getTotalServerCount(groupNode);
     const allServers = getAllServers(groupNode);
 
     const handleToggle = (e: React.MouseEvent) => {
         e.stopPropagation();
         const newExpandedState = !isExpanded;
+        
         if (onExpandChange && groupPath) {
             onExpandChange(groupPath, newExpandedState);
         } else {

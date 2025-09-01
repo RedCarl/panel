@@ -154,7 +154,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
 
     return (
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
-            <div css={tw`lg:col-span-4 order-1 flex items-start space-x-3`}>
+            <div css={tw`lg:col-span-3 order-1 flex items-start space-x-3`}>
                 <span css={tw`text-lg text-white font-mono font-semibold flex-shrink-0`}>{server.id}</span>
                 {server.description && (
                     <div css={tw`flex items-start space-x-2 min-w-0 flex-1`}>
@@ -172,7 +172,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                     </div>
                 )}
             </div>
-            <div css={tw`lg:col-span-8 order-2 flex items-center justify-end space-x-4`}>
+            <div css={tw`lg:col-span-9 order-2 flex items-center justify-end space-x-4`}>
                 <IpAddressBox>
                     {server.allocations
                         .filter((alloc) => alloc.isDefault)
