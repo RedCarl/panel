@@ -25,44 +25,19 @@ Pterodactyl® 是一个免费的开源游戏服务器管理面板，使用 PHP�
 
 ## 赞助商
 
-衷心感谢以下赞助商为翼龙中国的发展提供资金支持。
-[有兴趣成为赞助商吗？](https://afdian.com/a/vlssu)
-
 | 公司/个人 | 关于 |
 | ------- | ----- |
-| [**VLssu公益服**](https://vlssu.cn) | 一个热衷于美好社区的我的世界服务器。 |
-| [**速特互联**](https://www.suteidc.com) | 我的世界服务器出租，支持一键安装MOD插件 |
-| [**裕米云计算**](https://comcorn.cn) | COMCORN公共服务平台，提供优质项目云资源支持 |
+| [**KarNetwork**](https://kar.red) | 一个热衷于原创玩法的我的世界竞技服务器。 |
+| [**物语云计算**](https://www.wuyuidc.com) | 精选全球优质云服务器，满足多样业务需求。 |
 
 ### 支持的游戏
 
 我们通过使用 Docker 容器隔离每个实例来支持各种游戏，为您提供强大的功能
 在全球范围内托管您的游戏，而不必让每台物理机器都因安装额外的依赖而变得臃肿。
 
-我们支持的一些核心游戏包括:
+额外增加的功能:
 
-* Minecraft（我的世界） — 包括 Paper, Sponge, Bungeecord, Waterfall, 等....
-* Rust （腐蚀）
-* Terraria （泰拉瑞亚）
-* Teamspeak
-* Mumble
-* Team Fortress 2 （军团要塞2）
-* Counter Strike: Global Offensive （反恐精英：全球攻势）
-* Garry's Mod （盖瑞的模组）
-* ARK: Survival Evolved （方舟：生存进化）
-
-除了我们支持的标准游戏预设外，我们的社区还在不断突破这个软件的极限
-社区提供的游戏还有很多。其中一些游戏包括：
-
-* Factorio （异星工厂）
-* San Andreas: MP
-* Pocketmine MP
-* Squad （战术小队）
-* FiveM
-* Xonotic
-* Starmade
-* Discord ATLBot, and most other Node.js/Python discord bots
-* [更多...](https://pterodactyleggs.com)
+* 服务器分组功能
 
 ## 开源协议
 
