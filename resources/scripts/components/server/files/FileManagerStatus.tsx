@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { ServerContext } from '@/state/server';
-import { CloudUploadIcon, XIcon } from '@heroicons/react/solid';
+import { CloudArrowUpIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import asDialog from '@/hoc/asDialog';
 import { Dialog, DialogWrapperContext } from '@/components/elements/dialog';
 import { Button } from '@/components/elements/button/index';
@@ -52,7 +52,7 @@ const FileUploadList = () => {
                         onClick={cancelFileUpload.bind(this, name)}
                         className={'text-gray-500 hover:text-gray-200 transition-colors duration-75'}
                     >
-                        <XIcon className={'w-5 h-5'} />
+                        <XMarkIcon className={'w-5 h-5'} />
                     </button>
                 </div>
             ))}
@@ -68,7 +68,7 @@ const FileUploadList = () => {
 
 const FileUploadListDialog = asDialog({
     title: '文件上传',
-    description: '正在将以下文件上传到您的服务器。',
+    description: '正在将以下文件上传到您的实例。',
 })(FileUploadList);
 
 export default () => {
@@ -95,7 +95,7 @@ export default () => {
                         onClick={() => (open.value = true)}
                     >
                         <Spinner progress={(progress.uploaded / progress.total) * 100} className={'w-8 h-8'} />
-                        <CloudUploadIcon className={'h-3 absolute mx-auto animate-pulse'} />
+                        <CloudArrowUpIcon className={'h-3 absolute mx-auto animate-pulse'} />
                     </button>
                 </Tooltip>
             )}

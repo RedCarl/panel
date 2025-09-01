@@ -38,8 +38,8 @@ class RemovedFromServer extends Notification implements ShouldQueue
             ->error()
             ->subject('已被移除子用户')
             ->greeting('你好 ' . $this->server->user . '.')
-            ->line('您已作为以下服务器的子用户被删除,并失去其控制权限。')
-            ->line('服务器名称: ' . $this->server->name)
+            ->line('您已作为以下实例的子用户被删除,并失去其控制权限。')
+            ->line('实例名称: ' . $this->server->name)
             ->action('点此浏览面板', route('index'));
     }
 }

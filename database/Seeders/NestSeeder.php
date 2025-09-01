@@ -71,7 +71,7 @@ class NestSeeder extends Seeder
         if (is_null($nest)) {
             $this->creationService->handle([
                 'name' => 'Source Engine',
-                'description' => '包括对大多数 Source 专用服务器游戏的支持。',
+                'description' => '包括对大多数 Source 专用实例游戏的支持。',
             ], 'support@pterodactyl.io');
         }
     }
@@ -86,7 +86,7 @@ class NestSeeder extends Seeder
         if (is_null($nest)) {
             $this->creationService->handle([
                 'name' => 'Voice Servers',
-                'description' => 'Mumble 和 Teamspeak 3 等语音服务器。',
+                'description' => 'Mumble 和 Teamspeak 3 等语音实例。',
             ], 'support@pterodactyl.io');
         }
     }

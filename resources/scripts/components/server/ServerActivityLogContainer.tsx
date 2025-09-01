@@ -10,7 +10,7 @@ import { ActivityLogFilters } from '@/api/account/activity';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { styles as btnStyles } from '@/components/elements/button/index';
-import { XCircleIcon } from '@heroicons/react/solid';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import useLocationHash from '@/plugins/useLocationHash';
 
 export default () => {
@@ -48,7 +48,7 @@ export default () => {
             {!data && isValidating ? (
                 <Spinner centered />
             ) : !data?.items.length ? (
-                <p className={'text-sm text-center text-gray-400'}>此服务器没有可用的活动日志。</p>
+                <p className={'text-sm text-center text-gray-400'}>此实例没有可用的活动日志。</p>
             ) : (
                 <div className={'bg-gray-700'}>
                     {data?.items.map((activity) => (

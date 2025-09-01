@@ -23,8 +23,7 @@ class ServerTransferController extends Controller
         private ConnectionInterface $connection,
         private ServerRepository $repository,
         private DaemonServerRepository $daemonServerRepository,
-    ) {
-    }
+    ) {}
 
     /**
      * The daemon notifies us about a transfer failure.
@@ -36,7 +35,7 @@ class ServerTransferController extends Controller
         $server = $this->repository->getByUuid($uuid);
         $transfer = $server->transfer;
         if (is_null($transfer)) {
-            throw new ConflictHttpException('服务器未被转移。');
+            throw new ConflictHttpException('实例未被转移。');
         }
 
         return $this->processFailedTransfer($transfer);
@@ -52,7 +51,7 @@ class ServerTransferController extends Controller
         $server = $this->repository->getByUuid($uuid);
         $transfer = $server->transfer;
         if (is_null($transfer)) {
-            throw new ConflictHttpException('服务器未被转移。');
+            throw new ConflictHttpException('实例未被转移。');
         }
 
         /** @var \Pterodactyl\Models\Server $server */

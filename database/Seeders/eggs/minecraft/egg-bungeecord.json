@@ -7,7 +7,7 @@
     "exported_at": "2024-05-07T12:55:57+00:00",
     "name": "Bungeecord",
     "author": "support@pterodactyl.io",
-    "description": "长期以来，Minecraft 服务器腐竹们一直梦想着以一种免费、简单且可靠的方式，将多个 Minecraft 服务器变成一个整体。而 BungeeCord！实现了大家的梦想。 无论您是希望将多个游戏模式串在一起的小型服务器，还是 ShotBow 网络的腐竹，BungeeCord 都是您的理想解决方案。在 BungeeCord 的帮助下，您社区的全部潜力将会释放。",
+    "description": "长期以来，Minecraft 实例腐竹们一直梦想着以一种免费、简单且可靠的方式，将多个 Minecraft 实例变成一个整体。而 BungeeCord！实现了大家的梦想。 无论您是希望将多个游戏模式串在一起的小型实例，还是 ShotBow 网络的腐竹，BungeeCord 都是您的理想解决方案。在 BungeeCord 的帮助下，您社区的全部潜力将会释放。",
     "features": [
         "eula",
         "java_version",

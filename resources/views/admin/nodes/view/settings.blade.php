@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('title')
-    {{ $node->name }}: 设置
+{{ $node->name }}: 设置
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>配置你的节点设置.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.nodes') }}">节点</a></li>
-        <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-        <li class="active">设置</li>
-    </ol>
+<h1>{{ $node->name }}<small>配置你的节点设置.</small></h1>
+<ol class="breadcrumb">
+    <li><a href="{{ route('admin.index') }}">管理</a></li>
+    <li><a href="{{ route('admin.nodes') }}">节点</a></li>
+    <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
+    <li class="active">设置</li>
+</ol>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                 <li class="active"><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +54,7 @@
                         <div>
                             <select name="location_id" class="form-control">
                                 @foreach($locations as $location)
-                                    <option value="{{ $location->id }}" {{ (old('location_id', $node->location_id) === $location->id) ? 'selected' : '' }}>{{ $location->long }} ({{ $location->short }})</option>
+                                <option value="{{ $location->id }}" {{ (old('location_id', $node->location_id) === $location->id) ? 'selected' : '' }}>{{ $location->long }} ({{ $location->short }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -72,7 +72,7 @@
                             <input type="text" autocomplete="off" name="fqdn" class="form-control" value="{{ old('fqdn', $node->fqdn) }}" />
                         </div>
                         <p class="text-muted"><small>请输入用于连接守护程序的域名 (例如 <code>node.example.com</code>). 仅当您没有为此节点使用 SSL 时才可以使用 IP 地址.
-                                <a tabindex="0" data-toggle="popover" data-trigger="focus" title="为什么需要(FQDN)域名？" data-content="为了保护您的服务器与此节点之间的通信，我们需要使用 SSL。我们无法为 IP 地址生成 SSL 证书，因此您需要提供(FQDN)域名。">为什么？</a>
+                                <a tabindex="0" data-toggle="popover" data-trigger="focus" title="为什么需要(FQDN)域名？" data-content="为了保护您的实例与此节点之间的通信，我们需要使用 SSL。我们无法为 IP 地址生成 SSL 证书，因此您需要提供(FQDN)域名。">为什么？</a>
                             </small></p>
                     </div>
                     <div class="form-group col-xs-12">
@@ -115,7 +115,7 @@
                                 <label for="pMaintenanceTrue"> 开启</label>
                             </div>
                         </div>
-                        <p class="text-muted small">如果节点被标记为“维护中”，用户将无法访问该节点上的服务器.</p>
+                        <p class="text-muted small">如果节点被标记为“维护中”，用户将无法访问该节点上的实例.</p>
                     </div>
                 </div>
             </div>
@@ -131,38 +131,38 @@
                             <div class="form-group col-xs-6">
                                 <label for="memory" class="control-label">总内存</label>
                                 <div class="input-group">
-                                    <input type="text" name="memory" class="form-control" data-multiplicator="true" value="{{ old('memory', $node->memory) }}"/>
+                                    <input type="text" name="memory" class="form-control" data-multiplicator="true" value="{{ old('memory', $node->memory) }}" />
                                     <span class="input-group-addon">MiB</span>
                                 </div>
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="memory_overallocate" class="control-label">超额分配百分比</label>
                                 <div class="input-group">
-                                    <input type="text" name="memory_overallocate" class="form-control" value="{{ old('memory_overallocate', $node->memory_overallocate) }}"/>
+                                    <input type="text" name="memory_overallocate" class="form-control" value="{{ old('memory_overallocate', $node->memory_overallocate) }}" />
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-muted small">输入此节点上可用于分配给服务器的内存总量。您还可以提供一个百分比，允许分配超过定义的内存.</p>
+                        <p class="text-muted small">输入此节点上可用于分配给实例的内存总量。您还可以提供一个百分比，允许分配超过定义的内存.</p>
                     </div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="form-group col-xs-6">
                                 <label for="disk" class="control-label">总存储空间</label>
                                 <div class="input-group">
-                                    <input type="text" name="disk" class="form-control" data-multiplicator="true" value="{{ old('disk', $node->disk) }}"/>
+                                    <input type="text" name="disk" class="form-control" data-multiplicator="true" value="{{ old('disk', $node->disk) }}" />
                                     <span class="input-group-addon">MiB</span>
                                 </div>
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="disk_overallocate" class="control-label">超额分配百分比</label>
                                 <div class="input-group">
-                                    <input type="text" name="disk_overallocate" class="form-control" value="{{ old('disk_overallocate', $node->disk_overallocate) }}"/>
+                                    <input type="text" name="disk_overallocate" class="form-control" value="{{ old('disk_overallocate', $node->disk_overallocate) }}" />
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-muted small">输入此节点上可用于服务器分配存储空间总量。您还可以提供一个百分比来确定超出设置限制的存储空间量以允许.</p>
+                        <p class="text-muted small">输入此节点上可用于实例分配存储空间总量。您还可以提供一个百分比来确定超出设置限制的存储空间量以允许.</p>
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@
                     <div class="form-group col-xs-12">
                         <label for="disk_overallocate" class="control-label">最大网页文件上传大小</label>
                         <div class="input-group">
-                            <input type="text" name="upload_size" class="form-control" value="{{ old('upload_size', $node->upload_size) }}"/>
+                            <input type="text" name="upload_size" class="form-control" value="{{ old('upload_size', $node->upload_size) }}" />
                             <span class="input-group-addon">MiB</span>
                         </div>
                         <p class="text-muted"><small>输入可以通过基于 Web 的文件管理器上传的文件的最大大小.</small></p>
@@ -186,19 +186,19 @@
                             <div class="form-group col-md-6">
                                 <label for="daemonListen" class="control-label"><span class="label label-warning"><i class="fa fa-power-off"></i></span> 守护进程端口</label>
                                 <div>
-                                    <input type="text" name="daemonListen" class="form-control" value="{{ old('daemonListen', $node->daemonListen) }}"/>
+                                    <input type="text" name="daemonListen" class="form-control" value="{{ old('daemonListen', $node->daemonListen) }}" />
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="daemonSFTP" class="control-label"><span class="label label-warning"><i class="fa fa-power-off"></i></span> 守护进程 SFTP 端口</label>
                                 <div>
-                                    <input type="text" name="daemonSFTP" class="form-control" value="{{ old('daemonSFTP', $node->daemonSFTP) }}"/>
+                                    <input type="text" name="daemonSFTP" class="form-control" value="{{ old('daemonSFTP', $node->daemonSFTP) }}" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <p class="text-muted"><small>守护进程运行自己的 SFTP 管理容器，不使用主物理服务器上的 SSHd 进程. <Strong>不要使用为物理服务器的 SSH 进程分配的相同端口.</strong></small></p>
+                                <p class="text-muted"><small>守护进程运行自己的 SFTP 管理容器，不使用主物理实例上的 SSHd 进程. <Strong>不要使用为物理实例的 SSH 进程分配的相同端口.</strong></small></p>
                             </div>
                         </div>
                     </div>
@@ -215,7 +215,7 @@
                         <div>
                             <input type="checkbox" name="reset_secret" id="reset_secret" /> <label for="reset_secret" class="control-label">重置守护进程超级密钥</label>
                         </div>
-                        <p class="text-muted"><small>重置守护程序超级密钥将使来自旧密钥的任何请求无效。此密钥用于守护程序上的所有敏感操作，包括服务器创建和删除。我们建议定期更改此密钥以确保安全.</small></p>
+                        <p class="text-muted"><small>重置守护程序超级密钥将使来自旧密钥的任何请求无效。此密钥用于守护程序上的所有敏感操作，包括实例创建和删除。我们建议定期更改此密钥以确保安全.</small></p>
                     </div>
                 </div>
                 <div class="box-footer">
@@ -230,11 +230,11 @@
 @endsection
 
 @section('footer-scripts')
-    @parent
-    <script>
+@parent
+<script>
     $('[data-toggle="popover"]').popover({
         placement: 'auto'
     });
     $('select[name="location_id"]').select2();
-    </script>
+</script>
 @endsection

@@ -45,7 +45,7 @@ class ScheduleTaskController extends ClientApiController
         }
 
         if ($server->backup_limit === 0 && $request->action === 'backup') {
-            throw new HttpForbiddenException('当服务器的备份限制设置为 0 时，则不能创建备份任务。');
+            throw new HttpForbiddenException('当实例的备份限制设置为 0 时，则不能创建备份任务。');
         }
 
         /** @var Task|null $lastTask */
@@ -105,7 +105,7 @@ class ScheduleTaskController extends ClientApiController
         }
 
         if ($server->backup_limit === 0 && $request->action === 'backup') {
-            throw new HttpForbiddenException('当服务器的备份限制设置为 0 时，则不能创建备份任务。');
+            throw new HttpForbiddenException('当实例的备份限制设置为 0 时，则不能创建备份任务。');
         }
 
         $this->connection->transaction(function () use ($request, $schedule, $task) {

@@ -80,15 +80,9 @@ const ActionContainer = styled.div`
     ${tw`flex items-center space-x-2`}
 `;
 
-
-
 const MetricValue = styled.span<{ $alarm?: boolean }>`
     ${tw`text-sm font-medium`}
     ${(props) => (props.$alarm ? tw`text-red-400` : tw`text-neutral-50`)}
-`;
-
-const MetricLimit = styled.span`
-    ${tw`text-xs text-neutral-400`}
 `;
 
 type Timer = ReturnType<typeof setInterval>;
@@ -154,9 +148,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
             <div css={tw`lg:col-span-4 order-1 flex items-center space-x-6`}>
                 <div css={tw`flex items-center space-x-3`}>
-                    <span css={tw`text-sm text-neutral-400 font-mono`}>
-                        {server.id}
-                    </span>
+                    <span css={tw`text-sm text-neutral-400 font-mono`}>{server.id}</span>
                     <span css={tw`text-sm text-neutral-300 font-mono bg-neutral-600 px-2 py-1 rounded`}>
                         {server.allocations
                             .filter((alloc) => alloc.isDefault)
@@ -199,28 +191,25 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                         <div css={tw`flex items-center space-x-1`}>
                             <Icon icon={faMicrochip} $alarm={alarms.cpu} />
                             <MetricValue $alarm={alarms.cpu}>
-                                {cpuLimit === '无限制' 
+                                {cpuLimit === '无限制'
                                     ? `${stats.cpuUsagePercent.toFixed(0)}%`
-                                    : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`
-                                }
+                                    : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`}
                             </MetricValue>
                         </div>
                         <div css={tw`flex items-center space-x-1`}>
                             <Icon icon={faMemory} $alarm={alarms.memory} />
                             <MetricValue $alarm={alarms.memory}>
-                                {memoryLimit === '无限制' 
+                                {memoryLimit === '无限制'
                                     ? bytesToString(stats.memoryUsageInBytes)
-                                    : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`
-                                }
+                                    : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`}
                             </MetricValue>
                         </div>
                         <div css={tw`flex items-center space-x-1`}>
                             <Icon icon={faHdd} $alarm={alarms.disk} />
                             <MetricValue $alarm={alarms.disk}>
-                                {diskLimit === '无限制' 
+                                {diskLimit === '无限制'
                                     ? bytesToString(stats.diskUsageInBytes)
-                                    : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`
-                                }
+                                    : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`}
                             </MetricValue>
                         </div>
                     </div>
@@ -232,7 +221,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                         variant='start'
                         onClick={(e) => handlePowerAction('start', e)}
                         disabled={isPerformingAction || stats?.status === 'running'}
-                        title='启动服务器'
+                        title='启动实例'
                     >
                         {isPerformingAction ? (
                             <Spinner size='small' />
@@ -247,7 +236,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                         variant='stop'
                         onClick={(e) => handlePowerAction('stop', e)}
                         disabled={isPerformingAction || stats?.status === 'offline'}
-                        title='停止服务器'
+                        title='停止实例'
                     >
                         {isPerformingAction ? (
                             <Spinner size='small' />
@@ -262,7 +251,7 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                         variant='restart'
                         onClick={(e) => handlePowerAction('restart', e)}
                         disabled={isPerformingAction}
-                        title='重启服务器'
+                        title='重启实例'
                     >
                         {isPerformingAction ? (
                             <Spinner size='small' />

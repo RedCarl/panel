@@ -29,8 +29,8 @@
     },
     "variables": [
         {
-            "name": "服务器版本",
-            "description": "运行服务器时使用的 Teamspeak 3 版本。",
+            "name": "实例版本",
+            "description": "运行实例时使用的 Teamspeak 3 版本。",
             "env_variable": "TS_VERSION",
             "default_value": "latest",
             "user_viewable": true,
@@ -60,7 +60,7 @@
         },
         {
             "name": "查询协议",
-            "description": "逗号分隔的协议列表，可用于连接到服务器查询| \r\n可能的值为 raw、ssh 和 http | \r\n例如：raw,ssh,http",
+            "description": "逗号分隔的协议列表，可用于连接到实例查询| \r\n可能的值为 raw、ssh 和 http | \r\n例如：raw,ssh,http",
             "env_variable": "QUERY_PROTOCOLS_VAR",
             "default_value": "raw,http,ssh",
             "user_viewable": true,
@@ -70,7 +70,7 @@
         },
         {
             "name": "查询 SSH 端口",
-            "description": "使用 SSH 为服务器查询连接打开的 TCP 端口",
+            "description": "使用 SSH 为实例查询连接打开的 TCP 端口",
             "env_variable": "QUERY_SSH",
             "default_value": "10022",
             "user_viewable": true,
@@ -80,7 +80,7 @@
         },
         {
             "name": "查询 HTTP 端口",
-            "description": "使用 http 为服务器查询连接打开的 TCP 端口",
+            "description": "使用 http 为实例查询连接打开的 TCP 端口",
             "env_variable": "QUERY_HTTP",
             "default_value": "10080",
             "user_viewable": true,
@@ -89,8 +89,8 @@
             "field_type": "text"
         },
         {
-            "name": "服务器查询管理员密码",
-            "description": "用于服务器查询管理员用户的密码。",
+            "name": "实例查询管理员密码",
+            "description": "用于实例查询管理员用户的密码。",
             "env_variable": "SERVERADMIN_PASSWORD",
             "default_value": "",
             "user_viewable": true,

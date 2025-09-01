@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
 @section('title')
-    数据库主机
+数据库主机
 @endsection
 
 @section('content-header')
-    <h1>数据库主机<small>服务器可以在其上创建数据库的数据库主机。</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li class="active">数据库主机</li>
-    </ol>
+<h1>数据库主机<small>实例可以在其上创建数据库的数据库主机。</small></h1>
+<ol class="breadcrumb">
+    <li><a href="{{ route('admin.index') }}">管理</a></li>
+    <li class="active">数据库主机</li>
+</ol>
 @endsection
 
 @section('content')
@@ -35,21 +35,21 @@
                             <th class="text-center">节点</th>
                         </tr>
                         @foreach ($hosts as $host)
-                            <tr>
-                                <td><code>{{ $host->id }}</code></td>
-                                <td><a href="{{ route('admin.databases.view', $host->id) }}">{{ $host->name }}</a></td>
-                                <td><code>{{ $host->host }}</code></td>
-                                <td><code>{{ $host->port }}</code></td>
-                                <td>{{ $host->username }}</td>
-                                <td class="text-center">{{ $host->databases_count }}</td>
-                                <td class="text-center">
-                                    @if(! is_null($host->node))
-                                        <a href="{{ route('admin.nodes.view', $host->node->id) }}">{{ $host->node->name }}</a>
-                                    @else
-                                        <span class="label label-default">无</span>
-                                    @endif
-                                </td>
-                            </tr>
+                        <tr>
+                            <td><code>{{ $host->id }}</code></td>
+                            <td><a href="{{ route('admin.databases.view', $host->id) }}">{{ $host->name }}</a></td>
+                            <td><code>{{ $host->host }}</code></td>
+                            <td><code>{{ $host->port }}</code></td>
+                            <td>{{ $host->username }}</td>
+                            <td class="text-center">{{ $host->databases_count }}</td>
+                            <td class="text-center">
+                                @if(! is_null($host->node))
+                                <a href="{{ route('admin.nodes.view', $host->node->id) }}">{{ $host->node->name }}</a>
+                                @else
+                                <span class="label label-default">无</span>
+                                @endif
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="pPort" class="form-label">端口</label>
-                            <input type="text" name="port" id="pPort" class="form-control" value="3306"/>
+                            <input type="text" name="port" id="pPort" class="form-control" value="3306" />
                             <p class="text-muted small">MYSQL 主机运行开放的端口.</p>
                         </div>
                     </div>
@@ -100,14 +100,14 @@
                         <select name="node_id" id="pNodeId" class="form-control">
                             <option value="">无</option>
                             @foreach($locations as $location)
-                                <optgroup label="{{ $location->short }}">
-                                    @foreach($location->nodes as $node)
-                                        <option value="{{ $node->id }}">{{ $node->name }}</option>
-                                    @endforeach
-                                </optgroup>
+                            <optgroup label="{{ $location->short }}">
+                                @foreach($location->nodes as $node)
+                                <option value="{{ $node->id }}">{{ $node->name }}</option>
+                                @endforeach
+                            </optgroup>
                             @endforeach
                         </select>
-                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的服务器以外没有任何作用.</p>
+                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的实例以外没有任何作用.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -123,8 +123,8 @@
 @endsection
 
 @section('footer-scripts')
-    @parent
-    <script>
-        $('#pNodeId').select2();
-    </script>
+@parent
+<script>
+    $('#pNodeId').select2();
+</script>
 @endsection

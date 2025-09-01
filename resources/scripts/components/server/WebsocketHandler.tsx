@@ -109,7 +109,7 @@ export default () => {
                     {error === 'connecting' ? (
                         <>
                             <Spinner size={'small'} />
-                            <p css={tw`ml-2 text-sm text-red-100`}>我们在连接到你的服务器时出现错误，请等待...</p>
+                            <p css={tw`ml-2 text-sm text-red-100`}>我们在连接到你的实例时出现错误，请等待...</p>
                         </>
                     ) : (
                         <p css={tw`ml-2 text-sm text-white`}>{error}</p>

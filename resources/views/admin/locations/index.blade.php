@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
 @section('title')
-    地域
+地域
 @endsection
 
 @section('content-header')
-    <h1>地域<small>可以将节点分配到所有地域以便于分类。</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li class="active">地域</li>
-    </ol>
+<h1>地域<small>可以将节点分配到所有地域以便于分类。</small></h1>
+<ol class="breadcrumb">
+    <li><a href="{{ route('admin.index') }}">管理</a></li>
+    <li class="active">地域</li>
+</ol>
 @endsection
 
 @section('content')
@@ -30,16 +30,16 @@
                             <th>标识码</th>
                             <th>描述</th>
                             <th class="text-center">节点</th>
-                            <th class="text-center">服务器</th>
+                            <th class="text-center">实例</th>
                         </tr>
                         @foreach ($locations as $location)
-                            <tr>
-                                <td><code>{{ $location->id }}</code></td>
-                                <td><a href="{{ route('admin.locations.view', $location->id) }}">{{ $location->short }}</a></td>
-                                <td>{{ $location->long }}</td>
-                                <td class="text-center">{{ $location->nodes_count }}</td>
-                                <td class="text-center">{{ $location->servers_count }}</td>
-                            </tr>
+                        <tr>
+                            <td><code>{{ $location->id }}</code></td>
+                            <td><a href="{{ route('admin.locations.view', $location->id) }}">{{ $location->short }}</a></td>
+                            <td>{{ $location->long }}</td>
+                            <td class="text-center">{{ $location->nodes_count }}</td>
+                            <td class="text-center">{{ $location->servers_count }}</td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

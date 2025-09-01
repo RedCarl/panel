@@ -124,7 +124,7 @@ const EditSubuserModal = ({ subuser }: Props) => {
                         <Field
                             name={'email'}
                             label={'用户邮箱地址'}
-                            description={'输入您希望邀请为该服务器子用户的用户的电子邮箱地址。'}
+                            description={'输入您希望邀请为该实例子用户的用户的电子邮箱地址。'}
                         />
                     </div>
                 )}

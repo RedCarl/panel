@@ -194,7 +194,7 @@ class BackupController extends ClientApiController
         // Cannot restore a backup unless a server is fully installed and not currently
         // processing a different backup restoration request.
         if (!is_null($server->status)) {
-            throw new BadRequestHttpException('此服务器处于不允许还原备份的状态。');
+            throw new BadRequestHttpException('此实例处于不允许还原备份的状态。');
         }
 
         if (!$backup->is_successful && is_null($backup->completed_at)) {

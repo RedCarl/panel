@@ -18,6 +18,8 @@ import CollapsibleServerGroup from '@/components/dashboard/CollapsibleServerGrou
 import { groupServersByDomain, getDomainList, getSortedGroupTree, GroupedServer } from '@/lib/serverGrouping';
 import { sendBulkPowerAction, PowerAction } from '@/api/server/power';
 import { httpErrorToHuman } from '@/api/http';
+import { PlayCircleIcon, StopCircleIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import ConfirmationModal from '@/components/elements/ConfirmationModal';
 
 export default () => {
     const { search } = useLocation();
@@ -30,12 +32,22 @@ export default () => {
     const [showOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
     const [selectedDomain, setSelectedDomain] = useState('');
 
+    // 全局展开/折叠状态管理
+    const [expandAllTrigger, setExpandAllTrigger] = useState(0);
+    const [collapseAllTrigger, setCollapseAllTrigger] = useState(0);
+
+    // 确认弹窗状态
+    const [confirmAction, setConfirmAction] = useState<{ action: PowerAction; visible: boolean }>({
+        action: 'start',
+        visible: false,
+    });
+
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
         ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
         () => getServers({ page, type: 'admin-all' })
     );
 
-    // 分组服务器数据
+    // 分组实例数据
     const { domainList, selectedDomainData, groupTree, currentDomain } = useMemo(() => {
         if (!servers?.items) {
             return {
@@ -44,14 +56,6 @@ export default () => {
                 groupTree: null,
             };
         }
-
-        // 调试：打印原始服务器数据
-        console.log('原始数据:', servers);
-        console.log('原始服务器数据:', servers.items);
-        console.log(
-            '服务器名称列表:',
-            servers.items.map((s) => s.name)
-        );
 
         const groups = groupServersByDomain(servers.items);
         const domains = getDomainList(groups);
@@ -69,13 +73,6 @@ export default () => {
         const domainData = groups.get(currentDomain);
         const tree = domainData ? getSortedGroupTree(groups, currentDomain) : new Map();
 
-        // 调试：打印分组结果
-        console.log('分组结果:', groups);
-        console.log('域名列表:', domains);
-        console.log('当前选中域:', currentDomain);
-        console.log('当前域数据:', domainData);
-        console.log('分组树:', tree);
-
         return {
             domainGroups: groups,
             domainList: domains,
@@ -91,6 +88,15 @@ export default () => {
             setSelectedDomain(currentDomain);
         }
     }, [currentDomain, selectedDomain]);
+
+    // 处理全局展开/折叠
+    const handleExpandAll = () => {
+        setExpandAllTrigger((prev) => prev + 1);
+    };
+
+    const handleCollapseAll = () => {
+        setCollapseAllTrigger((prev) => prev + 1);
+    };
 
     // 处理批量操作
     const handleBulkAction = async (servers: GroupedServer[], action: PowerAction) => {
@@ -108,6 +114,33 @@ export default () => {
             }
         } catch (error) {
             console.error(`Bulk ${action} failed:`, httpErrorToHuman(error));
+        }
+    };
+
+    // 处理域级别的批量操作
+    const handleDomainBulkAction = async (action: PowerAction) => {
+        if (selectedDomainData && selectedDomainData.servers.length > 0) {
+            await handleBulkAction(selectedDomainData.servers, action);
+            setConfirmAction({ action, visible: false });
+        }
+    };
+
+    // 显示确认弹窗
+    const showConfirmation = (action: PowerAction) => {
+        setConfirmAction({ action, visible: true });
+    };
+
+    // 获取操作的中文名称
+    const getActionName = (action: PowerAction) => {
+        switch (action) {
+            case 'start':
+                return '启动';
+            case 'stop':
+                return '停止';
+            case 'restart':
+                return '重启';
+            default:
+                return action;
         }
     };
 
@@ -132,18 +165,6 @@ export default () => {
 
     return (
         <PageContentBlock title={'仪表盘'} showFlashKey={'dashboard'}>
-            {/* {rootAdmin && (
-                <div css={tw`mb-2 flex justify-end items-center`}>
-                    <p css={tw`uppercase text-xs text-neutral-400 mr-2`}>
-                        {showOnlyAdmin ? '显示其他人的服务器' : '显示你的服务器'}
-                    </p>
-                    <Switch
-                        name={'show_all_servers'}
-                        defaultChecked={showOnlyAdmin}
-                        onChange={() => setShowOnlyAdmin((s) => !s)}
-                    />
-                </div>
-            )} */}
             {!servers ? (
                 <Spinner centered size={'large'} />
             ) : (
@@ -163,6 +184,52 @@ export default () => {
                         />
                     </div>
 
+                    {/* 一键展开/折叠按钮和批量操作按钮 */}
+                    {groupTree && groupTree.size > 0 && (
+                        <div css={tw`mb-4 flex items-center justify-between`}>
+                            <div css={tw`flex items-center space-x-2`}>
+                                <button
+                                    onClick={handleExpandAll}
+                                    css={tw`px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded transition-colors duration-150 flex items-center space-x-1`}
+                                >
+                                    <span>展开所有组</span>
+                                </button>
+                                <button
+                                    onClick={handleCollapseAll}
+                                    css={tw`px-3 py-2 bg-gray-600 hover:bg-gray-500 text-white text-sm font-medium rounded transition-colors duration-150 flex items-center space-x-1`}
+                                >
+                                    <span>折叠所有组</span>
+                                </button>
+                            </div>
+                            {/* 批量操作按钮 */}
+                            {selectedDomainData && selectedDomainData.servers.length > 0 && (
+                                <div css={tw`flex items-center space-x-2`}>
+                                    <button
+                                        onClick={() => showConfirmation('start')}
+                                        css={tw`px-3 py-2 bg-green-600 hover:bg-green-500 text-white text-sm font-medium rounded transition-colors duration-150 flex items-center space-x-1`}
+                                    >
+                                        <PlayCircleIcon css={tw`w-4 h-4`} />
+                                        <span>启动全部</span>
+                                    </button>
+                                    <button
+                                        onClick={() => showConfirmation('stop')}
+                                        css={tw`px-3 py-2 bg-red-600 hover:bg-red-500 text-white text-sm font-medium rounded transition-colors duration-150 flex items-center space-x-1`}
+                                    >
+                                        <StopCircleIcon css={tw`w-4 h-4`} />
+                                        <span>停止全部</span>
+                                    </button>
+                                    <button
+                                        onClick={() => showConfirmation('restart')}
+                                        css={tw`px-3 py-2 bg-yellow-600 hover:bg-yellow-500 text-white text-sm font-medium rounded transition-colors duration-150 flex items-center space-x-1`}
+                                    >
+                                        <ArrowPathIcon css={tw`w-4 h-4`} />
+                                        <span>重启全部</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     <Pagination data={servers} onPageSelect={setPage}>
                         {({ items }) =>
                             items.length > 0 ? (
@@ -175,19 +242,34 @@ export default () => {
                                                     groupNode={groupNode}
                                                     level={0}
                                                     onBulkAction={handleBulkAction}
+                                                    expandAllTrigger={expandAllTrigger}
+                                                    collapseAllTrigger={collapseAllTrigger}
                                                 />
                                             ))}
                                     </div>
                                 ) : (
-                                    <p css={tw`text-center text-sm text-neutral-400`}>所选域中没有服务器。</p>
+                                    <p css={tw`text-center text-sm text-neutral-400`}>所选域中没有实例。</p>
                                 )
                             ) : (
-                                <p css={tw`text-center text-sm text-neutral-400`}>{'暂时没有任何服务器'}</p>
+                                <p css={tw`text-center text-sm text-neutral-400`}>{'暂时没有任何实例'}</p>
                             )
                         }
                     </Pagination>
                 </>
             )}
+
+            {/* 确认弹窗 */}
+            <ConfirmationModal
+                visible={confirmAction.visible}
+                title={`确认${getActionName(confirmAction.action)}操作`}
+                buttonText={`${getActionName(confirmAction.action)}全部实例`}
+                onConfirmed={() => handleDomainBulkAction(confirmAction.action)}
+                showSpinnerOverlay={false}
+                onModalDismissed={() => setConfirmAction({ action: confirmAction.action, visible: false })}
+            >
+                您确定要{getActionName(confirmAction.action)}当前域中的所有实例吗？此操作将影响{' '}
+                {selectedDomainData?.servers.length || 0} 个实例。
+            </ConfirmationModal>
         </PageContentBlock>
     );
 };

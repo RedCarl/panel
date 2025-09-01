@@ -47,10 +47,10 @@ return [
         'rebuild_failed' => '在节点 ":node" 上对 ":name" (#:id) 的重建请求失败并出现错误：:message',
         'reinstall' => [
             'failed' => '在节点 ":node" 上重新安装 ":name" (#:id) 请求失败并出现错误: :message',
-            'confirm' => '您即将针对一组服务器重新安装。你想继续吗？',
+            'confirm' => '您即将针对一组实例重新安装。你想继续吗？',
         ],
         'power' => [
-            'confirm' => '您即将对 :count 服务器执行 :action。你想继续吗？',
+            'confirm' => '您即将对 :count 实例执行 :action。你想继续吗？',
             'action_failed' => '节点 ":node" 上 ":name" (#:id) 的电源操作请求失败并出现错误: :message',
         ],
     ],

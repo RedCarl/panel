@@ -14,8 +14,8 @@ class DatabaseSettingsCommand extends Command
     protected $description = '为面板配置数据库设置.';
 
     protected $signature = 'p:environment:database
-                            {--host= : MySQL服务器的连接地址.}
-                            {--port= : MySQL服务器的连接端口.}
+                            {--host= : MySQL实例的连接地址.}
+                            {--port= : MySQL实例的连接端口.}
                             {--database= : 要使用的数据库.}
                             {--username= : 连接数据库时使用的用户名.}
                             {--password= : 用于连接此数据库的密码.}';
@@ -72,7 +72,7 @@ class DatabaseSettingsCommand extends Command
         try {
             $this->testMySQLConnection();
         } catch (\PDOException $exception) {
-            $this->output->error(sprintf('无法使用提供的凭证连接到 MySQL 服务器。返回的错误是 "%s".', $exception->getMessage()));
+            $this->output->error(sprintf('无法使用提供的凭证连接到 MySQL 实例。返回的错误是 "%s".', $exception->getMessage()));
             $this->output->error('您的连接凭证尚未保存。在继续之前，您需要提供有效的连接信息.');
 
             if ($this->confirm('回去再试一次?')) {

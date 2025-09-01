@@ -22,9 +22,7 @@ class SftpAuthenticationController extends Controller
 {
     use ThrottlesLogins;
 
-    public function __construct(protected GetUserPermissionsService $permissions)
-    {
-    }
+    public function __construct(protected GetUserPermissionsService $permissions) {}
 
     /**
      * Authenticate a set of credentials and return the associated server details
@@ -89,7 +87,7 @@ class SftpAuthenticationController extends Controller
     protected function getServer(Request $request, string $uuid): Server
     {
         return Server::query()
-            ->where(fn ($builder) => $builder->where('uuid', $uuid)->orWhere('uuidShort', $uuid))
+            ->where(fn($builder) => $builder->where('uuid', $uuid)->orWhere('uuidShort', $uuid))
             ->where('node_id', $request->attributes->get('node')->id)
             ->firstOr(function () use ($request) {
                 $this->reject($request);
@@ -146,7 +144,7 @@ class SftpAuthenticationController extends Controller
             if (!in_array(Permission::ACTION_FILE_SFTP, $permissions)) {
                 Activity::event('server:sftp.denied')->actor($user)->subject($server)->log();
 
-                throw new HttpForbiddenException('您无权访问此服务器的 SFTP。');
+                throw new HttpForbiddenException('您无权访问此实例的 SFTP。');
             }
         }
 

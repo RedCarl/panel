@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('title')
-    预设配置: {{ $egg->name }}
+预设配置: {{ $egg->name }}
 @endsection
 
 @section('content-header')
-    <h1>{{ $egg->name }}<small>{{ str_limit($egg->description, 50) }}</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.nests') }}">预设</a></li>
-        <li><a href="{{ route('admin.nests.view', $egg->nest->id) }}">{{ $egg->nest->name }}</a></li>
-        <li class="active">{{ $egg->name }}</li>
-    </ol>
+<h1>{{ $egg->name }}<small>{{ str_limit($egg->description, 50) }}</small></h1>
+<ol class="breadcrumb">
+    <li><a href="{{ route('admin.index') }}">管理</a></li>
+    <li><a href="{{ route('admin.nests') }}">预设</a></li>
+    <li><a href="{{ route('admin.nests.view', $egg->nest->id) }}">{{ $egg->nest->name }}</a></li>
+    <li class="active">{{ $egg->name }}</li>
+</ol>
 @endsection
 
 @section('content')
@@ -37,7 +37,7 @@
                                 <label for="pName" class="control-label">预设文件</label>
                                 <div>
                                     <input type="file" name="import_file" class="form-control" style="border: 0;margin-left:-10px;" />
-                                    <p class="text-muted small no-margin-bottom">如果您想通过上传新的 JSON 文件来替换此预设的设置，只需在此处选择它并按“更新预设”。这不会更改现有服务器使用的任何启动命令或 Docker 映像。</p>
+                                    <p class="text-muted small no-margin-bottom">如果您想通过上传新的 JSON 文件来替换此预设的设置，只需在此处选择它并按“更新预设”。这不会更改现有实例使用的任何启动命令或 Docker 映像。</p>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 <label for="pDockerImage" class="control-label">Docker 镜像 <span class="field-required"></span></label>
                                 <textarea id="pDockerImages" name="docker_images" class="form-control" rows="4">{{ implode(PHP_EOL, $images) }}</textarea>
                                 <p class="text-muted small">
-                                    使用这个预设的服务器可用的 docker 镜像。每行输入一个。
+                                    使用这个预设的实例可用的 docker 镜像。每行输入一个。
                                     如果提供了多个值，用户则可以从此列表中自行选择。
                                     也可以通过在镜像地址前面加上名称来提供显示名称
                                     后跟一个竖线字符，然后是镜像 URL. 例如: <code>镜像显示名称|ghcr.io/my/egg</code>
@@ -91,11 +91,11 @@
                                     <input id="pForceOutgoingIp" name="force_outgoing_ip" type="checkbox" value="1" @if($egg->force_outgoing_ip) checked @endif />
                                     <label for="pForceOutgoingIp" class="strong">强制传出 IP</label>
                                     <p class="text-muted small">
-                                        强制所有传出的网络流量将其源 IP地址转换（NAT）到服务器首选IP 的 IP地址。
+                                        强制所有传出的网络流量将其源 IP地址转换（NAT）到实例首选IP 的 IP地址。
                                         当节点具有多个公共IP地址时，某些游戏需要它才能正常运行。
                                         <br>
                                         <strong>
-                                            启用此选项将禁用任何使用此预设的服务器内网，这将导致它们无法从内部访问同一节点上的其他服务器。
+                                            启用此选项将禁用任何使用此预设的实例内网，这将导致它们无法从内部访问同一节点上的其他实例。
                                         </strong>
                                     </p>
                                 </div>
@@ -111,14 +111,14 @@
                             <div class="form-group">
                                 <label for="pStartup" class="control-label">启动命令 <span class="field-required"></span></label>
                                 <textarea id="pStartup" name="startup" class="form-control" rows="8">{{ $egg->startup }}</textarea>
-                                <p class="text-muted small">使用此预设的新服务器的默认启动命令.</p>
+                                <p class="text-muted small">使用此预设的新实例的默认启动命令.</p>
                             </div>
                             <div class="form-group">
                                 <label for="pConfigFeatures" class="control-label">功能</label>
                                 <div>
                                     <select class="form-control" name="features[]" id="pConfigFeatures" multiple>
                                         @foreach(($egg->features ?? []) as $feature)
-                                            <option value="{{ $feature }}" selected>{{ $feature }}</option>
+                                        <option value="{{ $feature }}" selected>{{ $feature }}</option>
                                         @endforeach
                                     </select>
                                     <p class="text-muted small">属于该预设的附加功能，用于配置面板的额外修改。</p>
@@ -148,7 +148,7 @@
                                 <select name="config_from" id="pConfigFrom" class="form-control">
                                     <option value="">无</option>
                                     @foreach($egg->nest->eggs as $o)
-                                        <option value="{{ $o->id }}" {{ ($egg->config_from !== $o->id) ?: 'selected' }}>{{ $o->name }} &lt;{{ $o->author }}&gt;</option>
+                                    <option value="{{ $o->id }}" {{ ($egg->config_from !== $o->id) ?: 'selected' }}>{{ $o->name }} &lt;{{ $o->author }}&gt;</option>
                                     @endforeach
                                 </select>
                                 <p class="text-muted small">如果您想默认使用另一个预设的设置，请从上面的菜单中选择它.</p>
@@ -156,7 +156,7 @@
                             <div class="form-group">
                                 <label for="pConfigStop" class="form-label">关机指令</label>
                                 <input type="text" id="pConfigStop" name="config_stop" class="form-control" value="{{ $egg->config_stop }}" />
-                                <p class="text-muted small">应该发送到服务器进程以正常停止它们的命令。如果你需要输出 <code>SIGINT</code> 你应该填入 <code>^C</code> 于此。</p>
+                                <p class="text-muted small">应该发送到实例进程以正常停止它们的命令。如果你需要输出 <code>SIGINT</code> 你应该填入 <code>^C</code> 于此。</p>
                             </div>
                             <div class="form-group">
                                 <label for="pConfigLogs" class="form-label">日志设置</label>
@@ -193,12 +193,12 @@
 @endsection
 
 @section('footer-scripts')
-    @parent
-    <script>
+@parent
+<script>
     $('#pConfigFrom').select2();
-    $('#deleteButton').on('mouseenter', function (event) {
+    $('#deleteButton').on('mouseenter', function(event) {
         $(this).find('i').html(' 删除预设');
-    }).on('mouseleave', function (event) {
+    }).on('mouseleave', function(event) {
         $(this).find('i').html('');
     });
     $('textarea[data-action="handle-tabs"]').on('keydown', function(event) {
@@ -217,5 +217,5 @@
         selectOnClose: false,
         tokenSeparators: [',', ' '],
     });
-    </script>
+</script>
 @endsection

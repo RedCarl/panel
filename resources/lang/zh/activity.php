@@ -39,15 +39,15 @@ return [
         ],
     ],
     'server' => [
-        'reinstall' => '重装服务器',
+        'reinstall' => '重装实例',
         'console' => [
-            'command' => '在服务器上执行 ":command"',
+            'command' => '在实例上执行 ":command"',
         ],
         'power' => [
-            'start' => '启动了服务器',
-            'stop' => '停止了服务器',
-            'restart' => '重启了服务器',
-            'kill' => '强制停止了服务器',
+            'start' => '启动了实例',
+            'stop' => '停止了实例',
+            'restart' => '重启了实例',
+            'kill' => '强制停止了实例',
         ],
         'backup' => [
             'download' => '下载了 :name 备份',
@@ -97,9 +97,9 @@ return [
             'rename_other' => '重命名或移动了 :count 个文件',
         ],
         'allocation' => [
-            'create' => '添加 :allocation 到服务器',
+            'create' => '添加 :allocation 到实例',
             'notes' => '将 :allocation 的备注从 ":old" 更新为 ":new"',
-            'primary' => '将 :allocation 设置为服务器首选',
+            'primary' => '将 :allocation 设置为实例首选',
             'delete' => '删除了 :allocation 分配',
         ],
         'schedule' => [
@@ -114,12 +114,12 @@ return [
             'delete' => '删除了 :name 计划的一个任务',
         ],
         'settings' => [
-            'rename' => '将服务器从 :old 重命名为 :new',
-            'description' => '将服务器描述从 :old 更改为 :new',
+            'rename' => '将实例从 :old 重命名为 :new',
+            'description' => '将实例描述从 :old 更改为 :new',
         ],
         'startup' => [
             'edit' => '将 :variable 变量从 ":old" 更改为 ":new"',
-            'image' => '将服务器的 Docker 映像从 :old 更新为 :new',
+            'image' => '将实例的 Docker 映像从 :old 更新为 :new',
         ],
         'subuser' => [
             'create' => '将 :email 添加为子用户',

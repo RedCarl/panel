@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build
+      - name: BuilBuildd
         run: yarn build:production
 
       - name: Create release branch and bump version

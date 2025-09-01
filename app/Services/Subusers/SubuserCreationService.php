@@ -23,8 +23,7 @@ class SubuserCreationService
         private SubuserRepository $subuserRepository,
         private UserCreationService $userCreationService,
         private UserRepositoryInterface $userRepository,
-    ) {
-    }
+    ) {}
 
     /**
      * Creates a new user on the system and assigns them access to the provided server.
@@ -58,7 +57,7 @@ class SubuserCreationService
                 $user = $this->userCreationService->handle([
                     'email' => $email,
                     'username' => $username,
-                    'name_first' => '服务器',
+                    'name_first' => '实例',
                     'name_last' => '子用户',
                     'root_admin' => false,
                 ]);

@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('title')
-    {{ $node->name }}: 分配
+{{ $node->name }}: 分配
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>控制此节点上的服务器可用的分配.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.nodes') }}">节点</a></li>
-        <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-        <li class="active">分配</li>
-    </ol>
+<h1>{{ $node->name }}<small>控制此节点上的实例可用的分配.</small></h1>
+<ol class="breadcrumb">
+    <li><a href="{{ route('admin.index') }}">管理</a></li>
+    <li><a href="{{ route('admin.nodes') }}">节点</a></li>
+    <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
+    <li class="active">分配</li>
+</ol>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li class="active"><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
             </ul>
         </div>
     </div>
@@ -47,7 +47,7 @@
                         <th>
                             <div class="btn-group hidden-xs">
                                 <button type="button" id="mass_actions" class="btn btn-sm btn-default dropdown-toggle disabled"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">批量操作 <span class="caret"></span>
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">批量操作 <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-massactions">
                                     <li><a href="#" id="selective-deletion" data-action="selective-deletion">删除 <i class="fa fa-fw fa-trash-o"></i></a></li>
@@ -56,38 +56,38 @@
                         </th>
                     </tr>
                     @foreach($node->allocations as $allocation)
-                        <tr>
-                            <td class="middle min-size" data-identifier="type">
-                                @if(is_null($allocation->server_id))
-                                <input type="checkbox" class="select-file hidden-xs" data-action="addSelection">
-                                @else
-                                <input disabled="disabled" type="checkbox" class="select-file hidden-xs" data-action="addSelection">
-                                @endif
-                            </td>
-                            <td class="col-sm-3 middle" data-identifier="ip">{{ $allocation->ip }}</td>
-                            <td class="col-sm-3 middle">
-                                <input class="form-control input-sm" type="text" value="{{ $allocation->ip_alias }}" data-action="set-alias" data-id="{{ $allocation->id }}" placeholder="none" />
-                                <span class="input-loader"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
-                            </td>
-                            <td class="col-sm-2 middle" data-identifier="port">{{ $allocation->port }}</td>
-                            <td class="col-sm-3 middle">
-                                @if(! is_null($allocation->server))
-                                    <a href="{{ route('admin.servers.view', $allocation->server_id) }}">{{ $allocation->server->name }}</a>
-                                @endif
-                            </td>
-                            <td class="col-sm-1 middle">
-                                @if(is_null($allocation->server_id))
-                                    <button data-action="deallocate" data-id="{{ $allocation->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
-                                @endif
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="middle min-size" data-identifier="type">
+                            @if(is_null($allocation->server_id))
+                            <input type="checkbox" class="select-file hidden-xs" data-action="addSelection">
+                            @else
+                            <input disabled="disabled" type="checkbox" class="select-file hidden-xs" data-action="addSelection">
+                            @endif
+                        </td>
+                        <td class="col-sm-3 middle" data-identifier="ip">{{ $allocation->ip }}</td>
+                        <td class="col-sm-3 middle">
+                            <input class="form-control input-sm" type="text" value="{{ $allocation->ip_alias }}" data-action="set-alias" data-id="{{ $allocation->id }}" placeholder="none" />
+                            <span class="input-loader"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
+                        </td>
+                        <td class="col-sm-2 middle" data-identifier="port">{{ $allocation->port }}</td>
+                        <td class="col-sm-3 middle">
+                            @if(! is_null($allocation->server))
+                            <a href="{{ route('admin.servers.view', $allocation->server_id) }}">{{ $allocation->server->name }}</a>
+                            @endif
+                        </td>
+                        <td class="col-sm-1 middle">
+                            @if(is_null($allocation->server_id))
+                            <button data-action="deallocate" data-id="{{ $allocation->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+                            @endif
+                        </td>
+                    </tr>
                     @endforeach
                 </table>
             </div>
             @if($node->allocations->hasPages())
-                <div class="box-footer text-center">
-                    {{ $node->allocations->render() }}
-                </div>
+            <div class="box-footer text-center">
+                {{ $node->allocations->render() }}
+            </div>
             @endif
         </div>
     </div>
@@ -103,7 +103,7 @@
                         <div>
                             <select class="form-control" name="allocation_ip" id="pAllocationIP" multiple>
                                 @foreach($allocations as $allocation)
-                                    <option value="{{ $allocation->ip }}">{{ $allocation->ip }}</option>
+                                <option value="{{ $allocation->ip }}">{{ $allocation->ip }}</option>
                                 @endforeach
                             </select>
                             <p class="text-muted small">在此处输入要分配端口的 IP 地址.</p>
@@ -145,7 +145,7 @@
                         <div class="col-md-12">
                             <select class="form-control" name="ip">
                                 @foreach($allocations as $allocation)
-                                    <option value="{{ $allocation->ip }}">{{ $allocation->ip }}</option>
+                                <option value="{{ $allocation->ip }}">{{ $allocation->ip }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -163,21 +163,21 @@
 @endsection
 
 @section('footer-scripts')
-    @parent
-    <script>
-    $('[data-action="addSelection"]').on('click', function () {
+@parent
+<script>
+    $('[data-action="addSelection"]').on('click', function() {
         updateMassActions();
     });
 
-    $('[data-action="selectAll"]').on('click', function () {
-        $('input.select-file').not(':disabled').prop('checked', function (i, val) {
+    $('[data-action="selectAll"]').on('click', function() {
+        $('input.select-file').not(':disabled').prop('checked', function(i, val) {
             return !val;
         });
 
         updateMassActions();
     });
 
-    $('[data-action="selective-deletion"]').on('mousedown', function () {
+    $('[data-action="selective-deletion"]').on('mousedown', function() {
         deleteSelected();
     });
 
@@ -194,7 +194,7 @@
         tokenSeparators: [',', ' '],
     });
 
-    $('button[data-action="deallocate"]').click(function (event) {
+    $('button[data-action="deallocate"]').click(function(event) {
         event.preventDefault();
         var element = $(this);
         var allocation = $(this).data('id');
@@ -208,15 +208,24 @@
             confirmButtonText: '确定',
             confirmButtonColor: '#d9534f',
             showLoaderOnConfirm: true
-        }, function () {
+        }, function() {
             $.ajax({
                 method: 'DELETE',
-                url: '/admin/nodes/view/' + {{ $node->id }} + '/allocation/remove/' + allocation,
-                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-            }).done(function (data) {
+                url: '/admin/nodes/view/' + {
+                    {
+                        $node - > id
+                    }
+                } + '/allocation/remove/' + allocation,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+            }).done(function(data) {
                 element.parent().parent().addClass('warning').delay(100).fadeOut();
-                swal({ type: 'success', title: '端口已删除!' });
-            }).fail(function (jqXHR) {
+                swal({
+                    type: 'success',
+                    title: '端口已删除!'
+                });
+            }).fail(function(jqXHR) {
                 console.error(jqXHR);
                 swal({
                     title: '噢谢!',
@@ -228,30 +237,37 @@
     });
 
     var typingTimer;
-    $('input[data-action="set-alias"]').keyup(function () {
+    $('input[data-action="set-alias"]').keyup(function() {
         clearTimeout(typingTimer);
         $(this).parent().removeClass('has-error has-success');
         typingTimer = setTimeout(sendAlias, 250, $(this));
     });
 
     var fadeTimers = [];
+
     function sendAlias(element) {
         element.parent().find('.input-loader').show();
         clearTimeout(fadeTimers[element.data('id')]);
         $.ajax({
             method: 'POST',
-            url: '/admin/nodes/view/' + {{ $node->id }} + '/allocation/alias',
-            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            url: '/admin/nodes/view/' + {
+                {
+                    $node - > id
+                }
+            } + '/allocation/alias',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
             data: {
                 alias: element.val(),
                 allocation_id: element.data('id'),
             }
-        }).done(function () {
+        }).done(function() {
             element.parent().addClass('has-success');
-        }).fail(function (jqXHR) {
+        }).fail(function(jqXHR) {
             console.error(jqXHR);
             element.parent().addClass('has-error');
-        }).always(function () {
+        }).always(function() {
             element.parent().find('.input-loader').hide();
             fadeTimers[element.data('id')] = setTimeout(clearHighlight, 2500, element);
         });
@@ -274,7 +290,7 @@
         var selectedItems = [];
         var selectedItemsElements = [];
 
-        $('input.select-file:checked').each(function () {
+        $('input.select-file:checked').each(function() {
             var $parent = $($(this).closest('tr'));
             var id = $parent.find('[data-action="deallocate"]').data('id');
             var $ip = $parent.find('td[data-identifier="ip"]');
@@ -291,7 +307,7 @@
         if (selectedItems.length !== 0) {
             var formattedItems = "";
             var i = 0;
-            $.each(selectedItems, function (key, value) {
+            $.each(selectedItems, function(key, value) {
                 formattedItems += ("<code>" + value + "</code>, ");
                 i++;
                 return i < 5;
@@ -311,22 +327,28 @@
                 showConfirmButton: true,
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true
-            }, function () {
+            }, function() {
                 $.ajax({
                     method: 'DELETE',
-                    url: '/admin/nodes/view/' + {{ $node->id }} + '/allocations',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+                    url: '/admin/nodes/view/' + {
+                        {
+                            $node - > id
+                        }
+                    } + '/allocations',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
                     data: JSON.stringify({
                         allocations: selectedIds
                     }),
                     contentType: 'application/json',
                     processData: false
-                }).done(function () {
-                    $('#file_listing input:checked').each(function () {
+                }).done(function() {
+                    $('#file_listing input:checked').each(function() {
                         $(this).prop('checked', false);
                     });
 
-                    $.each(selectedItemsElements, function () {
+                    $.each(selectedItemsElements, function() {
                         $(this).addClass('warning').delay(200).fadeOut();
                     });
 
@@ -334,7 +356,7 @@
                         type: 'success',
                         title: '端口已删除'
                     });
-                }).fail(function (jqXHR) {
+                }).fail(function(jqXHR) {
                     console.error(jqXHR);
                     swal({
                         type: 'error',
@@ -352,5 +374,5 @@
             });
         }
     }
-    </script>
+</script>
 @endsection

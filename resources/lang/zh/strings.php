@@ -16,7 +16,7 @@ return [
     'confirm_password' => '确认新密码',
     'login' => '登录',
     'home' => '主页',
-    'servers' => '服务器',
+    'servers' => '实例',
     'id' => 'ID',
     'name' => '名称',
     'node' => '节点',

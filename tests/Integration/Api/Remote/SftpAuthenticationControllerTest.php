@@ -160,7 +160,7 @@ class SftpAuthenticationControllerTest extends IntegrationTestCase
             'password' => 'foobar',
         ])
             ->assertForbidden()
-            ->assertJsonPath('errors.0.detail', '您无权访问此服务器的 SFTP。');
+            ->assertJsonPath('errors.0.detail', '您无权访问此实例的 SFTP。');
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('serverStateDataProvider')]

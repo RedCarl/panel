@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ServerIcon } from '@heroicons/react/outline';
+import { ServerIcon } from '@heroicons/react/24/outline';
 import tw from 'twin.macro';
 import styled from 'styled-components/macro';
 import { PowerAction } from '@/api/server/power';
@@ -16,7 +16,7 @@ interface Props {
 const Container = styled.div`
     ${tw`flex items-center justify-between bg-gradient-to-r from-neutral-800 to-neutral-700 rounded-xl p-2 mb-3 shadow-lg border border-neutral-600/50`}
     transition: all 0.2s ease-in-out;
-    
+
     &:hover {
         ${tw`shadow-xl border-neutral-500/70`}
         transform: translateY(-1px);
@@ -38,8 +38,6 @@ const ServerInfo = styled.div`
 const DomainLabel = styled.label`
     ${tw`text-neutral-300 text-sm font-medium`}
 `;
-
-
 
 // Cookie操作函数
 const DOMAIN_COOKIE_KEY = 'pterodactyl_selected_domain';
@@ -63,11 +61,11 @@ const getCookie = (name: string): string | null => {
 
 const DomainSelect = styled.select`
     ${tw`bg-neutral-600 hover:bg-neutral-500 text-neutral-100 px-3 py-2 rounded-lg border border-neutral-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition-all duration-200 text-sm`}
-    
+
     &:hover {
         ${tw`border-neutral-400`}
     }
-    
+
     option {
         ${tw`bg-neutral-700 text-neutral-100 py-2`}
     }
@@ -101,12 +99,10 @@ const DomainSelector: React.FC<Props> = ({
             <LeftContainer>
                 <ServerInfo>
                     <ServerIcon className='w-5 h-5 text-blue-400' />
-                    <span className="text-neutral-200 text-sm font-medium">
-                        {serverCount} 台服务器
-                    </span>
+                    <span className='text-neutral-200 text-sm font-medium'>{serverCount} 个实例</span>
                 </ServerInfo>
             </LeftContainer>
-            
+
             <RightContainer>
                 <DomainLabel>域:</DomainLabel>
                 <DomainSelect value={selectedDomain} onChange={handleDomainChange}>

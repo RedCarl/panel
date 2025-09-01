@@ -121,8 +121,8 @@ const EditScheduleModal = ({ schedule }: Props) => {
                     <div css={tw`mt-6 bg-neutral-700 border border-neutral-800 shadow-inner p-4 rounded`}>
                         <FormikSwitch
                             name={'onlyWhenOnline'}
-                            description={'仅在服务器处于运行状态时执行此计划。'}
-                            label={'仅当服务器在线运行时'}
+                            description={'仅在实例处于运行状态时执行此计划。'}
+                            label={'仅当实例在线运行时'}
                         />
                     </div>
                     <div css={tw`mt-6 bg-neutral-700 border border-neutral-800 shadow-inner p-4 rounded`}>
