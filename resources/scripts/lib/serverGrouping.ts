@@ -108,9 +108,6 @@ export function parseServerName(serverName: string): ParsedServerInfo {
             displayName: serverDisplayName,
         };
 
-        // 调试：打印解析结果
-        console.log('解析结果:', result);
-
         return result;
     } catch (error) {
         console.warn('Failed to parse server name:', serverName, error);

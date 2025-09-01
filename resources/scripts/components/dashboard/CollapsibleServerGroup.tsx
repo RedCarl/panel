@@ -22,7 +22,7 @@ interface Props {
 }
 
 const GroupContainer = styled.div<{ level: number }>`
-    ${tw`mb-3 bg-neutral-800 border border-neutral-700 rounded-lg shadow-sm overflow-visible`}
+    ${tw`mb-3 bg-neutral-900/50 border border-neutral-700 rounded-lg shadow-sm overflow-hidden`}
     ${tw`border-l-4 border-l-blue-500`}
 `;
 
@@ -55,7 +55,7 @@ const ActionTrigger = styled.div`
 `;
 
 const ContentContainer = styled.div<{ isExpanded: boolean }>`
-    ${tw`overflow-visible transition-all duration-300 ease-in-out`}
+    ${tw`overflow-hidden transition-all duration-300 ease-in-out`}
     max-height: ${(props) => (props.isExpanded ? '2000px' : '0')};
     opacity: ${(props) => (props.isExpanded ? '1' : '0')};
 `;
@@ -124,8 +124,8 @@ const CollapsibleServerGroup: React.FC<Props> = ({
         if (buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
             setMenuPosition({
-                top: rect.bottom + window.scrollY + 8,
-                right: window.innerWidth - rect.right - window.scrollX + 10,
+                top: rect.bottom + window.scrollY,
+                right: window.innerWidth - rect.right - window.scrollX - 10,
             });
         }
     };
