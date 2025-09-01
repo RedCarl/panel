@@ -80,6 +80,14 @@ const ActionContainer = styled.div`
     ${tw`flex items-center space-x-2`}
 `;
 
+const ServerInfoCard = styled.div`
+    ${tw`bg-neutral-800 rounded-lg p-3 flex items-center space-x-4`}
+`;
+
+const IpAddressBox = styled.div`
+    ${tw`bg-neutral-600 rounded px-3 py-2 text-sm text-neutral-300 font-mono`}
+`;
+
 const MetricValue = styled.span<{ $alarm?: boolean }>`
     ${tw`text-sm font-medium`}
     ${(props) => (props.$alarm ? tw`text-red-400` : tw`text-neutral-50`)}
@@ -146,77 +154,91 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
 
     return (
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
-            <div css={tw`lg:col-span-4 order-1 flex items-center space-x-6`}>
-                <div css={tw`flex items-center space-x-3`}>
-                    <span css={tw`text-sm text-neutral-400 font-mono`}>{server.id}</span>
-                    <span css={tw`text-sm text-neutral-300 font-mono bg-neutral-600 px-2 py-1 rounded`}>
-                        {server.allocations
-                            .filter((alloc) => alloc.isDefault)
-                            .map((allocation) => (
-                                <React.Fragment key={allocation.ip + allocation.port.toString()}>
-                                    {allocation.alias || ip(allocation.ip)}:{allocation.port}
-                                </React.Fragment>
-                            ))}
-                    </span>
-                </div>
-            </div>
-            <div css={tw`lg:col-span-5 order-2 flex items-center justify-center space-x-3`}>
-                {!stats || isSuspended ? (
-                    isSuspended ? (
-                        <div css={tw`flex-1 text-center`}>
-                            <span css={tw`bg-red-600 rounded px-3 py-1.5 text-red-50 text-sm font-medium`}>
-                                {server.status === 'suspended' ? '已冻结' : '连接错误'}
-                            </span>
-                        </div>
-                    ) : server.isTransferring || server.status ? (
-                        <div css={tw`flex-1 text-center`}>
-                            <span css={tw`bg-neutral-600 rounded px-3 py-1.5 text-neutral-100 text-sm font-medium`}>
-                                {server.isTransferring
-                                    ? '转移中'
-                                    : server.status === 'installing'
-                                    ? '安装中'
-                                    : server.status === 'restoring_backup'
-                                    ? '正在回档'
-                                    : '不可用'}
-                            </span>
-                        </div>
-                    ) : (
-                        <div css={tw`flex items-center space-x-2`}>
-                            <Spinner size={'small'} />
-                            <span css={tw`text-sm text-neutral-400`}>加载中...</span>
-                        </div>
-                    )
-                ) : (
-                    <div css={tw`flex items-center space-x-4 text-sm`}>
-                        <div css={tw`flex items-center space-x-1`}>
-                            <Icon icon={faMicrochip} $alarm={alarms.cpu} />
-                            <MetricValue $alarm={alarms.cpu}>
-                                {cpuLimit === '无限制'
-                                    ? `${stats.cpuUsagePercent.toFixed(0)}%`
-                                    : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`}
-                            </MetricValue>
-                        </div>
-                        <div css={tw`flex items-center space-x-1`}>
-                            <Icon icon={faMemory} $alarm={alarms.memory} />
-                            <MetricValue $alarm={alarms.memory}>
-                                {memoryLimit === '无限制'
-                                    ? bytesToString(stats.memoryUsageInBytes)
-                                    : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`}
-                            </MetricValue>
-                        </div>
-                        <div css={tw`flex items-center space-x-1`}>
-                            <Icon icon={faHdd} $alarm={alarms.disk} />
-                            <MetricValue $alarm={alarms.disk}>
-                                {diskLimit === '无限制'
-                                    ? bytesToString(stats.diskUsageInBytes)
-                                    : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`}
-                            </MetricValue>
+            <div css={tw`lg:col-span-4 order-1 flex items-start space-x-3`}>
+                <span css={tw`text-lg text-white font-mono font-semibold flex-shrink-0`}>{server.id}</span>
+                {server.description && (
+                    <div css={tw`flex items-start space-x-2 min-w-0 flex-1`}>
+                        <div css={tw`w-px bg-neutral-500 h-5 mt-0.5 flex-shrink-0`}></div>
+                        <div css={tw`text-sm text-neutral-300 leading-relaxed min-w-0 flex-1`}>
+                            <div css={tw`line-clamp-2 overflow-hidden`}>
+                                {server.description.split('\n').map((line, index) => (
+                                    <React.Fragment key={index}>
+                                        {line}
+                                        {index < server.description.split('\n').length - 1 && <br />}
+                                    </React.Fragment>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
-            <div css={tw`lg:col-span-3 order-4 flex items-center justify-center lg:justify-end`}>
-                <ActionContainer>
+            <div css={tw`lg:col-span-8 order-2 flex items-center justify-end space-x-4`}>
+                <IpAddressBox>
+                    {server.allocations
+                        .filter((alloc) => alloc.isDefault)
+                        .map((allocation) => (
+                            <React.Fragment key={allocation.ip + allocation.port.toString()}>
+                                {allocation.alias || ip(allocation.ip)}:{allocation.port}
+                            </React.Fragment>
+                        ))}
+                </IpAddressBox>
+                <ServerInfoCard>
+                    <div css={tw`flex-1 flex items-center justify-center`}>
+                    {!stats || isSuspended ? (
+                        isSuspended ? (
+                            <div css={tw`flex-1 text-center`}>
+                                <span css={tw`bg-red-600 rounded px-3 py-1.5 text-red-50 text-sm font-medium`}>
+                                    {server.status === 'suspended' ? '已冻结' : '连接错误'}
+                                </span>
+                            </div>
+                        ) : server.isTransferring || server.status ? (
+                            <div css={tw`flex-1 text-center`}>
+                                <span css={tw`bg-neutral-600 rounded px-3 py-1.5 text-neutral-100 text-sm font-medium`}>
+                                    {server.isTransferring
+                                        ? '转移中'
+                                        : server.status === 'installing'
+                                        ? '安装中'
+                                        : server.status === 'restoring_backup'
+                                        ? '正在回档'
+                                        : '不可用'}
+                                </span>
+                            </div>
+                        ) : (
+                            <div css={tw`flex items-center space-x-2`}>
+                                <Spinner size={'small'} />
+                                <span css={tw`text-sm text-neutral-400`}>加载中...</span>
+                            </div>
+                        )
+                    ) : (
+                        <div css={tw`flex items-center space-x-4 text-sm`}>
+                            <div css={tw`flex items-center space-x-1`}>
+                                <Icon icon={faMicrochip} $alarm={alarms.cpu} />
+                                <MetricValue $alarm={alarms.cpu}>
+                                    {cpuLimit === '无限制'
+                                        ? `${stats.cpuUsagePercent.toFixed(0)}%`
+                                        : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`}
+                                </MetricValue>
+                            </div>
+                            <div css={tw`flex items-center space-x-1`}>
+                                <Icon icon={faMemory} $alarm={alarms.memory} />
+                                <MetricValue $alarm={alarms.memory}>
+                                    {memoryLimit === '无限制'
+                                        ? bytesToString(stats.memoryUsageInBytes)
+                                        : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`}
+                                </MetricValue>
+                            </div>
+                            <div css={tw`flex items-center space-x-1`}>
+                                <Icon icon={faHdd} $alarm={alarms.disk} />
+                                <MetricValue $alarm={alarms.disk}>
+                                    {diskLimit === '无限制'
+                                        ? bytesToString(stats.diskUsageInBytes)
+                                        : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`}
+                                </MetricValue>
+                            </div>
+                        </div>
+                    )}
+                    </div>
+                    <ActionContainer>
                     <ActionButton
                         variant='start'
                         onClick={(e) => handlePowerAction('start', e)}
@@ -262,7 +284,8 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                             </>
                         )}
                     </ActionButton>
-                </ActionContainer>
+                    </ActionContainer>
+                </ServerInfoCard>
             </div>
             <div className='status-bar' />
         </StatusIndicatorBox>

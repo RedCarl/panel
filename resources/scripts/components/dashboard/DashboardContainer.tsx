@@ -30,11 +30,15 @@ export default () => {
     const uuid = useStoreState((state) => state.user.data!.uuid);
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const [showOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
-    const [selectedDomain, setSelectedDomain] = useState('');
+    const [selectedDomain, setSelectedDomain] = usePersistedState(`${uuid}:selected_domain`, '');
 
     // 全局展开/折叠状态管理
     const [expandAllTrigger, setExpandAllTrigger] = useState(0);
     const [collapseAllTrigger, setCollapseAllTrigger] = useState(0);
+    
+    // 展开状态持久化存储
+    const [expandedGroupsArray, setExpandedGroupsArray] = usePersistedState<string[]>(`${uuid}:expanded_groups`, []);
+    const expandedGroups = useMemo(() => new Set(expandedGroupsArray), [expandedGroupsArray]);
 
     // 确认弹窗状态
     const [confirmAction, setConfirmAction] = useState<{ action: PowerAction; visible: boolean }>({
@@ -54,6 +58,7 @@ export default () => {
                 domainList: [],
                 selectedDomainData: null,
                 groupTree: null,
+                currentDomain: '',
             };
         }
 
@@ -68,10 +73,10 @@ export default () => {
                 const data = groups.get(domain);
                 return data && data.groupTree.size > 0;
             });
-            currentDomain = domainWithGroups || domains[0];
+            currentDomain = domainWithGroups || domains[0] || '';
         }
-        const domainData = groups.get(currentDomain);
-        const tree = domainData ? getSortedGroupTree(groups, currentDomain) : new Map();
+        const domainData = groups.get(currentDomain || '');
+        const tree = domainData ? getSortedGroupTree(groups, currentDomain || '') : new Map();
 
         return {
             domainGroups: groups,
@@ -89,12 +94,44 @@ export default () => {
         }
     }, [currentDomain, selectedDomain]);
 
+    // 处理展开状态变化
+    const handleGroupExpandChange = (groupPath: string, isExpanded: boolean) => {
+        setExpandedGroupsArray((prev) => {
+            const currentArray = prev || [];
+            if (isExpanded) {
+                return currentArray.includes(groupPath) ? currentArray : [...currentArray, groupPath];
+            } else {
+                return currentArray.filter(path => path !== groupPath);
+            }
+        });
+    };
+    
+    // 检查组是否展开（包括子组）
+    const isGroupExpanded = (groupPath: string) => {
+        return expandedGroups.has(groupPath);
+    };
+
     // 处理全局展开/折叠
     const handleExpandAll = () => {
+        if (groupTree) {
+            const allGroupPaths: string[] = [];
+            const collectAllPaths = (tree: Map<string, any>, prefix = '') => {
+                tree.forEach((node, key) => {
+                    const fullPath = prefix ? `${prefix}/${key}` : key;
+                    allGroupPaths.push(fullPath);
+                    if (node.children && node.children.size > 0) {
+                        collectAllPaths(node.children, fullPath);
+                    }
+                });
+            };
+            collectAllPaths(groupTree);
+            setExpandedGroupsArray(allGroupPaths);
+        }
         setExpandAllTrigger((prev) => prev + 1);
     };
 
     const handleCollapseAll = () => {
+        setExpandedGroupsArray([]);
         setCollapseAllTrigger((prev) => prev + 1);
     };
 
@@ -241,9 +278,13 @@ export default () => {
                                                     key={groupPath}
                                                     groupNode={groupNode}
                                                     level={0}
+                                                    groupPath={groupPath}
                                                     onBulkAction={handleBulkAction}
                                                     expandAllTrigger={expandAllTrigger}
                                                     collapseAllTrigger={collapseAllTrigger}
+                                                    isExpanded={expandedGroups.has(groupPath)}
+                                                    onExpandChange={handleGroupExpandChange}
+                                                    isGroupExpanded={isGroupExpanded}
                                                 />
                                             ))}
                                     </div>
