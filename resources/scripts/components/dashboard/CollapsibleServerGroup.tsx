@@ -126,8 +126,22 @@ const CollapsibleServerGroup: React.FC<Props> = ({
             }
         }
     }, [collapseAllTrigger]);
+
     const totalServerCount = getTotalServerCount(groupNode);
     const allServers = getAllServers(groupNode);
+
+    // 检查是否为单级单服务器组：只有一个服务器且没有子组
+    const isSingleServerGroup = groupNode.servers.length === 1 && groupNode.children.size === 0;
+
+    // 如果是单级单服务器组，直接渲染服务器并在上方显示组名
+    if (isSingleServerGroup) {
+        const server = groupNode.servers[0];
+        return (
+            <div className={className}>
+                <ServerRow server={server} groupName={groupNode.name} />
+            </div>
+        );
+    }
 
     const handleToggle = (e: React.MouseEvent) => {
         e.stopPropagation();

@@ -95,7 +95,15 @@ const MetricValue = styled.span<{ $alarm?: boolean }>`
 
 type Timer = ReturnType<typeof setInterval>;
 
-export default ({ server, className }: { server: GroupedServer; className?: string }) => {
+export default ({
+    server,
+    className,
+    groupName,
+}: {
+    server: GroupedServer;
+    className?: string;
+    groupName?: string;
+}) => {
     const interval = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const [isSuspended, setIsSuspended] = useState(server.status === 'suspended');
     const [stats, setStats] = useState<ServerStats | null>(null);
@@ -154,11 +162,14 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
 
     return (
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
-            <div css={tw`lg:col-span-3 order-1 flex items-start space-x-3`}>
-                <span css={tw`text-lg text-white font-mono font-semibold flex-shrink-0`}>{server.id}</span>
+            <div css={tw`lg:col-span-3 order-1 flex items-center space-x-3`}>
+                <div css={tw`flex flex-col flex-shrink-0`}>
+                    {groupName && <span css={tw`text-sm text-neutral-400`}>{groupName}</span>}
+                    <span css={tw`text-lg text-white font-mono font-semibold`}>{server.id}</span>
+                </div>
                 {server.description && (
-                    <div css={tw`flex items-start space-x-2 min-w-0 flex-1`}>
-                        <div css={tw`w-px bg-neutral-500 h-5 mt-0.5 flex-shrink-0`}></div>
+                    <div css={tw`flex items-center space-x-2 min-w-0 flex-1`}>
+                        <div css={tw`w-0.5 bg-neutral-500 h-9 flex-shrink-0`}></div>
                         <div css={tw`text-sm text-neutral-300 leading-relaxed min-w-0 flex-1`}>
                             <div css={tw`line-clamp-2 overflow-hidden`}>
                                 {server.description.split('\n').map((line, index) => (

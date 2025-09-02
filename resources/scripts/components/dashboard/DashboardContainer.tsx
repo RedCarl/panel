@@ -214,21 +214,6 @@ export default () => {
                 <Spinner centered size={'large'} />
             ) : (
                 <>
-                    {/* 域选择器 */}
-                    <div css={tw`mb-4`}>
-                        <DomainSelector
-                            domains={domainList}
-                            selectedDomain={selectedDomain || (domainList.length > 0 ? domainList[0] : '')}
-                            onDomainChange={setSelectedDomain}
-                            serverCount={selectedDomainData?.servers.length || 0}
-                            onBulkAction={async (action) => {
-                                if (selectedDomainData) {
-                                    await handleBulkAction(selectedDomainData.servers, action);
-                                }
-                            }}
-                        />
-                    </div>
-
                     {/* 一键展开/折叠按钮和批量操作按钮 */}
                     {groupTree && groupTree.size > 0 && (
                         <div css={tw`mb-4 flex items-center justify-between`}>
@@ -274,6 +259,21 @@ export default () => {
                             )}
                         </div>
                     )}
+
+                    {/* 域选择器 */}
+                    <div css={tw`mb-4`}>
+                        <DomainSelector
+                            domains={domainList}
+                            selectedDomain={selectedDomain || (domainList.length > 0 ? domainList[0] : '')}
+                            onDomainChange={setSelectedDomain}
+                            serverCount={selectedDomainData?.servers.length || 0}
+                            onBulkAction={async (action) => {
+                                if (selectedDomainData) {
+                                    await handleBulkAction(selectedDomainData.servers, action);
+                                }
+                            }}
+                        />
+                    </div>
 
                     <Pagination data={servers} onPageSelect={setPage}>
                         {({ items }) =>
