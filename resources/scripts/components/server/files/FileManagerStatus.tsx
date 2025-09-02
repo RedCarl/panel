@@ -68,7 +68,7 @@ const FileUploadList = () => {
 
 const FileUploadListDialog = asDialog({
     title: '文件上传',
-    description: '正在将以下文件上传到您的服务器。',
+    description: '正在将以下文件上传到您的实例。',
 })(FileUploadList);
 
 export default () => {

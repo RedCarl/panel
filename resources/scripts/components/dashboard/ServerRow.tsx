@@ -256,7 +256,7 @@ export default ({
                             variant='start'
                             onClick={(e) => handlePowerAction('start', e)}
                             disabled={isPerformingAction || stats?.status === 'running'}
-                            title='启动服务器'
+                            title='启动实例'
                         >
                             {isPerformingAction ? (
                                 <Spinner size='small' />
@@ -271,7 +271,7 @@ export default ({
                             variant='stop'
                             onClick={(e) => handlePowerAction('stop', e)}
                             disabled={isPerformingAction || stats?.status === 'offline'}
-                            title='停止服务器'
+                            title='停止实例'
                         >
                             {isPerformingAction ? (
                                 <Spinner size='small' />
@@ -286,7 +286,7 @@ export default ({
                             variant='restart'
                             onClick={(e) => handlePowerAction('restart', e)}
                             disabled={isPerformingAction}
-                            title='重启服务器'
+                            title='重启实例'
                         >
                             {isPerformingAction ? (
                                 <Spinner size='small' />

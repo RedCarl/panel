@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>控制此节点上的服务器可用的分配.</small></h1>
+    <h1>{{ $node->name }}<small>控制此节点上的实例可用的分配.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
         <li><a href="{{ route('admin.nodes') }}">节点</a></li>
@@ -23,7 +23,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li class="active"><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
             </ul>
         </div>
     </div>

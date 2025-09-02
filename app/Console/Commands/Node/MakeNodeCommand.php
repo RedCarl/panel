@@ -23,7 +23,7 @@ class MakeNodeCommand extends Command
                             {--uploadSize= : 输入最大文件上传大小}
                             {--daemonListeningPort= : 输入wings监听端口。}
                             {--daemonSFTPPort= : 输入wings SFTP监听端口。}
-                            {--daemonBase= : 输入服务器文件存储目录}';
+                            {--daemonBase= : 输入实例文件存储目录}';
 
     protected $description = 'Creates a new node on the system via the CLI.';
 
@@ -55,13 +55,13 @@ class MakeNodeCommand extends Command
         $data['behind_proxy'] = $this->option('proxy') ?? $this->confirm('您的 FQDN(域名) 是否使用了代理？');
         $data['maintenance_mode'] = $this->option('maintenance') ?? $this->confirm('是否应该启用维护模式？');
         $data['memory'] = $this->option('maxMemory') ?? $this->ask('输入最大内存容量');
-        $data['memory_overallocate'] = $this->option('overallocateMemory') ?? $this->ask('输入要过度分配的内存容量，-1 将禁用检查，0 将阻止创建新服务器');
+        $data['memory_overallocate'] = $this->option('overallocateMemory') ?? $this->ask('输入要过度分配的内存容量，-1 将禁用检查，0 将阻止创建新实例');
         $data['disk'] = $this->option('maxDisk') ?? $this->ask('输入最大存储空间容量');
-        $data['disk_overallocate'] = $this->option('overallocateDisk') ?? $this->ask('输入要过度分配的存储空间容量，-1 将禁用检查，0 将阻止创建新服务器');
+        $data['disk_overallocate'] = $this->option('overallocateDisk') ?? $this->ask('输入要过度分配的存储空间容量，-1 将禁用检查，0 将阻止创建新实例');
         $data['upload_size'] = $this->option('uploadSize') ?? $this->ask('输入最大文件上传大小', '100');
         $data['daemonListen'] = $this->option('daemonListeningPort') ?? $this->ask('输入wings监听端口', '8080');
         $data['daemonSFTP'] = $this->option('daemonSFTPPort') ?? $this->ask('输入wings SFTP监听端口', '2022');
-        $data['daemonBase'] = $this->option('daemonBase') ?? $this->ask('输入服务器文件存储目录', '/var/lib/pterodactyl/volumes');
+        $data['daemonBase'] = $this->option('daemonBase') ?? $this->ask('输入实例文件存储目录', '/var/lib/pterodactyl/volumes');
 
         $node = $this->creationService->handle($data);
         $this->line('在地域 ' . $data['location_id'] . ' 上成功创建了一个名为 ' . $data['name'] . ' 且 id 为 ' . $node->id . ' 的新节点。');

@@ -108,7 +108,7 @@
                 <h3 class="box-title">删除此用户</h3>
             </div>
             <div class="box-body">
-                <p class="no-margin">必须没有与此帐户关联的服务器才能删除此用户.</p>
+                <p class="no-margin">必须没有与此帐户关联的实例才能删除此用户.</p>
             </div>
             <div class="box-footer">
                 <form action="{{ route('admin.users.view', $user->id) }}" method="POST">

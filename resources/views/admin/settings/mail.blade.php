@@ -39,14 +39,14 @@
                                     <label class="control-label">SMTP 主机</label>
                                     <div>
                                         <input required type="text" class="form-control" name="mail:mailers:smtp:host" value="{{ old('mail:mailers:smtp:host', config('mail.mailers.smtp.host')) }}" />
-                                        <p class="text-muted small">输入发送邮件的 SMTP 服务器地址.</p>
+                                        <p class="text-muted small">输入发送邮件的 SMTP 实例地址.</p>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="control-label">SMTP 主机端口</label>
                                     <div>
                                         <input required type="number" class="form-control" name="mail:mailers:smtp:port" value="{{ old('mail:mailers:smtp:port', config('mail.mailers.smtp.port')) }}" />
-                                        <p class="text-muted small">输入发送邮件的 SMTP 服务器端口.</p>
+                                        <p class="text-muted small">输入发送邮件的 SMTP 实例端口.</p>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -67,7 +67,7 @@
                                     <label class="control-label">用户名 <span class="field-optional"></span></label>
                                     <div>
                                         <input type="text" class="form-control" name="mail:mailers:smtp:username" value="{{ old('mail:mailers:smtp:username', config('mail.mailers.smtp.username')) }}" />
-                                        <p class="text-muted small">连接到 SMTP 服务器时使用的用户名.</p>
+                                        <p class="text-muted small">连接到 SMTP 实例时使用的用户名.</p>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">

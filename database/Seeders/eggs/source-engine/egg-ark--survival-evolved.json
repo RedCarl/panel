@@ -31,8 +31,8 @@
     },
     "variables": [
         {
-            "name": "服务器密码",
-            "description": "如果指定，玩家必须提供此密码才能加入服务器。",
+            "name": "实例密码",
+            "description": "如果指定，玩家必须提供此密码才能加入实例。",
             "env_variable": "ARK_PASSWORD",
             "default_value": "",
             "user_viewable": true,
@@ -51,7 +51,7 @@
             "field_type": "text"
         },
         {
-            "name": "服务器地图",
+            "name": "实例地图",
             "description": "可用地图：TheIsland、TheCenter、Ragnarok、ScorchedEarth_P、Aberration_P、Extinction、Valguero_P、Genesis、CrystalIsles、Gen2、Fjordur",
             "env_variable": "SERVER_MAP",
             "default_value": "TheIsland",
@@ -61,8 +61,8 @@
             "field_type": "text"
         },
         {
-            "name": "服务器名称",
-            "description": "方舟服务器名称",
+            "name": "实例名称",
+            "description": "方舟实例名称",
             "env_variable": "SESSION_NAME",
             "default_value": "A Pterodactyl Hosted ARK Server",
             "user_viewable": true,
@@ -82,7 +82,7 @@
         },
         {
             "name": "查询端口",
-            "description": "steam服务器列表和方舟客户端服务器列表使用的方舟查询端口。",
+            "description": "steam实例列表和方舟客户端实例列表使用的方舟查询端口。",
             "env_variable": "QUERY_PORT",
             "default_value": "27015",
             "user_viewable": true,
@@ -91,8 +91,8 @@
             "field_type": "text"
         },
         {
-            "name": "自动更新服务器",
-            "description": "服务器是否启用自动更新。\r\n\r\n默认值为 0。设置为 1 以更新",
+            "name": "自动更新实例",
+            "description": "实例是否启用自动更新。\r\n\r\n默认值为 0。设置为 1 以更新",
             "env_variable": "AUTO_UPDATE",
             "default_value": "0",
             "user_viewable": true,
@@ -142,7 +142,7 @@
         },
         {
             "name": "最大玩家数",
-            "description": "指定能够加入服务器的玩家的最大数量。",
+            "description": "指定能够加入实例的玩家的最大数量。",
             "env_variable": "MAX_PLAYERS",
             "default_value": "12",
             "user_viewable": true,

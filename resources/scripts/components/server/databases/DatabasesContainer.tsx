@@ -55,15 +55,15 @@ export default () => {
                         ) : (
                             <p css={tw`text-center text-sm text-neutral-300`}>
                                 {databaseLimit > 0
-                                    ? '看起来此服务器没有数据库.'
-                                    : '此服务器无法创建数据库'}
+                                    ? '看起来此实例没有数据库.'
+                                    : '此实例无法创建数据库'}
                             </p>
                         )}
                         <Can action={'database.create'}>
                             <div css={tw`mt-6 flex items-center justify-end`}>
                                 {databaseLimit > 0 && databases.length > 0 && (
                                     <p css={tw`text-sm text-neutral-300 mb-4 sm:mr-6 sm:mb-0`}>
-                                        {databases.length} / {databaseLimit} 个数据库已为此服务器创建.
+                                        {databases.length} / {databaseLimit} 个数据库已为此实例创建.
                                     </p>
                                 )}
                                 {databaseLimit > 0 && databaseLimit !== databases.length && (

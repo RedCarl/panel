@@ -52,10 +52,10 @@ class ServerInstalled extends Notification implements ShouldQueue, ReceivesEvent
     public function toMail(): MailMessage
     {
         return (new MailMessage())
-            ->subject('服务器已安装')
+            ->subject('实例已安装')
             ->greeting('你好 ' . $this->user->username . '.')
-            ->line('您的服务器已完成安装，现在可以使用了。')
-            ->line('服务器名称: ' . $this->server->name)
+            ->line('您的实例已完成安装，现在可以使用了。')
+            ->line('实例名称: ' . $this->server->name)
             ->action('点此登入并开始使用', route('index'));
     }
 }

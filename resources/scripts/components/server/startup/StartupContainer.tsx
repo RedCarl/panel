@@ -107,7 +107,7 @@ const StartupContainer = () => {
                                 </Select>
                             </InputSpinner>
                             <p css={tw`text-xs text-neutral-300 mt-2`}>
-                                这是一项高级设置，其允许您选择在运行此服务器时使用的 Docker 映像。
+                                这是一项高级设置，其允许您选择在运行此实例时使用的 Docker 映像。
                             </p>
                         </>
                     ) : (
@@ -115,7 +115,7 @@ const StartupContainer = () => {
                             <Input disabled readOnly value={variables.dockerImage} />
                             {isCustomImage && (
                                 <p css={tw`text-xs text-neutral-300 mt-2`}>
-                                    这个服务器的 Docker 镜像已由管理员手动设置，无法通过此界面更改。
+                                    这个实例的 Docker 镜像已由管理员手动设置，无法通过此界面更改。
                                 </p>
                             )}
                         </>

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    服务器 — {{ $server->name }}
+    实例 — {{ $server->name }}
 @endsection
 
 @section('content-header')
     <h1>{{ $server->name }}<small>{{ str_limit($server->description) }}</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li><a href="{{ route('admin.servers') }}">实例</a></li>
         <li class="active">{{ $server->name }}</li>
     </ol>
 @endsection
@@ -49,7 +49,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>服务器名称</td>
+                                <td>实例名称</td>
                                 <td>{{ $server->name }}</td>
                             </tr>
                             <tr>
@@ -150,7 +150,7 @@
                         <div class="small-box bg-gray">
                             <div class="inner">
                                 <h3>{{ str_limit($server->user->username, 16) }}</h3>
-                                <p>服务器所有者</p>
+                                <p>实例所有者</p>
                             </div>
                             <div class="icon"><i class="fa fa-user"></i></div>
                             <a href="{{ route('admin.users.view', $server->user->id) }}" class="small-box-footer">
@@ -162,7 +162,7 @@
                         <div class="small-box bg-gray">
                             <div class="inner">
                                 <h3>{{ str_limit($server->node->name, 16) }}</h3>
-                                <p>服务器节点</p>
+                                <p>实例节点</p>
                             </div>
                             <div class="icon"><i class="fa fa-codepen"></i></div>
                             <a href="{{ route('admin.nodes.view', $server->node->id) }}" class="small-box-footer">

@@ -23,7 +23,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li class="active"><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
             </ul>
         </div>
     </div>

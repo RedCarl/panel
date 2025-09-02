@@ -83,7 +83,7 @@ const TaskDetailsModal = ({ schedule, task }: Props) => {
         if (backupLimit === 0 && values.action === 'backup') {
             setSubmitting(false);
             addError({
-                message: "当服务器的备份限制设置为 0 时，无法创建备份任务。",
+                message: "当实例的备份限制设置为 0 时，无法创建备份任务。",
                 key: 'schedule:task',
             });
         } else {
@@ -155,10 +155,10 @@ const TaskDetailsModal = ({ schedule, task }: Props) => {
                                 <Label>任务操作</Label>
                                 <FormikFieldWrapper name={'payload'}>
                                     <FormikField as={Select} name={'payload'}>
-                                        <option value={'start'}>启动服务器</option>
-                                        <option value={'restart'}>重启服务器</option>
-                                        <option value={'stop'}>关闭服务器</option>
-                                        <option value={'kill'}>停止服务器</option>
+                                        <option value={'start'}>启动实例</option>
+                                        <option value={'restart'}>重启实例</option>
+                                        <option value={'stop'}>关闭实例</option>
+                                        <option value={'kill'}>停止实例</option>
                                     </FormikField>
                                 </FormikFieldWrapper>
                             </div>

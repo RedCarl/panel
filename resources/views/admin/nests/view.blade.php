@@ -62,7 +62,7 @@
                     <label class="control-label">UUID</label>
                     <div>
                         <input type="text" readonly class="form-control" value="{{ $nest->uuid }}" />
-                        <p class="text-muted small">为所有使用此预设的服务器分配的 UUID 用于识别目的.</p>
+                        <p class="text-muted small">为所有使用此预设的实例分配的 UUID 用于识别目的.</p>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                         <th>ID</th>
                         <th>名称</th>
                         <th>描述</th>
-                        <th class="text-center">服务器</th>
+                        <th class="text-center">实例</th>
                         <th class="text-center"></th>
                     </tr>
                     @foreach($nest->eggs as $egg)

@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="alert alert-danger">
-            预设是翼龙面板的一个强大功能，可实现极大的灵活性和配置。请注意，虽然功能强大，但错误地修改预设很容易使您的服务器宕机并导致更多问题。请避免编辑我们的默认预设 — 由 <code>support@pterodactyl.io</code> 提供 — 除非阁下十分明白该如何修改预设.
+            预设是翼龙面板的一个强大功能，可实现极大的灵活性和配置。请注意，虽然功能强大，但错误地修改预设很容易使您的实例宕机并导致更多问题。请避免编辑我们的默认预设 — 由 <code>support@pterodactyl.io</code> 提供 — 除非阁下十分明白该如何修改预设.
         </div>
     </div>
 </div>
@@ -37,7 +37,7 @@
                         <th>名称</th>
                         <th>描述</th>
                         <th class="text-center">预设</th>
-                        <th class="text-center">服务器</th>
+                        <th class="text-center">实例</th>
                     </tr>
                     @foreach($nests as $nest)
                         <tr>

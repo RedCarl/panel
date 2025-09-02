@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    服务器 — {{ $server->name }}: 构建配置
+    实例 — {{ $server->name }}: 构建配置
 @endsection
 
 @section('content-header')
-    <h1>{{ $server->name }}<small>控制此服务器的分配和系统资源。</small></h1>
+    <h1>{{ $server->name }}<small>控制此实例的分配和系统资源。</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li><a href="{{ route('admin.servers') }}">实例</a></li>
         <li><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></li>
         <li class="active">构建配置</li>
     </ol>
@@ -30,7 +30,7 @@
                             <input type="text" name="cpu" class="form-control" value="{{ old('cpu', $server->cpu) }}"/>
                             <span class="input-group-addon">%</span>
                         </div>
-                        <p class="text-muted small">每 <em>虚拟</em> 内核 (线程) 于此系统都将视为 <code>100%</code>. 将此值设置为 <code>0</code> 将允许此服务器无限制使用CPU虚拟线程.</p>
+                        <p class="text-muted small">每 <em>虚拟</em> 内核 (线程) 于此系统都将视为 <code>100%</code>. 将此值设置为 <code>0</code> 将允许此实例无限制使用CPU虚拟线程.</p>
                     </div>
                     <div class="form-group">
                         <label for="threads" class="control-label">CPU 核心</label>
@@ -45,7 +45,7 @@
                             <input type="text" name="memory" data-multiplicator="true" class="form-control" value="{{ old('memory', $server->memory) }}"/>
                             <span class="input-group-addon">MiB</span>
                         </div>
-                        <p class="text-muted small">此服务器允许的最大内存使用量。将此设置为 <code>0</code> 将不限制此服务器内存使用。</p>
+                        <p class="text-muted small">此实例允许的最大内存使用量。将此设置为 <code>0</code> 将不限制此实例内存使用。</p>
                     </div>
                     <div class="form-group">
                         <label for="swap" class="control-label">分配交换内存</label>
@@ -53,7 +53,7 @@
                             <input type="text" name="swap" data-multiplicator="true" class="form-control" value="{{ old('swap', $server->swap) }}"/>
                             <span class="input-group-addon">MiB</span>
                         </div>
-                        <p class="text-muted small">将此设置为 <code>0</code> 将禁用此服务器的交换内存. 将此设置为 <code>-1</code> 将允许此服务器使用无限制交换内存.</p>
+                        <p class="text-muted small">将此设置为 <code>0</code> 将禁用此实例的交换内存. 将此设置为 <code>-1</code> 将允许此实例使用无限制交换内存.</p>
                     </div>
                     <div class="form-group">
                         <label for="cpu" class="control-label">存储空间限制</label>
@@ -61,14 +61,14 @@
                             <input type="text" name="disk" class="form-control" value="{{ old('disk', $server->disk) }}"/>
                             <span class="input-group-addon">MiB</span>
                         </div>
-                        <p class="text-muted small">如果此服务器使用的空间超过此数量，则将不允许它启动。如果服务器在运行时超过此限制，它将安全停止并锁定，直到有足够的可用空间。调成 <code>0</code> 允许此服务器无限制使用存储空间.</p>
+                        <p class="text-muted small">如果此实例使用的空间超过此数量，则将不允许它启动。如果实例在运行时超过此限制，它将安全停止并锁定，直到有足够的可用空间。调成 <code>0</code> 允许此实例无限制使用存储空间.</p>
                     </div>
                     <div class="form-group">
                         <label for="io" class="control-label">IO 优先级</label>
                         <div>
                             <input type="text" name="io" class="form-control" value="{{ old('io', $server->io) }}"/>
                         </div>
-                        <p class="text-muted small"><strong>高级</strong>: 此服务器相对于其他 <em>运行中</em> 服务器的 IO 性能 . 此值应介于 <code>10</code> 至 <code>1000</code>.</p>
+                        <p class="text-muted small"><strong>高级</strong>: 此实例相对于其他 <em>运行中</em> 实例的 IO 性能 . 此值应介于 <code>10</code> 至 <code>1000</code>.</p>
                     </div>
                     <div class="form-group">
                         <label for="cpu" class="control-label">OOM Killer</label>
@@ -82,7 +82,7 @@
                                 <label for="pOomKillerDisabled">禁用</label>
                             </div>
                             <p class="text-muted small">
-                                启用 OOM killer 可能会导致服务器程序异常.
+                                启用 OOM killer 可能会导致实例程序异常.
                             </p>
                         </div>
                     </div>
@@ -103,21 +103,21 @@
                                     <div>
                                         <input type="text" name="database_limit" class="form-control" value="{{ old('database_limit', $server->database_limit) }}"/>
                                     </div>
-                                    <p class="text-muted small">允许用户为此服务器创建的数据库总数.</p>
+                                    <p class="text-muted small">允许用户为此实例创建的数据库总数.</p>
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="allocation_limit" class="control-label">网络分配限制</label>
                                     <div>
                                         <input type="text" name="allocation_limit" class="form-control" value="{{ old('allocation_limit', $server->allocation_limit) }}"/>
                                     </div>
-                                    <p class="text-muted small">允许用户为此服务器创建的网络分配总数。</p>
+                                    <p class="text-muted small">允许用户为此实例创建的网络分配总数。</p>
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="backup_limit" class="control-label">备份限制</label>
                                     <div>
                                         <input type="text" name="backup_limit" class="form-control" value="{{ old('backup_limit', $server->backup_limit) }}"/>
                                     </div>
-                                    <p class="text-muted small">可以为此服务器创建的备份总数。</p>
+                                    <p class="text-muted small">可以为此实例创建的备份总数。</p>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                                         >{{ $assignment->alias }}:{{ $assignment->port }}</option>
                                     @endforeach
                                 </select>
-                                <p class="text-muted small">将用于此服务器的默认连接地址。</p>
+                                <p class="text-muted small">将用于此实例的默认连接地址。</p>
                             </div>
                             <div class="form-group">
                                 <label for="pAddAllocations" class="control-label">分配额外端口</label>
@@ -151,7 +151,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <p class="text-muted small">请注意，由于软件限制，您不能将不同 IP 上的相同端口分配给同一台服务器.</p>
+                                <p class="text-muted small">请注意，由于软件限制，您不能将不同 IP 上的相同端口分配给同一个实例.</p>
                             </div>
                             <div class="form-group">
                                 <label for="pRemoveAllocations" class="control-label">移除额外端口</label>

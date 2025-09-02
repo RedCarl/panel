@@ -11,6 +11,6 @@ class NoSuitableDatabaseHostException extends DisplayException
      */
     public function __construct()
     {
-        parent::__construct('未找到满足此服务器要求的数据库主机。');
+        parent::__construct('未找到满足此实例要求的数据库主机。');
     }
 }

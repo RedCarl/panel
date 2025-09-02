@@ -51,7 +51,7 @@ export default () => {
         () => getServers(rootAdmin ? { page, type: 'admin-all' } : { page })
     );
 
-    // 分组服务器数据
+    // 分组实例数据
     const { domainList, selectedDomainData, groupTree, currentDomain } = useMemo(() => {
         if (!servers?.items) {
             return {
@@ -297,10 +297,10 @@ export default () => {
                                             ))}
                                     </div>
                                 ) : (
-                                    <p css={tw`text-center text-sm text-neutral-400`}>所选域中没有服务器。</p>
+                                    <p css={tw`text-center text-sm text-neutral-400`}>所选域中没有实例。</p>
                                 )
                             ) : (
-                                <p css={tw`text-center text-sm text-neutral-400`}>{'暂时没有任何服务器'}</p>
+                                <p css={tw`text-center text-sm text-neutral-400`}>{'暂时没有任何实例'}</p>
                             )
                         }
                     </Pagination>
@@ -311,13 +311,13 @@ export default () => {
             <ConfirmationModal
                 visible={confirmAction.visible}
                 title={`确认${getActionName(confirmAction.action)}操作`}
-                buttonText={`${getActionName(confirmAction.action)}全部服务器`}
+                buttonText={`${getActionName(confirmAction.action)}全部实例`}
                 onConfirmed={() => handleDomainBulkAction(confirmAction.action)}
                 showSpinnerOverlay={false}
                 onModalDismissed={() => setConfirmAction({ action: confirmAction.action, visible: false })}
             >
-                您确定要{getActionName(confirmAction.action)}当前域中的所有服务器吗？此操作将影响{' '}
-                {selectedDomainData?.servers.length || 0} 个服务器。
+                您确定要{getActionName(confirmAction.action)}当前域中的所有实例吗？此操作将影响{' '}
+                {selectedDomainData?.servers.length || 0} 个实例。
             </ConfirmationModal>
         </PageContentBlock>
     );

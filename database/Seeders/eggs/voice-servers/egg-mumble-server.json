@@ -30,7 +30,7 @@
     "variables": [
         {
             "name": "最大用户数",
-            "description": "Mumble 服务器上的最大并发用户数。",
+            "description": "Mumble 实例上的最大并发用户数。",
             "env_variable": "MAX_USERS",
             "default_value": "100",
             "user_viewable": true,

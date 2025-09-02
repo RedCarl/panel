@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    服务器 — {{ $server->name }}: 管理
+    实例 — {{ $server->name }}: 管理
 @endsection
 
 @section('content-header')
-    <h1>{{ $server->name }}<small>控制此服务器的其他操作.</small></h1>
+    <h1>{{ $server->name }}<small>控制此实例的其他操作.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li><a href="{{ route('admin.servers') }}">实例</a></li>
         <li><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></li>
         <li class="active">管理</li>
     </ol>
@@ -20,19 +20,19 @@
         <div class="col-sm-4">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">重新安装服务器</h3>
+                    <h3 class="box-title">重新安装实例</h3>
                 </div>
                 <div class="box-body">
-                    <p>此操作将使用预设的安装脚本重新安装服务器。<strong>危险!</strong> 这可能会覆盖服务器数据。</p>
+                    <p>此操作将使用预设的安装脚本重新安装实例。<strong>危险!</strong> 这可能会覆盖实例数据。</p>
                 </div>
                 <div class="box-footer">
                     @if($server->isInstalled())
                         <form action="{{ route('admin.servers.view.manage.reinstall', $server->id) }}" method="POST">
                             {!! csrf_field() !!}
-                            <button type="submit" class="btn btn-danger">重新安装服务器</button>
+                            <button type="submit" class="btn btn-danger">重新安装实例</button>
                         </form>
                     @else
-                        <button class="btn btn-danger disabled">服务器必须正常安装之后才可重新安装</button>
+                        <button class="btn btn-danger disabled">实例必须正常安装之后才可重新安装</button>
                     @endif
                 </div>
             </div>
@@ -58,16 +58,16 @@
             <div class="col-sm-4">
                 <div class="box box-warning">
                     <div class="box-header with-border">
-                        <h3 class="box-title">冻结服务器</h3>
+                        <h3 class="box-title">冻结实例</h3>
                     </div>
                     <div class="box-body">
-                        <p>这将暂停服务器，停止任何正在运行的进程，并立即阻止用户访问他们的文件或通过面板或 API 管理服务器.</p>
+                        <p>这将暂停实例，停止任何正在运行的进程，并立即阻止用户访问他们的文件或通过面板或 API 管理实例.</p>
                     </div>
                     <div class="box-footer">
                         <form action="{{ route('admin.servers.view.manage.suspension', $server->id) }}" method="POST">
                             {!! csrf_field() !!}
                             <input type="hidden" name="action" value="suspend" />
-                            <button type="submit" class="btn btn-warning @if(! is_null($server->transfer)) disabled @endif">冻结服务器</button>
+                            <button type="submit" class="btn btn-warning @if(! is_null($server->transfer)) disabled @endif">冻结实例</button>
                         </form>
                     </div>
                 </div>
@@ -76,16 +76,16 @@
             <div class="col-sm-4">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">撤销冻结服务器</h3>
+                        <h3 class="box-title">撤销冻结实例</h3>
                     </div>
                     <div class="box-body">
-                        <p>这将撤销服务器的冻结，且用户将有权限管理此服务器.</p>
+                        <p>这将撤销实例的冻结，且用户将有权限管理此实例.</p>
                     </div>
                     <div class="box-footer">
                         <form action="{{ route('admin.servers.view.manage.suspension', $server->id) }}" method="POST">
                             {!! csrf_field() !!}
                             <input type="hidden" name="action" value="unsuspend" />
-                            <button type="submit" class="btn btn-success">撤销冻结服务器</button>
+                            <button type="submit" class="btn btn-success">撤销冻结实例</button>
                         </form>
                     </div>
                 </div>
@@ -96,21 +96,21 @@
             <div class="col-sm-4">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">转移服务器</h3>
+                        <h3 class="box-title">转移实例</h3>
                     </div>
                     <div class="box-body">
                         <p>
-                            将此服务器转移到连接到此面板的另一个节点.
+                            将此实例转移到连接到此面板的另一个节点.
                             <strong>警告!</strong> 此功能未完全测试可能有BUG.
                         </p>
                     </div>
 
                     <div class="box-footer">
                         @if($canTransfer)
-                            <button class="btn btn-success" data-toggle="modal" data-target="#transferServerModal">转移服务器</button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#transferServerModal">转移实例</button>
                         @else
-                            <button class="btn btn-success disabled">转移服务器</button>
-                            <p style="padding-top: 1rem;">转移一台服务器需要在您的面板上配置多个节点。</p>
+                            <button class="btn btn-success disabled">转移实例</button>
+                            <p style="padding-top: 1rem;">转移一个实例需要在您的面板上配置多个节点。</p>
                         @endif
                     </div>
                 </div>
@@ -119,17 +119,17 @@
             <div class="col-sm-4">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">转移服务器</h3>
+                        <h3 class="box-title">转移实例</h3>
                     </div>
                     <div class="box-body">
                         <p>
-                            此服务器正在转移至另一个节点.
+                            此实例正在转移至另一个节点.
                             转移开始于 <strong>{{ $server->transfer->created_at }}</strong>
                         </p>
                     </div>
 
                     <div class="box-footer">
-                        <button class="btn btn-success disabled">转移服务器</button>
+                        <button class="btn btn-success disabled">转移实例</button>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                 <form action="{{ route('admin.servers.view.manage.transfer', $server->id) }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">转移服务器</h4>
+                        <h4 class="modal-title">转移实例</h4>
                     </div>
 
                     <div class="modal-body">
@@ -164,19 +164,19 @@
                                         </optgroup>
                                     @endforeach
                                 </select>
-                                <p class="small text-muted no-margin">该服务器将被转移到的节点.</p>
+                                <p class="small text-muted no-margin">该实例将被转移到的节点.</p>
                             </div>
 
                             <div class="form-group col-md-12">
                                 <label for="pAllocation">默认分配</label>
                                 <select name="allocation_id" id="pAllocation" class="form-control"></select>
-                                <p class="small text-muted no-margin">将分配给此服务器的主要分配。</p>
+                                <p class="small text-muted no-margin">将分配给此实例的主要分配。</p>
                             </div>
 
                             <div class="form-group col-md-12">
                                 <label for="pAllocationAdditional">额外分配</label>
                                 <select name="allocation_additional[]" id="pAllocationAdditional" class="form-control" multiple></select>
-                                <p class="small text-muted no-margin">将分配给此服务器的额外分配。</p>
+                                <p class="small text-muted no-margin">将分配给此实例的额外分配。</p>
                             </div>
                         </div>
                     </div>

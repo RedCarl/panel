@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    服务器 — {{ $server->name }}: 详细信息
+    实例 — {{ $server->name }}: 详细信息
 @endsection
 
 @section('content-header')
-    <h1>{{ $server->name }}<small>编辑此服务器的详细信息，包括所有者和容器.</small></h1>
+    <h1>{{ $server->name }}<small>编辑此实例的详细信息，包括所有者和容器.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li><a href="{{ route('admin.servers') }}">实例</a></li>
         <li><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></li>
         <li class="active">详细信息</li>
     </ol>
@@ -25,26 +25,26 @@
             <form action="{{ route('admin.servers.view.details', $server->id) }}" method="POST">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="name" class="control-label">服务器名称 <span class="field-required"></span></label>
+                        <label for="name" class="control-label">实例名称 <span class="field-required"></span></label>
                         <input type="text" name="name" value="{{ old('name', $server->name) }}" class="form-control" />
                         <p class="text-muted small">字符限制: <code>a-zA-Z0-9_-</code> 和 <code>[空格]</code>.</p>
                     </div>
                     <div class="form-group">
                         <label for="external_id" class="control-label">外部 ID</label>
                         <input type="text" name="external_id" value="{{ old('external_id', $server->external_id) }}" class="form-control" />
-                        <p class="text-muted small">留空以不为此服务器分配外部标识符。外部 ID 对于此服务器应该是唯一的，并且未被任何其他服务器使用。</p>
+                        <p class="text-muted small">留空以不为此实例分配外部标识符。外部 ID 对于此实例应该是唯一的，并且未被任何其他实例使用。</p>
                     </div>
                     <div class="form-group">
-                        <label for="pUserId" class="control-label">服务器所有者 <span class="field-required"></span></label>
+                        <label for="pUserId" class="control-label">实例所有者 <span class="field-required"></span></label>
                         <select name="owner_id" class="form-control" id="pUserId">
                             <option value="{{ $server->owner_id }}" selected>{{ $server->user->email }}</option>
                         </select>
-                        <p class="text-muted small">您可以通过将此字段更改为与此系统上的其他用途匹配的电子邮箱来更改此服务器的所有者。如果您这样做，将自动生成一个新的守护程序安全令牌。</p>
+                        <p class="text-muted small">您可以通过将此字段更改为与此系统上的其他用途匹配的电子邮箱来更改此实例的所有者。如果您这样做，将自动生成一个新的守护程序安全令牌。</p>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="control-label">服务器描述</label>
+                        <label for="description" class="control-label">实例描述</label>
                         <textarea name="description" rows="3" class="form-control">{{ old('description', $server->description) }}</textarea>
-                        <p class="text-muted small">服务器的简介.</p>
+                        <p class="text-muted small">实例的简介.</p>
                     </div>
                 </div>
                 <div class="box-footer">

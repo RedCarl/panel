@@ -10,7 +10,7 @@
 @endsection
 
 @section('content-header')
-    <h1>节点<small>连接到面板服务器的所有节点.</small></h1>
+    <h1>节点<small>连接到面板实例的所有节点.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
         <li class="active">节点</li>
@@ -44,7 +44,7 @@
                             <th>地域</th>
                             <th>内存容量</th>
                             <th>存储容量</th>
-                            <th class="text-center">服务器</th>
+                            <th class="text-center">实例</th>
                             <th class="text-center">SSL</th>
                             <th class="text-center">公开</th>
                         </tr>

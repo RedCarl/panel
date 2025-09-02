@@ -135,7 +135,7 @@ export default ({ backup }: Props) => {
                 onConfirmed={() => doRestorationAction()}
             >
                 <p>
-                    该服务器将停止以恢复备份。备份开始后，您将无法控制服务器电源状态、访问文件管理器或创建其他备份直到它完成。
+                    该实例将停止以恢复备份。备份开始后，您将无法控制实例电源状态、访问文件管理器或创建其他备份直到它完成。
                 </p>
                 <p css={tw`mt-4 -mb-2 bg-gray-700 p-3 rounded`}>
                     <label htmlFor={'restore_truncate'} css={tw`text-base flex items-center cursor-pointer`}>

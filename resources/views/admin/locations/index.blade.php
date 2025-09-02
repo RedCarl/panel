@@ -30,7 +30,7 @@
                             <th>标识码</th>
                             <th>描述</th>
                             <th class="text-center">节点</th>
-                            <th class="text-center">服务器</th>
+                            <th class="text-center">实例</th>
                         </tr>
                         @foreach ($locations as $location)
                             <tr>

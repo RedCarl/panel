@@ -37,8 +37,8 @@
     },
     "variables": [
         {
-            "name": "服务器 Jar 文件",
-            "description": "用于运行服务器的服务器核心文件名称。",
+            "name": "实例 Jar 文件",
+            "description": "用于运行实例的实例核心文件名称。",
             "env_variable": "SERVER_JARFILE",
             "default_value": "server.jar",
             "user_viewable": true,
@@ -47,8 +47,8 @@
             "field_type": "text"
         },
         {
-            "name": "服务器版本",
-            "description": "要安装的原版 Minecraft 版本。使用 \"latest\" 将安装最新版本，或使用 \"snapshot\" 安装最新快照版本。转到设置 > 重新安装服务器以应用此次更改。",
+            "name": "实例版本",
+            "description": "要安装的原版 Minecraft 版本。使用 \"latest\" 将安装最新版本，或使用 \"snapshot\" 安装最新快照版本。转到设置 > 重新安装实例以应用此次更改。",
             "env_variable": "VANILLA_VERSION",
             "default_value": "latest",
             "user_viewable": true,

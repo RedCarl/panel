@@ -48,7 +48,7 @@
                                 </optgroup>
                             @endforeach
                         </select>
-                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的服务器以外没有任何作用.</p>
+                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的实例以外没有任何作用.</p>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                     <tr>
-                        <th>服务器</th>
+                        <th>实例</th>
                         <th>数据库名</th>
                         <th>用户名</th>
                         <th>连接白名单</th>

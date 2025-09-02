@@ -118,11 +118,11 @@ class NetworkAllocationController extends ClientApiController
         // Don't allow the deletion of allocations if the server does not have an
         // allocation limit set.
         if (empty($server->allocation_limit)) {
-            throw new DisplayException('您无法删除此服务器的网络分配：未设置分配限制。');
+            throw new DisplayException('您无法删除此实例的网络分配：未设置分配限制。');
         }
 
         if ($allocation->id === $server->allocation_id) {
-            throw new DisplayException('您不能删除此服务器的首选分配。');
+            throw new DisplayException('您不能删除此实例的首选分配。');
         }
 
         Allocation::query()->where('id', $allocation->id)->update([
