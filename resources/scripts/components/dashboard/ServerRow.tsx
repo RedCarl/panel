@@ -12,6 +12,7 @@ import isEqual from 'react-fast-compare';
 import { GroupedServer } from '@/lib/serverGrouping';
 import { sendPowerAction, PowerAction } from '@/api/server/power';
 import { httpErrorToHuman } from '@/api/http';
+import CopyOnClick from '@/components/elements/CopyOnClick';
 
 // 优化后的组件结构和样式设计
 
@@ -165,7 +166,13 @@ export default ({
             <div css={tw`lg:col-span-3 order-1 flex items-center space-x-3`}>
                 <div css={tw`flex flex-col flex-shrink-0`}>
                     {groupName && <span css={tw`text-sm text-neutral-400`}>{groupName}</span>}
-                    <span css={tw`text-lg text-white font-mono font-semibold`}>{server.id}</span>
+                    <CopyOnClick text={server.uuid}>
+                        <span
+                            css={tw`text-lg text-white font-mono font-semibold hover:text-blue-400 transition-colors`}
+                        >
+                            {server.id}
+                        </span>
+                    </CopyOnClick>
                 </div>
                 {server.description && (
                     <div css={tw`flex items-center space-x-2 min-w-0 flex-1`}>
@@ -184,15 +191,22 @@ export default ({
                 )}
             </div>
             <div css={tw`lg:col-span-9 order-2 flex items-center justify-end space-x-4`}>
-                <IpAddressBox>
-                    {server.allocations
+                <CopyOnClick
+                    text={server.allocations
                         .filter((alloc) => alloc.isDefault)
-                        .map((allocation) => (
-                            <React.Fragment key={allocation.ip + allocation.port.toString()}>
-                                {allocation.alias || ip(allocation.ip)}:{allocation.port}
-                            </React.Fragment>
-                        ))}
-                </IpAddressBox>
+                        .map((allocation) => `${allocation.alias || ip(allocation.ip)}:${allocation.port}`)
+                        .join(', ')}
+                >
+                    <IpAddressBox>
+                        {server.allocations
+                            .filter((alloc) => alloc.isDefault)
+                            .map((allocation) => (
+                                <React.Fragment key={allocation.ip + allocation.port.toString()}>
+                                    {allocation.alias || ip(allocation.ip)}:{allocation.port}
+                                </React.Fragment>
+                            ))}
+                    </IpAddressBox>
+                </CopyOnClick>
                 <ServerInfoCard>
                     <div css={tw`flex-1 flex items-center justify-center`}>
                         {!stats || isSuspended ? (
@@ -252,51 +266,38 @@ export default ({
                         )}
                     </div>
                     <ActionContainer>
-                        <ActionButton
-                            variant='start'
-                            onClick={(e) => handlePowerAction('start', e)}
-                            disabled={isPerformingAction || stats?.status === 'running'}
-                            title='启动实例'
-                        >
-                            {isPerformingAction ? (
+                        {!isPerformingAction && stats?.status !== 'running' && (
+                            <ActionButton
+                                variant='start'
+                                onClick={(e) => handlePowerAction('start', e)}
+                                title='启动实例'
+                            >
+                                <FontAwesomeIcon icon={faPlay} />
+                                <span>启动</span>
+                            </ActionButton>
+                        )}
+                        {!isPerformingAction && stats?.status !== 'offline' && (
+                            <ActionButton variant='stop' onClick={(e) => handlePowerAction('stop', e)} title='停止实例'>
+                                <FontAwesomeIcon icon={faStop} />
+                                <span>停止</span>
+                            </ActionButton>
+                        )}
+                        {!isPerformingAction && (
+                            <ActionButton
+                                variant='restart'
+                                onClick={(e) => handlePowerAction('restart', e)}
+                                title='重启实例'
+                            >
+                                <FontAwesomeIcon icon={faRedo} />
+                                <span>重启</span>
+                            </ActionButton>
+                        )}
+                        {isPerformingAction && (
+                            <ActionButton disabled title='操作进行中'>
                                 <Spinner size='small' />
-                            ) : (
-                                <>
-                                    <FontAwesomeIcon icon={faPlay} />
-                                    <span>启动</span>
-                                </>
-                            )}
-                        </ActionButton>
-                        <ActionButton
-                            variant='stop'
-                            onClick={(e) => handlePowerAction('stop', e)}
-                            disabled={isPerformingAction || stats?.status === 'offline'}
-                            title='停止实例'
-                        >
-                            {isPerformingAction ? (
-                                <Spinner size='small' />
-                            ) : (
-                                <>
-                                    <FontAwesomeIcon icon={faStop} />
-                                    <span>停止</span>
-                                </>
-                            )}
-                        </ActionButton>
-                        <ActionButton
-                            variant='restart'
-                            onClick={(e) => handlePowerAction('restart', e)}
-                            disabled={isPerformingAction}
-                            title='重启实例'
-                        >
-                            {isPerformingAction ? (
-                                <Spinner size='small' />
-                            ) : (
-                                <>
-                                    <FontAwesomeIcon icon={faRedo} />
-                                    <span>重启</span>
-                                </>
-                            )}
-                        </ActionButton>
+                                <span>处理中</span>
+                            </ActionButton>
+                        )}
                     </ActionContainer>
                 </ServerInfoCard>
             </div>
