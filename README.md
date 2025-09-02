@@ -1,11 +1,3 @@
-[![Logo Image](https://api.pterodactyl.top/logos/new/pterodactyl_china_logo.png)](https://pterodactyl.top)
-
-![GitHub Stars](https://img.shields.io/github/stars/pterodactyl-china/panel?style=for-the-badge&logo=appveyor)
-![GitHub Releases](https://img.shields.io/github/v/release/pterodactyl-china/panel?style=for-the-badge&logo=appveyor)
-![GitHub Releases](https://img.shields.io/github/downloads/pterodactyl-china/panel/total?style=for-the-badge)
-![GitHub Releases Latest](https://img.shields.io/github/downloads/pterodactyl-china/panel/latest/total?style=for-the-badge)
-![Alt](https://repobeats.axiom.co/api/embed/9e3f7d2c6db2f248adf85b55e7ebd4a3a4911bdf.svg 'Repobeats analytics image')
-
 # 翼龙面板
 
 Pterodactyl® 是一个免费的开源游戏服务器管理面板，使用 PHP、React 和 Go 构建。Pterodactyl 在设计时考虑了安全性，在隔离的 Docker 容器中运行所有游戏服务器，同时向最终用户展示了美观直观的 UI。
@@ -13,8 +5,6 @@ Pterodactyl® 是一个免费的开源游戏服务器管理面板，使用 PHP�
 不要再安于现状了。让该面板成为您游戏服务器是上上之选。
 
 **此仓库将实时同步上游进行汉化 , 发布的 Releases 均通过 Github Actions 的构建测试，并在发布前会经过本地环境测试。**
-
-![Image](https://cdn.pterodactyl.io/site-assets/pterodactyl_v1_demo.gif)
 
 ## 翼龙中国文档
 
