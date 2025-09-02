@@ -1,20 +1,20 @@
 @extends('layouts.admin')
 
 @section('title')
-节点列表
+    节点列表
 @endsection
 
 @section('scripts')
-@parent
-{!! Theme::css('vendor/fontawesome/animation.min.css') !!}
+    @parent
+    {!! Theme::css('vendor/fontawesome/animation.min.css') !!}
 @endsection
 
 @section('content-header')
-<h1>节点<small>连接到面板实例的所有节点.</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li class="active">节点</li>
-</ol>
+    <h1>节点<small>连接到面板服务器的所有节点.</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li class="active">节点</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -44,29 +44,29 @@
                             <th>地域</th>
                             <th>内存容量</th>
                             <th>存储容量</th>
-                            <th class="text-center">实例</th>
+                            <th class="text-center">服务器</th>
                             <th class="text-center">SSL</th>
                             <th class="text-center">公开</th>
                         </tr>
                         @foreach ($nodes as $node)
-                        <tr>
-                            <td class="text-center text-muted left-icon" data-action="ping" data-secret="{{ $node->getDecryptedKey() }}" data-location="{{ $node->scheme }}://{{ $node->fqdn }}:{{ $node->daemonListen }}/api/system"><i class="fa fa-fw fa-refresh fa-spin"></i></td>
-                            <td>{!! $node->maintenance_mode ? '<span class="label label-warning"><i class="fa fa-wrench"></i></span> ' : '' !!}<a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
-                            <td>{{ $node->location->short }}</td>
-                            <td>{{ $node->memory }} MiB</td>
-                            <td>{{ $node->disk }} MiB</td>
-                            <td class="text-center">{{ $node->servers_count }}</td>
-                            <td class="text-center" style="color:{{ ($node->scheme === 'https') ? '#50af51' : '#d9534f' }}"><i class="fa fa-{{ ($node->scheme === 'https') ? 'lock' : 'unlock' }}"></i></td>
-                            <td class="text-center"><i class="fa fa-{{ ($node->public) ? 'eye' : 'eye-slash' }}"></i></td>
-                        </tr>
+                            <tr>
+                                <td class="text-center text-muted left-icon" data-action="ping" data-secret="{{ $node->getDecryptedKey() }}" data-location="{{ $node->scheme }}://{{ $node->fqdn }}:{{ $node->daemonListen }}/api/system"><i class="fa fa-fw fa-refresh fa-spin"></i></td>
+                                <td>{!! $node->maintenance_mode ? '<span class="label label-warning"><i class="fa fa-wrench"></i></span> ' : '' !!}<a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
+                                <td>{{ $node->location->short }}</td>
+                                <td>{{ $node->memory }} MiB</td>
+                                <td>{{ $node->disk }} MiB</td>
+                                <td class="text-center">{{ $node->servers_count }}</td>
+                                <td class="text-center" style="color:{{ ($node->scheme === 'https') ? '#50af51' : '#d9534f' }}"><i class="fa fa-{{ ($node->scheme === 'https') ? 'lock' : 'unlock' }}"></i></td>
+                                <td class="text-center"><i class="fa fa-{{ ($node->public) ? 'eye' : 'eye-slash' }}"></i></td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             @if($nodes->hasPages())
-            <div class="box-footer with-border">
-                <div class="col-md-12 text-center">{!! $nodes->appends(['query' => Request::input('query')])->render() !!}</div>
-            </div>
+                <div class="box-footer with-border">
+                    <div class="col-md-12 text-center">{!! $nodes->appends(['query' => Request::input('query')])->render() !!}</div>
+                </div>
             @endif
         </div>
     </div>
@@ -74,8 +74,8 @@
 @endsection
 
 @section('footer-scripts')
-@parent
-<script>
+    @parent
+    <script>
     (function pingNodes() {
         $('td[data-action="ping"]').each(function(i, element) {
             $.ajax({
@@ -85,25 +85,23 @@
                     'Authorization': 'Bearer ' + $(element).data('secret'),
                 },
                 timeout: 5000
-            }).done(function(data) {
+            }).done(function (data) {
                 $(element).find('i').tooltip({
                     title: 'v' + data.version,
                 });
                 $(element).removeClass('text-muted').find('i').removeClass().addClass('fa fa-fw fa-heartbeat faa-pulse animated').css('color', '#50af51');
-            }).fail(function(error) {
+            }).fail(function (error) {
                 var errorText = '无法连接至节点! 查看浏览器开发控制台以了解更多.';
                 try {
                     errorText = error.responseJSON.errors[0].detail || errorText;
                 } catch (ex) {}
 
                 $(element).removeClass('text-muted').find('i').removeClass().addClass('fa fa-fw fa-heart-o').css('color', '#d9534f');
-                $(element).find('i').tooltip({
-                    title: errorText
-                });
+                $(element).find('i').tooltip({ title: errorText });
             });
-        }).promise().done(function() {
+        }).promise().done(function () {
             setTimeout(pingNodes, 10000);
         });
     })();
-</script>
+    </script>
 @endsection

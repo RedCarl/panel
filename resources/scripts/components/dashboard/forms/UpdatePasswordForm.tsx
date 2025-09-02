@@ -19,9 +19,13 @@ interface Values {
 const schema = Yup.object().shape({
     current: Yup.string().min(1).required('您必须提供当前密码。'),
     password: Yup.string().min(8).required(),
-    confirmPassword: Yup.string().test('password', '密码确认与您输入的密码不匹配。', function (value) {
-        return value === this.parent.password;
-    }),
+    confirmPassword: Yup.string().test(
+        'password',
+        '密码确认与您输入的密码不匹配。',
+        function (value) {
+            return value === this.parent.password;
+        }
+    ),
 });
 
 export default () => {
@@ -61,14 +65,21 @@ export default () => {
                     <React.Fragment>
                         <SpinnerOverlay size={'large'} visible={isSubmitting} />
                         <Form css={tw`m-0`}>
-                            <Field id={'current_password'} type={'password'} name={'current'} label={'当前密码'} />
+                            <Field
+                                id={'current_password'}
+                                type={'password'}
+                                name={'current'}
+                                label={'当前密码'}
+                            />
                             <div css={tw`mt-6`}>
                                 <Field
                                     id={'new_password'}
                                     type={'password'}
                                     name={'password'}
                                     label={'新密码'}
-                                    description={'您的新密码长度应至少为 8 个字符。'}
+                                    description={
+                                        '您的新密码长度应至少为 8 个字符。'
+                                    }
                                 />
                             </div>
                             <div css={tw`mt-6`}>

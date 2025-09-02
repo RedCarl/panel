@@ -12,7 +12,7 @@ class TooManyBackupsException extends DisplayException
     public function __construct(int $backupLimit)
     {
         parent::__construct(
-            sprintf('无法创建新备份，此实例已达到 %d 个备份的限制。', $backupLimit)
+            sprintf('无法创建新备份，此服务器已达到 %d 个备份的限制。', $backupLimit)
         );
     }
 }

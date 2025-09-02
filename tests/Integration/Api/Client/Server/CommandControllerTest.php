@@ -54,7 +54,7 @@ class CommandControllerTest extends ClientApiIntegrationTestCase
 
         $mock = $this->mock(DaemonCommandRepository::class);
         $mock->expects('setServer')
-            ->with(\Mockery::on(fn(Server $value) => $value->is($server)))
+            ->with(\Mockery::on(fn (Server $value) => $value->is($server)))
             ->andReturnSelf();
 
         $mock->expects('send')->with('say Test')->andReturn(new GuzzleResponse());
@@ -87,6 +87,6 @@ class CommandControllerTest extends ClientApiIntegrationTestCase
 
         $response->assertStatus(Response::HTTP_BAD_GATEWAY);
         $response->assertJsonPath('errors.0.code', 'HttpException');
-        $response->assertJsonPath('errors.0.detail', '实例必须在线才能发送命令。');
+        $response->assertJsonPath('errors.0.detail', '服务器必须在线才能发送命令。');
     }
 }

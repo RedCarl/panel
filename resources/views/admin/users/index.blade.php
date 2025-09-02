@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
 @section('title')
-用户列表
+    用户列表
 @endsection
 
 @section('content-header')
-<h1>用户<small>此系统上所有注册用户。</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li class="active">用户</li>
-</ol>
+    <h1>用户<small>此系统上所有注册用户。</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li class="active">用户</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -39,39 +39,39 @@
                             <th>姓名</th>
                             <th>用户名</th>
                             <th class="text-center">动态口令认证</th>
-                            <th class="text-center"><span data-toggle="tooltip" data-placement="top" title="此用户作为所有者的实例。">拥有的实例</span></th>
-                            <th class="text-center"><span data-toggle="tooltip" data-placement="top" title="此用户作为子用户可以访问的实例。">可访问</span></th>
+                            <th class="text-center"><span data-toggle="tooltip" data-placement="top" title="此用户作为所有者的服务器。">拥有的服务器</span></th>
+                            <th class="text-center"><span data-toggle="tooltip" data-placement="top" title="此用户作为子用户可以访问的服务器。">可访问</span></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                        <tr class="align-middle">
-                            <td><code>{{ $user->id }}</code></td>
-                            <td><a href="{{ route('admin.users.view', $user->id) }}">{{ $user->email }}</a> @if($user->root_admin)<i class="fa fa-star text-yellow"></i>@endif</td>
-                            <td>{{ $user->name_last }}, {{ $user->name_first }}</td>
-                            <td>{{ $user->username }}</td>
-                            <td class="text-center">
-                                @if($user->use_totp)
-                                <i class="fa fa-lock text-green"></i>
-                                @else
-                                <i class="fa fa-unlock text-red"></i>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.servers', ['filter[owner_id]' => $user->id]) }}">{{ $user->servers_count }}</a>
-                            </td>
-                            <td class="text-center">{{ $user->subuser_of_count }}</td>
-                            <td class="text-center"><img src="https://cravatar.cn/avatar/{{ md5(strtolower($user->email)) }}?s=100" style="height:20px;" class="img-circle" /></td>
-                        </tr>
+                            <tr class="align-middle">
+                                <td><code>{{ $user->id }}</code></td>
+                                <td><a href="{{ route('admin.users.view', $user->id) }}">{{ $user->email }}</a> @if($user->root_admin)<i class="fa fa-star text-yellow"></i>@endif</td>
+                                <td>{{ $user->name_last }}, {{ $user->name_first }}</td>
+                                <td>{{ $user->username }}</td>
+                                <td class="text-center">
+                                    @if($user->use_totp)
+                                        <i class="fa fa-lock text-green"></i>
+                                    @else
+                                        <i class="fa fa-unlock text-red"></i>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.servers', ['filter[owner_id]' => $user->id]) }}">{{ $user->servers_count }}</a>
+                                </td>
+                                <td class="text-center">{{ $user->subuser_of_count }}</td>
+                                <td class="text-center"><img src="https://cravatar.cn/avatar/{{ md5(strtolower($user->email)) }}?s=100" style="height:20px;" class="img-circle" /></td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             @if($users->hasPages())
-            <div class="box-footer with-border">
-                <div class="col-md-12 text-center">{!! $users->appends(['query' => Request::input('query')])->render() !!}</div>
-            </div>
+                <div class="box-footer with-border">
+                    <div class="col-md-12 text-center">{!! $users->appends(['query' => Request::input('query')])->render() !!}</div>
+                </div>
             @endif
         </div>
     </div>

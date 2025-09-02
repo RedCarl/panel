@@ -165,7 +165,7 @@ class AppSettingsCommand extends Command
         }
 
         if ($askForRedisPassword) {
-            $this->output->comment('默认情况下，Redis 实例连接无需密码，因为它在本地运行并且不允许外部访问。在这种情况下，阁下只需直接按回车键表示留空.');
+            $this->output->comment('默认情况下，Redis 服务器连接无需密码，因为它在本地运行并且不允许外部访问。在这种情况下，阁下只需直接按回车键表示留空.');
             $this->variables['REDIS_PASSWORD'] = $this->option('redis-pass') ?? $this->output->askHidden(
                 'Redis 密码'
             );

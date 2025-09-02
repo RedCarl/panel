@@ -1,22 +1,22 @@
 @extends('layouts.admin')
 
 @section('title')
-预设组
+    预设组
 @endsection
 
 @section('content-header')
-<h1>预设组<small>于此系统上的所有预设组.</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li class="active">预设组</li>
-</ol>
+    <h1>预设组<small>于此系统上的所有预设组.</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li class="active">预设组</li>
+    </ol>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
         <div class="alert alert-danger">
-            预设是翼龙面板的一个强大功能，可实现极大的灵活性和配置。请注意，虽然功能强大，但错误地修改预设很容易使您的实例宕机并导致更多问题。请避免编辑我们的默认预设 — 由 <code>support@pterodactyl.io</code> 提供 — 除非阁下十分明白该如何修改预设.
+            预设是翼龙面板的一个强大功能，可实现极大的灵活性和配置。请注意，虽然功能强大，但错误地修改预设很容易使您的服务器宕机并导致更多问题。请避免编辑我们的默认预设 — 由 <code>support@pterodactyl.io</code> 提供 — 除非阁下十分明白该如何修改预设.
         </div>
     </div>
 </div>
@@ -37,16 +37,16 @@
                         <th>名称</th>
                         <th>描述</th>
                         <th class="text-center">预设</th>
-                        <th class="text-center">实例</th>
+                        <th class="text-center">服务器</th>
                     </tr>
                     @foreach($nests as $nest)
-                    <tr>
-                        <td class="middle"><code>{{ $nest->id }}</code></td>
-                        <td class="middle"><a href="{{ route('admin.nests.view', $nest->id) }}" data-toggle="tooltip" data-placement="right" title="{{ $nest->author }}">{{ $nest->name }}</a></td>
-                        <td class="col-xs-6 middle">{{ $nest->description }}</td>
-                        <td class="text-center middle">{{ $nest->eggs_count }}</td>
-                        <td class="text-center middle">{{ $nest->servers_count }}</td>
-                    </tr>
+                        <tr>
+                            <td class="middle"><code>{{ $nest->id }}</code></td>
+                            <td class="middle"><a href="{{ route('admin.nests.view', $nest->id) }}" data-toggle="tooltip" data-placement="right" title="{{ $nest->author }}">{{ $nest->name }}</a></td>
+                            <td class="col-xs-6 middle">{{ $nest->description }}</td>
+                            <td class="text-center middle">{{ $nest->eggs_count }}</td>
+                            <td class="text-center middle">{{ $nest->servers_count }}</td>
+                        </tr>
                     @endforeach
                 </table>
             </div>
@@ -74,7 +74,7 @@
                         <div>
                             <select id="pImportToNest" name="import_to_nest">
                                 @foreach($nests as $nest)
-                                <option value="{{ $nest->id }}">{{ $nest->name }} &lt;{{ $nest->author }}&gt;</option>
+                                   <option value="{{ $nest->id }}">{{ $nest->name }} &lt;{{ $nest->author }}&gt;</option>
                                 @endforeach
                             </select>
                             <p class="small text-muted">从下拉列表中选择与此预设关联的预设组。如果您希望将其与新预设组相关联，则需要在继续之前创建该预设组.</p>
@@ -93,10 +93,10 @@
 @endsection
 
 @section('footer-scripts')
-@parent
-<script>
-    $(document).ready(function() {
-        $('#pImportToNest').select2();
-    });
-</script>
+    @parent
+    <script>
+        $(document).ready(function() {
+            $('#pImportToNest').select2();
+        });
+    </script>
 @endsection

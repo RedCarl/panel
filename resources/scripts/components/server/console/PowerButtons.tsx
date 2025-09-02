@@ -46,7 +46,7 @@ export default ({ className }: PowerButtonProps) => {
                 confirm={'继续'}
                 onConfirmed={onButtonClick.bind(this, 'kill-confirmed')}
             >
-                强行停止实例会导致数据损坏。
+                强行停止服务器会导致数据损坏。
             </Dialog.Confirm>
             <Can action={'control.start'}>
                 <Button

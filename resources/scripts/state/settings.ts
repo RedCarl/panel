@@ -33,4 +33,3 @@ const settings: SettingsStore = {
 };
 
 export default settings;
-

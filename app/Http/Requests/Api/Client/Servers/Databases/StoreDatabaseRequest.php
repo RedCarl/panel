@@ -46,7 +46,7 @@ class StoreDatabaseRequest extends ClientApiRequest implements ClientPermissions
     public function messages(): array
     {
         return [
-            'database.unique' => '你选择的数据库名已经被这个实例使用。',
+            'database.unique' => '你选择的数据库名已经被这个服务器使用。',
         ];
     }
 }

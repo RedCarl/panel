@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('title')
-{{ $node->name }}
+    {{ $node->name }}
 @endsection
 
 @section('content-header')
-<h1>{{ $node->name }}<small>快速概览您的节点。</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li><a href="{{ route('admin.nodes') }}">节点</a></li>
-    <li class="active">{{ $node->name }}</li>
-</ol>
+    <h1>{{ $node->name }}<small>快速概览您的节点。</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li><a href="{{ route('admin.nodes') }}">节点</a></li>
+        <li class="active">{{ $node->name }}</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
             </ul>
         </div>
     </div>
@@ -54,16 +54,16 @@
                 </div>
             </div>
             @if ($node->description)
-            <div class="col-xs-12">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        描述
-                    </div>
-                    <div class="box-body table-responsive">
-                        <pre>{{ $node->description }}</pre>
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            描述
+                        </div>
+                        <div class="box-body table-responsive">
+                            <pre>{{ $node->description }}</pre>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
             <div class="col-xs-12">
                 <div class="box box-danger">
@@ -71,7 +71,7 @@
                         <h3 class="box-title">删除节点</h3>
                     </div>
                     <div class="box-body">
-                        <p class="no-margin">删除节点是不可逆的操作，会立即从面板中删除该节点。必须没有与此节点关联的实例才能进行删除操作。</p>
+                        <p class="no-margin">删除节点是不可逆的操作，会立即从面板中删除该节点。必须没有与此节点关联的服务器才能进行删除操作。</p>
                     </div>
                     <div class="box-footer">
                         <form action="{{ route('admin.nodes.view.delete', $node->id) }}" method="POST">
@@ -130,7 +130,7 @@
                         <div class="info-box bg-blue">
                             <span class="info-box-icon"><i class="ion ion-social-buffer-outline"></i></span>
                             <div class="info-box-content" style="padding: 23px 10px 0;">
-                                <span class="info-box-text">实例</span>
+                                <span class="info-box-text">服务器</span>
                                 <span class="info-box-number">{{ $node->servers_count }}</span>
                             </div>
                         </div>
@@ -143,8 +143,8 @@
 @endsection
 
 @section('footer-scripts')
-@parent
-<script>
+    @parent
+    <script>
     function escapeHtml(str) {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(str));
@@ -156,15 +156,15 @@
             method: 'GET',
             url: '/admin/nodes/view/{{ $node->id }}/system-information',
             timeout: 5000,
-        }).done(function(data) {
+        }).done(function (data) {
             $('[data-attr="info-version"]').html(escapeHtml(data.version));
             $('[data-attr="info-system"]').html(escapeHtml(data.system.type) + ' (' + escapeHtml(data.system.arch) + ') <code>' + escapeHtml(data.system.release) + '</code>');
             $('[data-attr="info-cpus"]').html(data.system.cpus);
-        }).fail(function(jqXHR) {
+        }).fail(function (jqXHR) {
 
         }).always(function() {
             setTimeout(getInformation, 10000);
         });
     })();
-</script>
+    </script>
 @endsection

@@ -8,4 +8,3 @@ export const breakpoint: BreakpointFunction<Breakpoints> = createBreakpoint<Brea
     lg: 1024,
     xl: 1280,
 });
-

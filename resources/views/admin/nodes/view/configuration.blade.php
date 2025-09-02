@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('title')
-{{ $node->name }}: 配置
+    {{ $node->name }}: 配置
 @endsection
 
 @section('content-header')
-<h1>{{ $node->name }}<small>守护进程配置文件.</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li><a href="{{ route('admin.nodes') }}">节点</a></li>
-    <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-    <li class="active">配置</li>
-</ol>
+    <h1>{{ $node->name }}<small>守护进程配置文件.</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li><a href="{{ route('admin.nodes') }}">节点</a></li>
+        <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
+        <li class="active">配置</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li class="active"><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
             </ul>
         </div>
     </div>
@@ -61,27 +61,21 @@
 @endsection
 
 @section('footer-scripts')
-@parent
-<script>
-    $('#configTokenBtn').on('click', function(event) {
+    @parent
+    <script>
+    $('#configTokenBtn').on('click', function (event) {
         $.ajax({
             method: 'POST',
-            url: '{{ route('
-            admin.nodes.view.configuration.token ', $node->id) }}',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-        }).done(function(data) {
+            url: '{{ route('admin.nodes.view.configuration.token', $node->id) }}',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        }).done(function (data) {
             swal({
                 type: 'success',
                 title: '指令已生成.',
-                text: '<p>要自动配置节点，请运行以下命令:<br /><small><pre>cd /etc/pterodactyl && sudo wings configure --panel-url {{ config('
-                app.url ') }} --token ' + data.token + ' --node ' + data.node + '{{ config('
-                app.debug ') ? '--allow - insecure ' : '
-                ' }}</pre></small></p>',
+                text: '<p>要自动配置节点，请运行以下命令:<br /><small><pre>cd /etc/pterodactyl && sudo wings configure --panel-url {{ config('app.url') }} --token ' + data.token + ' --node ' + data.node + '{{ config('app.debug') ? ' --allow-insecure' : '' }}</pre></small></p>',
                 html: true
             })
-        }).fail(function() {
+        }).fail(function () {
             swal({
                 title: '错误',
                 text: '生成自动部署指令时发生错误，无法继续此操作.',
@@ -89,5 +83,5 @@
             });
         });
     });
-</script>
+    </script>
 @endsection

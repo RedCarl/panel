@@ -205,7 +205,7 @@ class Handler extends ExceptionHandler
             // Show a nicer error message compared to the standard "No query results for model"
             // response that is normally returned. If we are in debug mode this will get overwritten
             // with a more specific error message to help narrow down things.
-            $error['detail'] = '无法在实例上找到请求的资源。';
+            $error['detail'] = '无法在服务器上找到请求的资源。';
         }
 
         if (config('app.debug')) {
@@ -217,11 +217,11 @@ class Handler extends ExceptionHandler
                 ],
                 'meta' => [
                     'trace' => Collection::make($e->getTrace())
-                        ->map(fn($trace) => Arr::except($trace, ['args']))
+                        ->map(fn ($trace) => Arr::except($trace, ['args']))
                         ->all(),
                     'previous' => Collection::make($this->extractPrevious($e))
-                        ->map(fn($exception) => $e->getTrace())
-                        ->map(fn($trace) => Arr::except($trace, ['args']))
+                        ->map(fn ($exception) => $e->getTrace())
+                        ->map(fn ($trace) => Arr::except($trace, ['args']))
                         ->all(),
                 ],
             ]);

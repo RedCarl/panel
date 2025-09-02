@@ -46,7 +46,7 @@
             "field_type": "text"
         },
         {
-            "name": "实例 Jar 文件",
+            "name": "服务器 Jar 文件",
             "description": "运行 SpongeVanilla 时使用的核心文件名称。",
             "env_variable": "SERVER_JARFILE",
             "default_value": "server.jar",

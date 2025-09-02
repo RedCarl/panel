@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Pterodactyl CHINA - Panel
  * Copyright (c) 2018 - 2022 ValiantShishu <vlssu@vlssu.com>.
@@ -10,7 +9,7 @@
 
 return [
     'exceptions' => [
-        'user_has_servers' => '无法删除账户下有实例的用户，请将其全部删除，然后再继续此操作。',
+        'user_has_servers' => '无法删除账户下有服务器的用户，请将其全部删除，然后再继续此操作。',
     ],
     'notices' => [
         'account_created' => '已成功创建帐户。',

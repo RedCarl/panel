@@ -21,7 +21,9 @@ export default ({ tokens, open, onClose }: RecoveryTokenDialogProps) => {
             open={open}
             onClose={onClose}
             title={'启用动态口令认证'}
-            description={'将下面的代码存储在安全的地方。如果您无法使用手机，则可以使用这些备用代码登录。'}
+            description={
+                '将下面的代码存储在安全的地方。如果您无法使用手机，则可以使用这些备用代码登录。'
+            }
             hideCloseIcon
             preventExternalClose
         >

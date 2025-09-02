@@ -70,7 +70,7 @@ const ChildGroupsContainer = styled.div`
     ${tw`space-y-3 p-3 bg-neutral-900`}
 `;
 
-// 递归计算所有实例数量
+// 递归计算所有服务器数量
 const getTotalServerCount = (node: ServerGroupNode): number => {
     let count = node.servers.length;
     for (const child of node.children.values()) {
@@ -79,7 +79,7 @@ const getTotalServerCount = (node: ServerGroupNode): number => {
     return count;
 };
 
-// 递归收集所有实例
+// 递归收集所有服务器
 const getAllServers = (node: ServerGroupNode): GroupedServer[] => {
     let servers = [...node.servers];
     for (const child of node.children.values()) {
@@ -102,7 +102,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({
 }) => {
     const [localIsExpanded, setLocalIsExpanded] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+
     // 使用传入的展开状态，如果没有传入则使用本地状态
     const isExpanded = propIsExpanded !== undefined ? propIsExpanded : localIsExpanded;
 
@@ -132,15 +132,13 @@ const CollapsibleServerGroup: React.FC<Props> = ({
     const handleToggle = (e: React.MouseEvent) => {
         e.stopPropagation();
         const newExpandedState = !isExpanded;
-        
+
         if (onExpandChange && groupPath) {
             onExpandChange(groupPath, newExpandedState);
         } else {
             setLocalIsExpanded(newExpandedState);
         }
     };
-
-
 
     const handleBulkAction = async (action: PowerAction, e: React.MouseEvent) => {
         e.stopPropagation();
@@ -176,10 +174,10 @@ const CollapsibleServerGroup: React.FC<Props> = ({
                         <GroupName>{groupNode.name}</GroupName>
                     </GroupLeftSection>
                     <GroupRightSection onClick={(e) => e.stopPropagation()}>
-                        <ServerCount>共{totalServerCount}个实例</ServerCount>
+                        <ServerCount>共{totalServerCount}个服务器</ServerCount>
                         {onBulkAction && <span className='text-neutral-400'>|</span>}
                         {onBulkAction && (
-                            <div 
+                            <div
                                 className='relative inline-block text-left'
                                 onMouseEnter={() => setIsMenuOpen(true)}
                                 onMouseLeave={() => setIsMenuOpen(false)}
@@ -233,7 +231,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({
             </GroupHeader>
 
             <ContentContainer isExpanded={isExpanded}>
-                {/* 渲染直属实例 */}
+                {/* 渲染直属服务器 */}
                 {groupNode.servers.length > 0 && (
                     <ServersContainer>
                         {groupNode.servers.map((groupedServer) => (

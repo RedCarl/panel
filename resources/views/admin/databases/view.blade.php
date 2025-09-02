@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('title')
-数据库主机 &rarr; 详细信息 &rarr; {{ $host->name }}
+    数据库主机 &rarr; 详细信息 &rarr; {{ $host->name }}
 @endsection
 
 @section('content-header')
-<h1>{{ $host->name }}<small>查看此数据库主机的关联数据库和详细信息.</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li><a href="{{ route('admin.databases') }}">数据库主机</a></li>
-    <li class="active">{{ $host->name }}</li>
-</ol>
+    <h1>{{ $host->name }}<small>查看此数据库主机的关联数据库和详细信息.</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li><a href="{{ route('admin.databases') }}">数据库主机</a></li>
+        <li class="active">{{ $host->name }}</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -41,14 +41,14 @@
                         <select name="node_id" id="pNodeId" class="form-control">
                             <option value="">无</option>
                             @foreach($locations as $location)
-                            <optgroup label="{{ $location->short }}">
-                                @foreach($location->nodes as $node)
-                                <option value="{{ $node->id }}" {{ $host->node_id !== $node->id ?: 'selected' }}>{{ $node->name }}</option>
-                                @endforeach
-                            </optgroup>
+                                <optgroup label="{{ $location->short }}">
+                                    @foreach($location->nodes as $node)
+                                        <option value="{{ $node->id }}" {{ $host->node_id !== $node->id ?: 'selected' }}>{{ $node->name }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
                         </select>
-                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的实例以外没有任何作用.</p>
+                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的服务器以外没有任何作用.</p>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                     <tr>
-                        <th>实例</th>
+                        <th>服务器</th>
                         <th>数据库名</th>
                         <th>用户名</th>
                         <th>连接白名单</th>
@@ -98,29 +98,29 @@
                         <th></th>
                     </tr>
                     @foreach($databases as $database)
-                    <tr>
-                        <td class="middle"><a href="{{ route('admin.servers.view', $database->getRelation('server')->id) }}">{{ $database->getRelation('server')->name }}</a></td>
-                        <td class="middle">{{ $database->database }}</td>
-                        <td class="middle">{{ $database->username }}</td>
-                        <td class="middle">{{ $database->remote }}</td>
-                        @if($database->max_connections != null)
-                        <td class="middle">{{ $database->max_connections }}</td>
-                        @else
-                        <td class="middle">无限制</td>
-                        @endif
-                        <td class="text-center">
-                            <a href="{{ route('admin.servers.view.database', $database->getRelation('server')->id) }}">
-                                <button class="btn btn-xs btn-primary">管理</button>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="middle"><a href="{{ route('admin.servers.view', $database->getRelation('server')->id) }}">{{ $database->getRelation('server')->name }}</a></td>
+                            <td class="middle">{{ $database->database }}</td>
+                            <td class="middle">{{ $database->username }}</td>
+                            <td class="middle">{{ $database->remote }}</td>
+                            @if($database->max_connections != null)
+                                <td class="middle">{{ $database->max_connections }}</td>
+                            @else
+                                <td class="middle">无限制</td>
+                            @endif
+                            <td class="text-center">
+                                <a href="{{ route('admin.servers.view.database', $database->getRelation('server')->id) }}">
+                                    <button class="btn btn-xs btn-primary">管理</button>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
                 </table>
             </div>
             @if($databases->hasPages())
-            <div class="box-footer with-border">
-                <div class="col-md-12 text-center">{!! $databases->render() !!}</div>
-            </div>
+                <div class="box-footer with-border">
+                    <div class="col-md-12 text-center">{!! $databases->render() !!}</div>
+                </div>
             @endif
         </div>
     </div>
@@ -128,8 +128,8 @@
 @endsection
 
 @section('footer-scripts')
-@parent
-<script>
-    $('#pNodeId').select2();
-</script>
+    @parent
+    <script>
+        $('#pNodeId').select2();
+    </script>
 @endsection

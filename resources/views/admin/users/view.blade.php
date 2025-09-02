@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('title')
-管理用户: {{ $user->username }}
+    管理用户: {{ $user->username }}
 @endsection
 
 @section('content-header')
-<h1>{{ $user->name_last }} {{ $user->name_first}}<small>{{ $user->username }}</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li><a href="{{ route('admin.users') }}">用户</a></li>
-    <li class="active">{{ $user->username }}</li>
-</ol>
+    <h1>{{ $user->name_last }} {{ $user->name_first}}<small>{{ $user->username }}</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li><a href="{{ route('admin.users') }}">用户</a></li>
+        <li class="active">{{ $user->username }}</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -51,7 +51,7 @@
                         <div>
                             <select name="language" class="form-control">
                                 @foreach($languages as $key => $value)
-                                <option value="{{ $key }}" @if($user->language === $key) selected @endif>{{ $value }}</option>
+                                    <option value="{{ $key }}" @if($user->language === $key) selected @endif>{{ $value }}</option>
                                 @endforeach
                             </select>
                             <p class="text-muted"><small>用户使用的默认语言.</small></p>
@@ -108,7 +108,7 @@
                 <h3 class="box-title">删除此用户</h3>
             </div>
             <div class="box-body">
-                <p class="no-margin">必须没有与此帐户关联的实例才能删除此用户.</p>
+                <p class="no-margin">必须没有与此帐户关联的服务器才能删除此用户.</p>
             </div>
             <div class="box-footer">
                 <form action="{{ route('admin.users.view', $user->id) }}" method="POST">

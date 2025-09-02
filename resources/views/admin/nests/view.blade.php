@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('title')
-预设组 &rarr; {{ $nest->name }}
+    预设组 &rarr; {{ $nest->name }}
 @endsection
 
 @section('content-header')
-<h1>{{ $nest->name }}<small>{{ str_limit($nest->description, 50) }}</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li><a href="{{ route('admin.nests') }}">预设组</a></li>
-    <li class="active">{{ $nest->name }}</li>
-</ol>
+    <h1>{{ $nest->name }}<small>{{ str_limit($nest->description, 50) }}</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li><a href="{{ route('admin.nests') }}">预设组</a></li>
+        <li class="active">{{ $nest->name }}</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -62,7 +62,7 @@
                     <label class="control-label">UUID</label>
                     <div>
                         <input type="text" readonly class="form-control" value="{{ $nest->uuid }}" />
-                        <p class="text-muted small">为所有使用此预设的实例分配的 UUID 用于识别目的.</p>
+                        <p class="text-muted small">为所有使用此预设的服务器分配的 UUID 用于识别目的.</p>
                     </div>
                 </div>
             </div>
@@ -81,19 +81,19 @@
                         <th>ID</th>
                         <th>名称</th>
                         <th>描述</th>
-                        <th class="text-center">实例</th>
+                        <th class="text-center">服务器</th>
                         <th class="text-center"></th>
                     </tr>
                     @foreach($nest->eggs as $egg)
-                    <tr>
-                        <td class="align-middle"><code>{{ $egg->id }}</code></td>
-                        <td class="align-middle"><a href="{{ route('admin.nests.egg.view', $egg->id) }}" data-toggle="tooltip" data-placement="right" title="{{ $egg->author }}">{{ $egg->name }}</a></td>
-                        <td class="col-xs-8 align-middle">{{ $egg->description }}</td>
-                        <td class="text-center align-middle"><code>{{ $egg->servers->count() }}</code></td>
-                        <td class="align-middle">
-                            <a href="{{ route('admin.nests.egg.export', ['egg' => $egg->id]) }}"><i class="fa fa-download"></i></a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="align-middle"><code>{{ $egg->id }}</code></td>
+                            <td class="align-middle"><a href="{{ route('admin.nests.egg.view', $egg->id) }}" data-toggle="tooltip" data-placement="right" title="{{ $egg->author }}">{{ $egg->name }}</a></td>
+                            <td class="col-xs-8 align-middle">{{ $egg->description }}</td>
+                            <td class="text-center align-middle"><code>{{ $egg->servers->count() }}</code></td>
+                            <td class="align-middle">
+                                <a href="{{ route('admin.nests.egg.export', ['egg' => $egg->id]) }}"><i class="fa fa-download"></i></a>
+                            </td>
+                        </tr>
                     @endforeach
                 </table>
             </div>
@@ -106,12 +106,12 @@
 @endsection
 
 @section('footer-scripts')
-@parent
-<script>
-    $('#deleteButton').on('mouseenter', function(event) {
-        $(this).find('i').html(' 删除预设组');
-    }).on('mouseleave', function(event) {
-        $(this).find('i').html('');
-    });
-</script>
+    @parent
+    <script>
+        $('#deleteButton').on('mouseenter', function (event) {
+            $(this).find('i').html(' 删除预设组');
+        }).on('mouseleave', function (event) {
+            $(this).find('i').html('');
+        });
+    </script>
 @endsection

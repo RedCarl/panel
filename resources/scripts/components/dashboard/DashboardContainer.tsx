@@ -35,7 +35,7 @@ export default () => {
     // 全局展开/折叠状态管理
     const [expandAllTrigger, setExpandAllTrigger] = useState(0);
     const [collapseAllTrigger, setCollapseAllTrigger] = useState(0);
-    
+
     // 展开状态持久化存储
     const [expandedGroupsArray, setExpandedGroupsArray] = usePersistedState<string[]>(`${uuid}:expanded_groups`, []);
     const expandedGroups = useMemo(() => new Set(expandedGroupsArray), [expandedGroupsArray]);
@@ -51,7 +51,7 @@ export default () => {
         () => getServers({ page, type: 'admin-all' })
     );
 
-    // 分组实例数据
+    // 分组服务器数据
     const { domainList, selectedDomainData, groupTree, currentDomain } = useMemo(() => {
         if (!servers?.items) {
             return {
@@ -109,11 +109,11 @@ export default () => {
                 if (!currentArray.includes(groupPath)) {
                     return currentArray;
                 }
-                return currentArray.filter(path => path !== groupPath);
+                return currentArray.filter((path) => path !== groupPath);
             }
         });
     };
-    
+
     // 检查组是否展开（包括子组）
     const isGroupExpanded = (groupPath: string) => {
         return expandedGroups.has(groupPath);
@@ -297,10 +297,10 @@ export default () => {
                                             ))}
                                     </div>
                                 ) : (
-                                    <p css={tw`text-center text-sm text-neutral-400`}>所选域中没有实例。</p>
+                                    <p css={tw`text-center text-sm text-neutral-400`}>所选域中没有服务器。</p>
                                 )
                             ) : (
-                                <p css={tw`text-center text-sm text-neutral-400`}>{'暂时没有任何实例'}</p>
+                                <p css={tw`text-center text-sm text-neutral-400`}>{'暂时没有任何服务器'}</p>
                             )
                         }
                     </Pagination>
@@ -311,13 +311,13 @@ export default () => {
             <ConfirmationModal
                 visible={confirmAction.visible}
                 title={`确认${getActionName(confirmAction.action)}操作`}
-                buttonText={`${getActionName(confirmAction.action)}全部实例`}
+                buttonText={`${getActionName(confirmAction.action)}全部服务器`}
                 onConfirmed={() => handleDomainBulkAction(confirmAction.action)}
                 showSpinnerOverlay={false}
                 onModalDismissed={() => setConfirmAction({ action: confirmAction.action, visible: false })}
             >
-                您确定要{getActionName(confirmAction.action)}当前域中的所有实例吗？此操作将影响{' '}
-                {selectedDomainData?.servers.length || 0} 个实例。
+                您确定要{getActionName(confirmAction.action)}当前域中的所有服务器吗？此操作将影响{' '}
+                {selectedDomainData?.servers.length || 0} 个服务器。
             </ConfirmationModal>
         </PageContentBlock>
     );

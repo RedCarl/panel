@@ -9,7 +9,7 @@ export default async (uuid: string, directory: string, files: string[]): Promise
         {
             timeout: 60000,
             timeoutErrorMessage: '打包成压缩包可能需要一些时间，一旦完成，您将能够看到生成的压缩文件。',
-        }
+        },
     );
 
     return rawDataToFileObject(data);

@@ -41,7 +41,7 @@
         },
         {
             "name": "默认地图",
-            "description": "启动实例时要使用的默认地图。",
+            "description": "启动服务器时要使用的默认地图。",
             "env_variable": "SRCDS_MAP",
             "default_value": "sinjar",
             "user_viewable": true,

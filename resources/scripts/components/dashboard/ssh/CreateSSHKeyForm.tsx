@@ -51,7 +51,11 @@ export default () => {
                         <FormikFieldWrapper label={'SSH 密钥名'} name={'name'} css={tw`mb-6`}>
                             <Field name={'name'} as={Input} />
                         </FormikFieldWrapper>
-                        <FormikFieldWrapper label={'公钥'} name={'publicKey'} description={'输入你的公钥.'}>
+                        <FormikFieldWrapper
+                            label={'公钥'}
+                            name={'publicKey'}
+                            description={'输入你的公钥.'}
+                        >
                             <Field name={'publicKey'} as={CustomTextarea} />
                         </FormikFieldWrapper>
                         <div css={tw`flex justify-end mt-6`}>

@@ -73,7 +73,12 @@ const ServerError = ({ title, ...props }: ServerErrorProps) => (
 );
 
 const NotFound = ({ title, message, onBack }: Partial<Pick<ScreenBlockProps, 'title' | 'message' | 'onBack'>>) => (
-    <ScreenBlock title={title || '404'} image={NotFoundSvg} message={message || '找不到请求的资源。'} onBack={onBack} />
+    <ScreenBlock
+        title={title || '404'}
+        image={NotFoundSvg}
+        message={message || '找不到请求的资源。'}
+        onBack={onBack}
+    />
 );
 
 export { ServerError, NotFound };

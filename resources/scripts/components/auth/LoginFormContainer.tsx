@@ -36,10 +36,7 @@ export default forwardRef<HTMLFormElement, Props>(({ title, ...props }, ref) => 
         <Form {...props} ref={ref}>
             <div css={tw`md:flex w-full bg-white shadow-lg rounded-lg p-6 md:pl-0 mx-1`}>
                 <div css={tw`flex-none select-none mb-6 md:mb-0 self-center`}>
-                    <img
-                        src={useStoreState((state) => state.settings.data?.logo.auth) || '/assets/svgs/pterodactyl.svg'}
-                        css={tw`block w-48 md:w-64 mx-auto`}
-                    />
+                    <img src={useStoreState((state) => state.settings.data?.logo.auth) || '/assets/svgs/pterodactyl.svg'} css={tw`block w-48 md:w-64 mx-auto`}/>
                 </div>
                 <div css={tw`flex-1`}>{props.children}</div>
             </div>
@@ -76,12 +73,13 @@ export default forwardRef<HTMLFormElement, Props>(({ title, ...props }, ref) => 
                         target={'_blank'}
                         css={tw`no-underline text-neutral-500 hover:text-neutral-300`}
                     >
-                        <img src={'/assets/images/gongan.png'} css={tw`display: inline`} />
-                        &nbsp;
+                        <img src={'/assets/images/gongan.png'} css={tw`display: inline`} />&nbsp;
                         {useStoreState((state) => state.settings.data?.icp.security_record)}
                     </a>
                 )}
-                {useStoreState((state) => state.settings.data?.icp.security_record) && <a>&nbsp;|&nbsp;</a>}
+                {useStoreState((state) => state.settings.data?.icp.security_record) && (
+                    <a>&nbsp;|&nbsp;</a>
+                )}
                 <a
                     rel={'noopener nofollow noreferrer'}
                     href={'https://beian.miit.gov.cn'}

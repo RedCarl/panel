@@ -45,9 +45,9 @@ class DaemonConnectionException extends DisplayException
         }
 
         if (is_null($response)) {
-            $message = '无法与运行此实例的主机建立连接。请再试一次。';
+            $message = '无法与运行此服务器的主机建立连接。请再试一次。';
         } else {
-            $message = sprintf('与运行此实例的主机通信时出错。已记录此错误，请重试。(code: %s) (request_id: %s)', $response->getStatusCode(), $this->requestId ?? '<nil>');
+            $message = sprintf('与运行此服务器的主机通信时出错。已记录此错误，请重试。(code: %s) (request_id: %s)', $response->getStatusCode(), $this->requestId ?? '<nil>');
         }
 
         // Attempt to pull the actual error message off the response and return that if it is not

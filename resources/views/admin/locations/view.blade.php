@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('title')
-地域 &rarr; 概览 &rarr; {{ $location->short }}
+    地域 &rarr; 概览 &rarr; {{ $location->short }}
 @endsection
 
 @section('content-header')
-<h1>{{ $location->short }}<small>{{ str_limit($location->long, 75) }}</small></h1>
-<ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}">管理</a></li>
-    <li><a href="{{ route('admin.locations') }}">地域</a></li>
-    <li class="active">{{ $location->short }}</li>
-</ol>
+    <h1>{{ $location->short }}<small>{{ str_limit($location->long, 75) }}</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('admin.index') }}">管理</a></li>
+        <li><a href="{{ route('admin.locations') }}">地域</a></li>
+        <li class="active">{{ $location->short }}</li>
+    </ol>
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
     <div class="col-sm-6">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">实例组详情</h3>
+                <h3 class="box-title">服务器组详情</h3>
             </div>
             <form action="{{ route('admin.locations.view', $location->id) }}" method="POST">
                 <div class="box-body">
@@ -51,15 +51,15 @@
                         <th>ID</th>
                         <th>名称</th>
                         <th>域名</th>
-                        <th>实例</th>
+                        <th>服务器</th>
                     </tr>
                     @foreach($location->nodes as $node)
-                    <tr>
-                        <td><code>{{ $node->id }}</code></td>
-                        <td><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
-                        <td><code>{{ $node->fqdn }}</code></td>
-                        <td>{{ $node->servers->count() }}</td>
-                    </tr>
+                        <tr>
+                            <td><code>{{ $node->id }}</code></td>
+                            <td><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
+                            <td><code>{{ $node->fqdn }}</code></td>
+                            <td>{{ $node->servers->count() }}</td>
+                        </tr>
                     @endforeach
                 </table>
             </div>

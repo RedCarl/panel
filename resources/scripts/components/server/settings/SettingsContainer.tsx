@@ -30,7 +30,7 @@ export default () => {
                     <Can action={'file.sftp'}>
                         <TitledGreyBox title={'SFTP 连接信息'} css={tw`mb-6 md:mb-10`}>
                             <div>
-                                <Label>实例地址</Label>
+                                <Label>服务器地址</Label>
                                 <CopyOnClick text={`sftp://${ip(sftp.ip)}:${sftp.port}`}>
                                     <Input type={'text'} value={`sftp://${ip(sftp.ip)}:${sftp.port}`} readOnly />
                                 </CopyOnClick>
@@ -64,7 +64,7 @@ export default () => {
                         </div>
                         <CopyOnClick text={uuid}>
                             <div css={tw`flex items-center justify-between mt-2 text-sm`}>
-                                <p>实例 ID</p>
+                                <p>服务器 ID</p>
                                 <code css={tw`font-mono bg-neutral-900 rounded py-1 px-2`}>{uuid}</code>
                             </div>
                         </CopyOnClick>

@@ -8,7 +8,12 @@ export interface RequireServerPermissionProps {
 
 const RequireServerPermission: React.FC<RequireServerPermissionProps> = ({ children, permissions }) => {
     return (
-        <Can action={permissions} renderOnError={<ServerError title={'拒绝访问'} message={'您没有权限访问此页面。'} />}>
+        <Can
+            action={permissions}
+            renderOnError={
+                <ServerError title={'拒绝访问'} message={'您没有权限访问此页面。'} />
+            }
+        >
             {children}
         </Can>
     );

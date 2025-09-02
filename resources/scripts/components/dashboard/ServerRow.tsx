@@ -184,106 +184,108 @@ export default ({ server, className }: { server: GroupedServer; className?: stri
                 </IpAddressBox>
                 <ServerInfoCard>
                     <div css={tw`flex-1 flex items-center justify-center`}>
-                    {!stats || isSuspended ? (
-                        isSuspended ? (
-                            <div css={tw`flex-1 text-center`}>
-                                <span css={tw`bg-red-600 rounded px-3 py-1.5 text-red-50 text-sm font-medium`}>
-                                    {server.status === 'suspended' ? '已冻结' : '连接错误'}
-                                </span>
-                            </div>
-                        ) : server.isTransferring || server.status ? (
-                            <div css={tw`flex-1 text-center`}>
-                                <span css={tw`bg-neutral-600 rounded px-3 py-1.5 text-neutral-100 text-sm font-medium`}>
-                                    {server.isTransferring
-                                        ? '转移中'
-                                        : server.status === 'installing'
-                                        ? '安装中'
-                                        : server.status === 'restoring_backup'
-                                        ? '正在回档'
-                                        : '不可用'}
-                                </span>
-                            </div>
+                        {!stats || isSuspended ? (
+                            isSuspended ? (
+                                <div css={tw`flex-1 text-center`}>
+                                    <span css={tw`bg-red-600 rounded px-3 py-1.5 text-red-50 text-sm font-medium`}>
+                                        {server.status === 'suspended' ? '已冻结' : '连接错误'}
+                                    </span>
+                                </div>
+                            ) : server.isTransferring || server.status ? (
+                                <div css={tw`flex-1 text-center`}>
+                                    <span
+                                        css={tw`bg-neutral-600 rounded px-3 py-1.5 text-neutral-100 text-sm font-medium`}
+                                    >
+                                        {server.isTransferring
+                                            ? '转移中'
+                                            : server.status === 'installing'
+                                            ? '安装中'
+                                            : server.status === 'restoring_backup'
+                                            ? '正在回档'
+                                            : '不可用'}
+                                    </span>
+                                </div>
+                            ) : (
+                                <div css={tw`flex items-center space-x-2`}>
+                                    <Spinner size={'small'} />
+                                    <span css={tw`text-sm text-neutral-400`}>加载中...</span>
+                                </div>
+                            )
                         ) : (
-                            <div css={tw`flex items-center space-x-2`}>
-                                <Spinner size={'small'} />
-                                <span css={tw`text-sm text-neutral-400`}>加载中...</span>
+                            <div css={tw`flex items-center space-x-4 text-sm`}>
+                                <div css={tw`flex items-center space-x-1`}>
+                                    <Icon icon={faMicrochip} $alarm={alarms.cpu} />
+                                    <MetricValue $alarm={alarms.cpu}>
+                                        {cpuLimit === '无限制'
+                                            ? `${stats.cpuUsagePercent.toFixed(0)}%`
+                                            : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`}
+                                    </MetricValue>
+                                </div>
+                                <div css={tw`flex items-center space-x-1`}>
+                                    <Icon icon={faMemory} $alarm={alarms.memory} />
+                                    <MetricValue $alarm={alarms.memory}>
+                                        {memoryLimit === '无限制'
+                                            ? bytesToString(stats.memoryUsageInBytes)
+                                            : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`}
+                                    </MetricValue>
+                                </div>
+                                <div css={tw`flex items-center space-x-1`}>
+                                    <Icon icon={faHdd} $alarm={alarms.disk} />
+                                    <MetricValue $alarm={alarms.disk}>
+                                        {diskLimit === '无限制'
+                                            ? bytesToString(stats.diskUsageInBytes)
+                                            : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`}
+                                    </MetricValue>
+                                </div>
                             </div>
-                        )
-                    ) : (
-                        <div css={tw`flex items-center space-x-4 text-sm`}>
-                            <div css={tw`flex items-center space-x-1`}>
-                                <Icon icon={faMicrochip} $alarm={alarms.cpu} />
-                                <MetricValue $alarm={alarms.cpu}>
-                                    {cpuLimit === '无限制'
-                                        ? `${stats.cpuUsagePercent.toFixed(0)}%`
-                                        : `${stats.cpuUsagePercent.toFixed(0)}% / ${cpuLimit}`}
-                                </MetricValue>
-                            </div>
-                            <div css={tw`flex items-center space-x-1`}>
-                                <Icon icon={faMemory} $alarm={alarms.memory} />
-                                <MetricValue $alarm={alarms.memory}>
-                                    {memoryLimit === '无限制'
-                                        ? bytesToString(stats.memoryUsageInBytes)
-                                        : `${bytesToString(stats.memoryUsageInBytes)} / ${memoryLimit}`}
-                                </MetricValue>
-                            </div>
-                            <div css={tw`flex items-center space-x-1`}>
-                                <Icon icon={faHdd} $alarm={alarms.disk} />
-                                <MetricValue $alarm={alarms.disk}>
-                                    {diskLimit === '无限制'
-                                        ? bytesToString(stats.diskUsageInBytes)
-                                        : `${bytesToString(stats.diskUsageInBytes)} / ${diskLimit}`}
-                                </MetricValue>
-                            </div>
-                        </div>
-                    )}
+                        )}
                     </div>
                     <ActionContainer>
-                    <ActionButton
-                        variant='start'
-                        onClick={(e) => handlePowerAction('start', e)}
-                        disabled={isPerformingAction || stats?.status === 'running'}
-                        title='启动实例'
-                    >
-                        {isPerformingAction ? (
-                            <Spinner size='small' />
-                        ) : (
-                            <>
-                                <FontAwesomeIcon icon={faPlay} />
-                                <span>启动</span>
-                            </>
-                        )}
-                    </ActionButton>
-                    <ActionButton
-                        variant='stop'
-                        onClick={(e) => handlePowerAction('stop', e)}
-                        disabled={isPerformingAction || stats?.status === 'offline'}
-                        title='停止实例'
-                    >
-                        {isPerformingAction ? (
-                            <Spinner size='small' />
-                        ) : (
-                            <>
-                                <FontAwesomeIcon icon={faStop} />
-                                <span>停止</span>
-                            </>
-                        )}
-                    </ActionButton>
-                    <ActionButton
-                        variant='restart'
-                        onClick={(e) => handlePowerAction('restart', e)}
-                        disabled={isPerformingAction}
-                        title='重启实例'
-                    >
-                        {isPerformingAction ? (
-                            <Spinner size='small' />
-                        ) : (
-                            <>
-                                <FontAwesomeIcon icon={faRedo} />
-                                <span>重启</span>
-                            </>
-                        )}
-                    </ActionButton>
+                        <ActionButton
+                            variant='start'
+                            onClick={(e) => handlePowerAction('start', e)}
+                            disabled={isPerformingAction || stats?.status === 'running'}
+                            title='启动服务器'
+                        >
+                            {isPerformingAction ? (
+                                <Spinner size='small' />
+                            ) : (
+                                <>
+                                    <FontAwesomeIcon icon={faPlay} />
+                                    <span>启动</span>
+                                </>
+                            )}
+                        </ActionButton>
+                        <ActionButton
+                            variant='stop'
+                            onClick={(e) => handlePowerAction('stop', e)}
+                            disabled={isPerformingAction || stats?.status === 'offline'}
+                            title='停止服务器'
+                        >
+                            {isPerformingAction ? (
+                                <Spinner size='small' />
+                            ) : (
+                                <>
+                                    <FontAwesomeIcon icon={faStop} />
+                                    <span>停止</span>
+                                </>
+                            )}
+                        </ActionButton>
+                        <ActionButton
+                            variant='restart'
+                            onClick={(e) => handlePowerAction('restart', e)}
+                            disabled={isPerformingAction}
+                            title='重启服务器'
+                        >
+                            {isPerformingAction ? (
+                                <Spinner size='small' />
+                            ) : (
+                                <>
+                                    <FontAwesomeIcon icon={faRedo} />
+                                    <span>重启</span>
+                                </>
+                            )}
+                        </ActionButton>
                     </ActionContainer>
                 </ServerInfoCard>
             </div>

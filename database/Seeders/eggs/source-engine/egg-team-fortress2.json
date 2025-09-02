@@ -42,7 +42,7 @@
         },
         {
             "name": "默认地图",
-            "description": "启动实例时要使用的默认地图。",
+            "description": "启动服务器时要使用的默认地图。",
             "env_variable": "SRCDS_MAP",
             "default_value": "cp_dustbowl",
             "user_viewable": true,
@@ -51,7 +51,7 @@
         },
         {
             "name": "Steam",
-            "description": "用于公开显示实例的 Steam 游戏实例登录令牌。在 https:\/\/steamcommunity.com\/dev\/managegameservers 处生成一个",
+            "description": "用于公开显示服务器的 Steam 游戏服务器登录令牌。在 https:\/\/steamcommunity.com\/dev\/managegameservers 处生成一个",
             "env_variable": "STEAM_ACC",
             "default_value": "",
             "user_viewable": true,

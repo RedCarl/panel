@@ -38,4 +38,3 @@ const user: UserStore = {
 };
 
 export default user;
-

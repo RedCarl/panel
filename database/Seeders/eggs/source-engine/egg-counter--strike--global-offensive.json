@@ -33,7 +33,7 @@
     "variables": [
         {
             "name": "地图",
-            "description": "实例的默认地图。",
+            "description": "服务器的默认地图。",
             "env_variable": "SRCDS_MAP",
             "default_value": "de_dust2",
             "user_viewable": true,
@@ -42,7 +42,7 @@
         },
         {
             "name": "Steam 帐户令牌",
-            "description": "实例公开显示所需的 Steam 帐户令牌。",
+            "description": "服务器公开显示所需的 Steam 帐户令牌。",
             "env_variable": "STEAM_ACC",
             "default_value": "",
             "user_viewable": true,
@@ -51,7 +51,7 @@
         },
         {
             "name": "Source AppID",
-            "description": "游戏在实例重新启动时更新的必要内容。请不要修改这个。",
+            "description": "游戏在服务器重新启动时更新的必要内容。请不要修改这个。",
             "env_variable": "SRCDS_APPID",
             "default_value": "740",
             "user_viewable": false,

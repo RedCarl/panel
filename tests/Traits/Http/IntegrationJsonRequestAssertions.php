@@ -20,7 +20,7 @@ trait IntegrationJsonRequestAssertions
                 [
                     'code' => 'NotFoundHttpException',
                     'status' => '404',
-                    'detail' => '无法在实例上找到请求的资源。',
+                    'detail' => '无法在服务器上找到请求的资源。',
                 ],
             ],
         ], true);

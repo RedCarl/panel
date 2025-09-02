@@ -65,7 +65,7 @@ class DeleteAllocationTest extends ClientApiIntegrationTestCase
         $this->actingAs($user)->deleteJson($this->link($server->allocation))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJsonPath('errors.0.code', 'DisplayException')
-            ->assertJsonPath('errors.0.detail', '您不能删除此实例的首选分配。');
+            ->assertJsonPath('errors.0.detail', '您不能删除此服务器的首选分配。');
     }
 
     public function testAllocationCannotBeDeletedIfServerLimitIsNotDefined()
@@ -77,7 +77,7 @@ class DeleteAllocationTest extends ClientApiIntegrationTestCase
 
         $this->actingAs($user)->deleteJson($this->link($allocation))
             ->assertStatus(400)
-            ->assertJsonPath('errors.0.detail', '您无法删除此实例的网络分配：未设置分配限制。');
+            ->assertJsonPath('errors.0.detail', '您无法删除此服务器的网络分配：未设置分配限制。');
 
         $allocation->refresh();
         $this->assertNotNull($allocation->notes);

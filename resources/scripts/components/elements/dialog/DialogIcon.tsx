@@ -1,10 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import {
-    CheckIcon,
-    ExclamationTriangleIcon,
-    InformationCircleIcon,
-    ShieldExclamationIcon,
-} from '@heroicons/react/24/outline';
+import { CheckIcon, ExclamationTriangleIcon, InformationCircleIcon, ShieldExclamationIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DialogContext, DialogIconProps, styles } from './';
 
