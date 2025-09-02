@@ -282,7 +282,7 @@ export default ({
                                 <span>停止</span>
                             </ActionButton>
                         )}
-                        {!isPerformingAction && (
+                        {!isPerformingAction && stats?.status === 'running' && (
                             <ActionButton
                                 variant='restart'
                                 onClick={(e) => handlePowerAction('restart', e)}
