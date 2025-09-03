@@ -52,8 +52,9 @@ const StatusIndicatorBox = styled(GreyRowBox)<{ $status: ServerPowerState | unde
     }
 `;
 
-const ActionButton = styled.button<{ variant?: 'start' | 'stop' | 'restart' }>`
+const ActionButton = styled.button<{ variant?: 'start' | 'stop' | 'restart'; $isWide?: boolean }>`
     ${tw`p-2 rounded text-sm font-medium transition-all duration-200 flex items-center space-x-1.5 justify-center`}
+    ${(props) => (props.$isWide ? tw`flex-1` : tw`flex-none`)}
 
     &:hover {
         ${tw`shadow-md`};
@@ -266,33 +267,58 @@ export default ({
                         )}
                     </div>
                     <ActionContainer>
-                        {!isPerformingAction && stats?.status !== 'running' && (
-                            <ActionButton
-                                variant='start'
-                                onClick={(e) => handlePowerAction('start', e)}
-                                title='启动实例'
-                            >
-                                <FontAwesomeIcon icon={faPlay} />
-                                <span>启动</span>
-                            </ActionButton>
-                        )}
-                        {!isPerformingAction && stats?.status !== 'offline' && (
-                            <ActionButton variant='stop' onClick={(e) => handlePowerAction('stop', e)} title='停止实例'>
-                                <FontAwesomeIcon icon={faStop} />
-                                <span>停止</span>
-                            </ActionButton>
-                        )}
-                        {!isPerformingAction && (
-                            <ActionButton
-                                variant='restart'
-                                onClick={(e) => handlePowerAction('restart', e)}
-                                title='重启实例'
-                            >
-                                <FontAwesomeIcon icon={faRedo} />
-                                <span>重启</span>
-                            </ActionButton>
-                        )}
-                        {isPerformingAction && (
+                        {stats &&
+                            !isPerformingAction &&
+                            (() => {
+                                const canStart = stats.status !== 'running';
+                                const canStop = stats.status !== 'offline';
+                                const canRestart = stats.status !== 'offline';
+
+                                const visibleButtons = [
+                                    canStart && 'start',
+                                    canStop && 'stop',
+                                    canRestart && 'restart',
+                                ].filter(Boolean);
+
+                                const isStartAlone = visibleButtons.length === 1 && visibleButtons[0] === 'start';
+
+                                return (
+                                    <>
+                                        {canStart && (
+                                            <ActionButton
+                                                variant='start'
+                                                onClick={(e) => handlePowerAction('start', e)}
+                                                title='启动实例'
+                                                style={isStartAlone ? { width: '132px' } : {}}
+                                            >
+                                                <FontAwesomeIcon icon={faPlay} />
+                                                <span>启动</span>
+                                            </ActionButton>
+                                        )}
+                                        {canStop && (
+                                            <ActionButton
+                                                variant='stop'
+                                                onClick={(e) => handlePowerAction('stop', e)}
+                                                title='停止实例'
+                                            >
+                                                <FontAwesomeIcon icon={faStop} />
+                                                <span>停止</span>
+                                            </ActionButton>
+                                        )}
+                                        {canRestart && (
+                                            <ActionButton
+                                                variant='restart'
+                                                onClick={(e) => handlePowerAction('restart', e)}
+                                                title='重启实例'
+                                            >
+                                                <FontAwesomeIcon icon={faRedo} />
+                                                <span>重启</span>
+                                            </ActionButton>
+                                        )}
+                                    </>
+                                );
+                            })()}
+                        {stats && isPerformingAction && (
                             <ActionButton disabled title='操作进行中'>
                                 <Spinner size='small' />
                                 <span>处理中</span>
