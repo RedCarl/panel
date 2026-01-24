@@ -52,15 +52,15 @@ class StartupController extends ClientApiController
      */
     public function update(UpdateStartupVariableRequest $request, Server $server): array
     {
-        /** @var \Pterodactyl\Models\EggVariable $variable */
         $variable = $server->variables()->where('env_variable', $request->input('key'))->first();
-        $original = $variable->server_value;
 
         if (is_null($variable) || !$variable->user_viewable) {
             throw new BadRequestHttpException('您试图编辑不存在的环境变量。');
         } elseif (!$variable->user_editable) {
             throw new BadRequestHttpException('您试图编辑的环境变量是只读的。');
         }
+
+        $original = $variable->server_value;
 
         // Revalidate the variable value using the egg variable specific validation rules for it.
         $this->validate($request, ['value' => $variable->rules]);

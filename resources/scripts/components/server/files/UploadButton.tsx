@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosProgressEvent } from 'axios';
 import getFileUploadUrl from '@/api/server/files/getFileUploadUrl';
 import tw from 'twin.macro';
 import { Button } from '@/components/elements/button/index';
@@ -57,14 +57,14 @@ export default ({ className }: WithClassname) => {
         return () => timeouts.value.forEach(clearTimeout);
     }, []);
 
-    const onUploadProgress = (data: ProgressEvent, name: string) => {
+    const onUploadProgress = (data: AxiosProgressEvent, name: string) => {
         setUploadProgress({ name, loaded: data.loaded });
     };
 
     const onFileSubmission = (files: FileList) => {
         clearAndAddHttpError();
         const list = Array.from(files);
-        if (list.some((file) => !file.size || (!file.type && file.size === 4096))) {
+        if (list.some((file) => !file.type && (!file.size || file.size === 4096))) {
             return addError('目前不支持文件夹上传。', '错误');
         }
 
