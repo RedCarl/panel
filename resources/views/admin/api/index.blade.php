@@ -25,15 +25,22 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            <th>密钥 KEY</th>
+                            <th>密钥 Key</th>
                             <th>备注</th>
                             <th>上次使用于</th>
                             <th>创建于</th>
+                            <th>创建自</th>
                             <th></th>
                         </tr>
                         @foreach($keys as $key)
                             <tr>
-                                <td><code>{{ $key->identifier }}{{ decrypt($key->token) }}</code></td>
+                                <td><code>
+                                    @if (Auth::user()->is($key->user))
+                                        {{ $key->identifier . decrypt($key->token) }}
+                                    @else
+                                        {{ $key->identifier . '****' }}
+                                    @endif
+                                </code></td>
                                 <td>{{ $key->memo }}</td>
                                 <td>
                                     @if(!is_null($key->last_used_at))
@@ -43,6 +50,9 @@
                                     @endif
                                 </td>
                                 <td>@datetimeHuman($key->created_at)</td>
+                                <td>
+                                    <a href="{{ route('admin.users.view', $key->user->id) }}">{{ $key->user->username }}</a>
+                                </td>
                                 <td>
                                     <a href="#" data-action="revoke-key" data-attr="{{ $key->identifier }}">
                                         <i class="fa fa-trash-o text-danger"></i>

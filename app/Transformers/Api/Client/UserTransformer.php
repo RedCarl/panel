@@ -23,6 +23,7 @@ class UserTransformer extends BaseClientTransformer
     {
         return [
             'uuid' => $model->uuid,
+            'identifier' => $model->identifier,
             'username' => $model->username,
             'email' => $model->email,
             'image' => 'https://cravatar.cn/avatar/' . md5(Str::lower($model->email)),
