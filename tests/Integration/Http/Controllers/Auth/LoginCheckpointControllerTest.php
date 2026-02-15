@@ -95,7 +95,7 @@ class LoginCheckpointControllerTest extends HttpTestCase
             'authentication_code' => $totp,
         ]))
             ->assertBadRequest()
-            ->assertJsonPath('errors.0.detail', 'The two-factor authentication token was invalid.');
+            ->assertJsonPath('errors.0.detail', '动态口令无效。');
 
         $this->assertGuest();
         $this->assertEquals(now()->addSeconds($seconds), $user->refresh()->totp_authenticated_at);
@@ -116,7 +116,7 @@ class LoginCheckpointControllerTest extends HttpTestCase
             'authentication_code' => '123456',
         ]))
             ->assertBadRequest()
-            ->assertJsonPath('errors.0.detail', 'The authentication token provided has expired, please refresh the page and try again.');
+            ->assertJsonPath('errors.0.detail', '提供的动态口令已过期，请刷新页面重试。');
 
         $this->assertGuest();
 
@@ -171,7 +171,7 @@ class LoginCheckpointControllerTest extends HttpTestCase
             'authentication_code' => '123456',
         ]))
             ->assertBadRequest()
-            ->assertJsonPath('errors.0.detail', 'The authentication token provided has expired, please refresh the page and try again.');
+            ->assertJsonPath('errors.0.detail', '提供的动态口令已过期，请刷新页面重试。');
     }
 
     public function testEndpointAllowsRecoveryToken(): void
@@ -190,7 +190,7 @@ class LoginCheckpointControllerTest extends HttpTestCase
             'recovery_token' => 'invalid',
         ]))
             ->assertBadRequest()
-            ->assertJsonPath('errors.0.detail', 'The recovery token provided is not valid.');
+            ->assertJsonPath('errors.0.detail', '提供的恢复口令无效。');
 
         $this->assertGuest();
 

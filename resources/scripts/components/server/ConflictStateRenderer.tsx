@@ -25,11 +25,7 @@ export default () => {
             message={'此服务器已被冻结，您目前无法访问此服务器。'}
         />
     ) : isNodeUnderMaintenance ? (
-        <ScreenBlock
-            title={'节点维护中'}
-            image={ServerErrorSvg}
-            message={'此服务器的节点目前正在维护中。'}
-        />
+        <ScreenBlock title={'节点维护中'} image={ServerErrorSvg} message={'此服务器的节点目前正在维护中。'} />
     ) : (
         <ScreenBlock
             title={isTransferring ? '转移中' : '回档中'}

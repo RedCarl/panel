@@ -60,9 +60,7 @@ export default () => {
                         所有使用 <Code>{deleteIdentifier}</Code> 密钥的请求将立即失效！
                     </Dialog.Confirm>
                     {keys.length === 0 ? (
-                        <p css={tw`text-center text-sm`}>
-                            {loading ? '载入中.....' : '此账户无 API 密钥'}
-                        </p>
+                        <p css={tw`text-center text-sm`}>{loading ? '载入中.....' : '此账户无 API 密钥'}</p>
                     ) : (
                         keys.map((key, index) => (
                             <GreyRowBox

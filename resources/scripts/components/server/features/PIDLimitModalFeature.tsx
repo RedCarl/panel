@@ -64,7 +64,8 @@ const PIDLimitModalFeature = () => {
                     </div>
                     <p css={tw`mt-4`}>此服务器已达到最大进程或内存限制。</p>
                     <p css={tw`mt-4`}>
-                        在wings配置中增加 <code css={tw`font-mono bg-neutral-900`}>container_pid_limit</code> , <code css={tw`font-mono bg-neutral-900`}>config.yml</code>, 可能有助于解决这个问题。
+                        在wings配置中增加 <code css={tw`font-mono bg-neutral-900`}>container_pid_limit</code> ,{' '}
+                        <code css={tw`font-mono bg-neutral-900`}>config.yml</code>, 可能有助于解决这个问题。
                     </p>
                     <p css={tw`mt-4`}>
                         <b>注意：必须重新启动 Wings 才能使配置文件更改生效</b>
@@ -81,9 +82,7 @@ const PIDLimitModalFeature = () => {
                         <FontAwesomeIcon css={tw`pr-4`} icon={faExclamationTriangle} color={'orange'} size={'4x'} />
                         <h2 css={tw`text-2xl mb-4 text-neutral-100`}>可能达到资源限制...</h2>
                     </div>
-                    <p css={tw`mt-4`}>
-                        此服务器尝试使用的资源多于分配的资源。请联系管理员，并在下面给他们错误信息。
-                    </p>
+                    <p css={tw`mt-4`}>此服务器尝试使用的资源多于分配的资源。请联系管理员，并在下面给他们错误信息。</p>
                     <p css={tw`mt-4`}>
                         <code css={tw`font-mono bg-neutral-900`}>
                             pthread_create 失败，可能内存不足或已达到进程/资源限制

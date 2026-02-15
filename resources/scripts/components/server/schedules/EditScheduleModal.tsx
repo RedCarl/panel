@@ -92,11 +92,7 @@ const EditScheduleModal = ({ schedule }: Props) => {
                 <Form>
                     <h3 css={tw`text-2xl mb-6`}>{schedule ? '编辑计划' : '创建新计划'}</h3>
                     <FlashMessageRender byKey={'schedule:edit'} css={tw`mb-6`} />
-                    <Field
-                        name={'name'}
-                        label={'计划名'}
-                        description={'此计划的名字'}
-                    />
+                    <Field name={'name'} label={'计划名'} description={'此计划的名字'} />
                     <div css={tw`grid grid-cols-2 sm:grid-cols-5 gap-4 mt-6`}>
                         <Field name={'minute'} label={'分钟'} />
                         <Field name={'hour'} label={'小时'} />
@@ -105,7 +101,8 @@ const EditScheduleModal = ({ schedule }: Props) => {
                         <Field name={'dayOfWeek'} label={'每周的某一天'} />
                     </div>
                     <p css={tw`text-neutral-400 text-xs mt-2`}>
-                        计划系统支持在定义任务何时开始运行时使用 Cronjob 语法。使用上面的字段来指定这些计划任务应该何时开始运行。
+                        计划系统支持在定义任务何时开始运行时使用 Cronjob
+                        语法。使用上面的字段来指定这些计划任务应该何时开始运行。
                     </p>
                     <div css={tw`mt-6 bg-neutral-700 border border-neutral-800 shadow-inner p-4 rounded`}>
                         <Switch

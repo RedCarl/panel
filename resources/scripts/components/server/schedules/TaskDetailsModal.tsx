@@ -83,7 +83,7 @@ const TaskDetailsModal = ({ schedule, task }: Props) => {
         if (backupLimit === 0 && values.action === 'backup') {
             setSubmitting(false);
             addError({
-                message: "当服务器的备份限制设置为 0 时，无法创建备份任务。",
+                message: '当服务器的备份限制设置为 0 时，无法创建备份任务。',
                 key: 'schedule:task',
             });
         } else {
