@@ -1,6 +1,9 @@
 name: Tests
 
 on:
+  push:
+    branches:
+      - 1.0-develop
   pull_request:
     branches:
       - "1.0-develop"
