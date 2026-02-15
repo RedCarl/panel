@@ -45,11 +45,11 @@ class BackupStatusController extends Controller
         /** @var \Pterodactyl\Models\Server $server */
         $server = $model->server;
         if ($server->node_id !== $node->id) {
-            throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
+            throw new HttpForbiddenException('请求节点无权访问此服务器。');
         }
 
         if ($model->is_successful) {
-            throw new BadRequestHttpException('Cannot update the status of a backup that is already marked as completed.');
+            throw new BadRequestHttpException('无法更新已标记为完成的备份状态。');
         }
 
         $action = $request->boolean('successful') ? 'server:backup.complete' : 'server:backup.fail';
@@ -97,7 +97,7 @@ class BackupStatusController extends Controller
 
         $node = $request->attributes->get('node');
         if (! $model->server->node->is($node)) {
-            throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
+            throw new HttpForbiddenException('请求节点无权访问此服务器。');
         }
 
         $model->server->update(['status' => null]);
@@ -129,7 +129,7 @@ class BackupStatusController extends Controller
                 return;
             }
 
-            throw new DisplayException('Cannot complete backup request: no upload_id present on model.');
+            throw new DisplayException('无法完成备份请求：模型中缺少 upload_id。');
         }
 
         $params = [
