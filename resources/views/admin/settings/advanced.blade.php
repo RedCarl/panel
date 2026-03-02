@@ -78,7 +78,7 @@
                             <div class="form-group col-md-4">
                                 <label class="control-label">ICP备案号</label>
                                 <div>
-                                    <input type="text" required class="form-control" name="icp:record" value="{{ old('icp:record', config('icp.record')) }}">
+                                    <input type="text" class="form-control" name="icp:record" value="{{ old('icp:record', config('icp.record')) }}">
                                     <p class="text-muted small">中国网络服务需要的网站经营许可证，如果您的站点架设在中国，您应向服务提供商申请 ICP 许可证并填写此参数.</p>
                                 </div>
                             </div>
@@ -143,6 +143,30 @@
                                 <div>
                                     <input type="number" class="form-control" name="pterodactyl:client_features:allocations:range_end" value="{{ old('pterodactyl:client_features:allocations:range_end', config('pterodactyl.client_features.allocations.range_end')) }}">
                                     <p class="text-muted small">可自动分配范围内的结束端口.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">允许前台切换预设</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label">模式</label>
+                                <div>
+                                    <select class="form-control" name="pterodactyl:client_features:egg_change:mode">
+                                        <option value="disabled" @if(old('pterodactyl:client_features:egg_change:mode', config('pterodactyl.client_features.egg_change.mode')) === 'disabled') selected @endif>禁用</option>
+                                        <option value="egg_only" @if(old('pterodactyl:client_features:egg_change:mode', config('pterodactyl.client_features.egg_change.mode')) === 'egg_only') selected @endif>只允许切换预设</option>
+                                        <option value="both" @if(old('pterodactyl:client_features:egg_change:mode', config('pterodactyl.client_features.egg_change.mode')) === 'both') selected @endif>允许切换预设和预设组</option>
+                                    </select>
+                                    <p class="text-muted small">
+                                        控制拥有相应权限的用户在服务器启动设置页面中可执行的切换操作：<br>
+                                        <strong>只允许切换预设</strong>：显示预设组（仅作为过滤器）和预设下拉框，手动选择预设后应用；<br>
+                                        <strong>允许切换预设和预设组</strong>：同时显示两个下拉框，切换预设组时自动应用第一个预设，也可手动切换预设。
+                                    </p>
                                 </div>
                             </div>
                         </div>

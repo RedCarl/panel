@@ -13,7 +13,7 @@ class AdvancedSettingsFormRequest extends AdminFormRequest
     {
         return [
             'icp:enabled' => 'required|in:true,false',
-            'icp:record' => 'nullable|string|max:100',
+            'icp:record' => 'nullable|required_if:icp:enabled,true|string|max:100',
             'icp:security_record' => 'nullable|string|max:100',
             'recaptcha:enabled' => 'required|in:true,false',
             'recaptcha:secret_key' => 'required|string|max:191',
@@ -34,6 +34,7 @@ class AdvancedSettingsFormRequest extends AdminFormRequest
                 'between:1024,65535',
                 'gt:pterodactyl:client_features:allocations:range_start',
             ],
+            'pterodactyl:client_features:egg_change:mode' => 'required|in:disabled,egg_only,both',
         ];
     }
 
@@ -51,6 +52,7 @@ class AdvancedSettingsFormRequest extends AdminFormRequest
             'pterodactyl:client_features:allocations:enabled' => 'Auto Create Allocations Enabled',
             'pterodactyl:client_features:allocations:range_start' => 'Starting Port',
             'pterodactyl:client_features:allocations:range_end' => 'Ending Port',
+            'pterodactyl:client_features:egg_change:mode' => 'Allow Egg Change Mode',
         ];
     }
 }
