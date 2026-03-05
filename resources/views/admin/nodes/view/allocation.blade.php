@@ -66,7 +66,7 @@
                             </td>
                             <td class="col-sm-3 middle" data-identifier="ip">{{ $allocation->ip }}</td>
                             <td class="col-sm-3 middle">
-                                <input class="form-control input-sm" type="text" value="{{ $allocation->ip_alias }}" data-action="set-alias" data-id="{{ $allocation->id }}" placeholder="none" />
+                                <input class="form-control input-sm" type="text" value="{{ $allocation->ip_alias }}" data-action="set-alias" data-id="{{ $allocation->id }}" placeholder="无" />
                                 <span class="input-loader"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
                             </td>
                             <td class="col-sm-2 middle" data-identifier="port">{{ $allocation->port }}</td>
@@ -112,7 +112,7 @@
                     <div class="form-group">
                         <label for="pAllocationIP" class="control-label">域名</label>
                         <div>
-                            <input type="text" id="pAllocationAlias" class="form-control" name="allocation_alias" placeholder="alias" />
+                            <input type="text" id="pAllocationAlias" class="form-control" name="allocation_alias" placeholder="别名" />
                             <p class="text-muted small">如果您想为这些分配分配一个默认域名，请在此处输入.</p>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="modal-footer">
                     {{{ csrf_field() }}}
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="submit" class="btn btn-danger">删除分配</button>
                 </div>
             </form>
@@ -219,7 +219,7 @@
             }).fail(function (jqXHR) {
                 console.error(jqXHR);
                 swal({
-                    title: '噢谢!',
+                    title: '呜呼!',
                     text: jqXHR.responseJSON.error,
                     type: 'error'
                 });
@@ -338,9 +338,9 @@
                     console.error(jqXHR);
                     swal({
                         type: 'error',
-                        title: 'Whoops!',
+                        title: '呜呼!',
                         html: true,
-                        text: 'An error occurred while attempting to delete these allocations. Please try again.',
+                        text: '尝试删除这些分配时发生错误，请再试一次。',
                     });
                 });
             });
@@ -348,7 +348,7 @@
             swal({
                 type: 'warning',
                 title: '',
-                text: 'Please select allocation(s) to delete.',
+                text: '请选择要删除的分配。',
             });
         }
     }
