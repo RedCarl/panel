@@ -43,7 +43,7 @@ class EmailSettingsCommand extends Command
         $this->variables['MAIL_DRIVER'] = $this->option('driver') ?? $this->choice(
             trans('command/messages.environment.mail.ask_driver'),
             [
-                'smtp' => 'SMTP 服务器',
+                'smtp' => 'SMTP 实例',
                 'sendmail' => 'sendmail 二进制文件',
                 'mailgun' => 'Mailgun 交易电子邮件',
                 'mandrill' => 'Mandrill 交易电子邮件',

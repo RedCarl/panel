@@ -90,7 +90,7 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                     <tr>
-                        <th>服务器</th>
+                        <th>实例</th>
                         <th>数据库名</th>
                         <th>用户名</th>
                         <th>连接白名单</th>

@@ -35,7 +35,7 @@
                                 <th>挂载路径</th>
                                 <th class="text-center">预设</th>
                                 <th class="text-center">节点</th>
-                                <th class="text-center">服务器</th>
+                                <th class="text-center">实例</th>
                             </tr>
 
                             @foreach ($mounts as $mount)

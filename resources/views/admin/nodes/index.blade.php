@@ -44,7 +44,7 @@
                             <th>地域</th>
                             <th>内存容量</th>
                             <th>存储容量</th>
-                            <th class="text-center">服务器</th>
+                            <th class="text-center">实例</th>
                             <th class="text-center">SSL</th>
                             <th class="text-center">公开</th>
                         </tr>

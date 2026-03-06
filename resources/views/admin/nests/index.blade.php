@@ -37,7 +37,7 @@
                         <th>名称</th>
                         <th>描述</th>
                         <th class="text-center">预设</th>
-                        <th class="text-center">服务器</th>
+                        <th class="text-center">实例</th>
                     </tr>
                     @foreach($nests as $nest)
                         <tr>

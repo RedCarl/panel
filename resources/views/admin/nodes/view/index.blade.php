@@ -22,7 +22,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
+                <li><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
             </ul>
         </div>
     </div>
@@ -130,7 +130,7 @@
                         <div class="info-box bg-blue">
                             <span class="info-box-icon"><i class="ion ion-social-buffer-outline"></i></span>
                             <div class="info-box-content" style="padding: 23px 10px 0;">
-                                <span class="info-box-text">服务器</span>
+                                <span class="info-box-text">实例</span>
                                 <span class="info-box-number">{{ $node->servers_count }}</span>
                             </div>
                         </div>

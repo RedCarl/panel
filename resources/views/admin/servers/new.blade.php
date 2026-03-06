@@ -8,7 +8,7 @@
     <h1>创建服务器<small>创建一个新的服务器.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li><a href="{{ route('admin.servers') }}">实例</a></li>
         <li class="active">创建服务器</li>
     </ol>
 @endsection
@@ -292,7 +292,7 @@
                     <div class="form-group col-xs-12">
                         <label for="pStartup">启动指令</label>
                         <input type="text" id="pStartup" name="startup" value="{{ old('startup') }}" class="form-control" />
-                        <p class="small text-muted no-margin">以下变量可用于启动命令: <code>@{{SERVER_MEMORY}}</code>, <code>@{{SERVER_IP}}</code>, 和 <code>@{{SERVER_PORT}}</code>. 它们将分别替换为分配的内存、服务器 IP 和服务器端口的值.</p>
+                        <p class="small text-muted no-margin">以下变量可用于启动命令: <code>@{{SERVER_MEMORY}}</code>, <code>@{{SERVER_IP}}</code>, 和 <code>@{{SERVER_PORT}}</code>. 它们将分别替换为分配的内存、实例 IP 和服务器端口的值.</p>
                     </div>
                 </div>
 

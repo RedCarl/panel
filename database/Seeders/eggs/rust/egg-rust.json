@@ -181,7 +181,7 @@
             "field_type": "text"
         },
         {
-            "name": "服务器 Logo",
+            "name": "实例 Logo",
             "description": "Rust+ 应用程序的服务器 Logo。",
             "env_variable": "SERVER_LOGO",
             "default_value": "",

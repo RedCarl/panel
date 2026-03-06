@@ -37,7 +37,7 @@
     },
     "variables": [
         {
-            "name": "服务器 Jar 文件",
+            "name": "实例 Jar 文件",
             "description": "用于运行服务器的服务器核心文件名称。",
             "env_variable": "SERVER_JARFILE",
             "default_value": "server.jar",

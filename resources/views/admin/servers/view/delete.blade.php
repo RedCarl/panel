@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    服务器 — {{ $server->name }}: 删除
+    实例 — {{ $server->name }}: 删除
 @endsection
 
 @section('content-header')
     <h1>{{ $server->name }}<small>将此服务器从面板上删除.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li><a href="{{ route('admin.servers') }}">实例</a></li>
         <li><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></li>
         <li class="active">删除</li>
     </ol>

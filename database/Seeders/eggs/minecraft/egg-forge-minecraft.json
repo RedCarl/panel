@@ -7,7 +7,7 @@
     "exported_at": "2024-05-07T12:55:56+00:00",
     "name": "Forge Minecraft",
     "author": "support@pterodactyl.io",
-    "description": "Minecraft Forge 服务器。Minecraft Forge 是一个模组 API（应用程序编程接口），它可以更轻松地创建模组，并确保模组彼此兼容。",
+    "description": "Minecraft Forge 实例。Minecraft Forge 是一个模组 API（应用程序编程接口），它可以更轻松地创建模组，并确保模组彼此兼容。",
     "features": [
         "eula",
         "java_version",
@@ -37,7 +37,7 @@
     },
     "variables": [
         {
-            "name": "服务器 Jar 文件",
+            "name": "实例 Jar 文件",
             "description": "运行低于 1.17 Forge 版本时使用的核心名称。如果你的核心不对记得修改哦！",
             "env_variable": "SERVER_JARFILE",
             "default_value": "server.jar",

@@ -8,7 +8,7 @@
     <h1>服务器列表<small>此系统上所有的可用服务器.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li class="active">服务器</li>
+        <li class="active">实例</li>
     </ol>
 @endsection
 

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    {{ $node->name }}: 服务器
+    {{ $node->name }}: 实例
 @endsection
 
 @section('content-header')
@@ -10,7 +10,7 @@
         <li><a href="{{ route('admin.index') }}">管理</a></li>
         <li><a href="{{ route('admin.nodes') }}">节点</a></li>
         <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-        <li class="active">服务器</li>
+        <li class="active">实例</li>
     </ol>
 @endsection
 
@@ -23,7 +23,7 @@
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">设置</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">配置</a></li>
                 <li><a href="{{ route('admin.nodes.view.allocation', $node->id) }}">分配</a></li>
-                <li class="active"><a href="{{ route('admin.nodes.view.servers', $node->id) }}">服务器</a></li>
+                <li class="active"><a href="{{ route('admin.nodes.view.servers', $node->id) }}">实例</a></li>
             </ul>
         </div>
     </div>
