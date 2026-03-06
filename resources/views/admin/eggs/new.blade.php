@@ -63,7 +63,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="pDockerImage" class="control-label">Docker 镜像</label>
-                                <textarea id="pDockerImages" name="docker_images" rows="4" placeholder="quay.io/pterodactyl/service" class="form-control">{{ old('docker_images') }}</textarea>
+                                <textarea id="pDockerImages" name="docker_images" rows="4" placeholder="ghcr.io/pterodactyl/yolks" class="form-control">{{ old('docker_images') }}</textarea>
                                 <p class="text-muted small">使用这个预设的服务器可用的 Docker 镜像。每行输入一个。如果提供了多个值，用户将能够从此图像列表中自行选择。</p>
                             </div>
                             <div class="form-group">

@@ -69,9 +69,7 @@ export default ({ onKeyCreated }: { onKeyCreated: (key: ApiKey) => void }) => {
                         <FormikFieldWrapper
                             label={'IP 白名单'}
                             name={'allowedIps'}
-                            description={
-                                '留空以允许任何 IP 地址使用此 API 密钥，否则在每一行中提供每个 IP 地址。'
-                            }
+                            description={'留空以允许任何 IP 地址使用此 API 密钥，否则在每一行中提供每个 IP 地址。'}
                         >
                             <Field name={'allowedIps'} as={CustomTextarea} />
                         </FormikFieldWrapper>

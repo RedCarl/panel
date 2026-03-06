@@ -1,4 +1,3 @@
-version: '3.8'
 x-common:
     database: &db-environment # 不要将下面行尾 "&db-password" 删除，这对面板功能很重要。
         MYSQL_PASSWORD: &db-password 'CHANGE_ME'

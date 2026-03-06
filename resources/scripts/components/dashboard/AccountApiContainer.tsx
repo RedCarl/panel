@@ -60,9 +60,7 @@ export default () => {
                         所有使用 <Code>{deleteIdentifier}</Code> 密钥的请求将立即失效！
                     </Dialog.Confirm>
                     {keys.length === 0 ? (
-                        <p css={tw`text-center text-sm`}>
-                            {loading ? '载入中.....' : '此账户无 API 密钥'}
-                        </p>
+                        <p css={tw`text-center text-sm`}>{loading ? '载入中.....' : '此账户无 API 密钥'}</p>
                     ) : (
                         keys.map((key, index) => (
                             <GreyRowBox
@@ -74,7 +72,7 @@ export default () => {
                                     <p css={tw`text-sm break-words`}>{key.description}</p>
                                     <p css={tw`text-2xs text-neutral-300 uppercase`}>
                                         上次使用于:&nbsp;
-                                        {key.lastUsedAt ? format(key.lastUsedAt, 'MMM do, yyyy HH:mm') : '从未'}
+                                        {key.lastUsedAt ? format(key.lastUsedAt, 'yyyy年M月d日 HH:mm') : '从未'}
                                     </p>
                                 </div>
                                 <p css={tw`text-sm ml-4 hidden md:block`}>

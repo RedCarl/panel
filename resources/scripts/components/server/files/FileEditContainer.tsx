@@ -18,7 +18,7 @@ import useFlash from '@/plugins/useFlash';
 import { ServerContext } from '@/state/server';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import { encodePathSegments, hashToPath } from '@/helpers';
-import { dirname } from 'path';
+import { dirname } from 'pathe';
 import CodemirrorEditor from '@/components/elements/CodemirrorEditor';
 
 export default () => {
@@ -94,9 +94,9 @@ export default () => {
             {hash.replace(/^#/, '').endsWith('.pteroignore') && (
                 <div css={tw`mb-4 p-4 border-l-4 bg-neutral-900 rounded border-cyan-400`}>
                     <p css={tw`text-neutral-300 text-sm`}>
-                        你正在编辑一个 <code css={tw`font-mono bg-black rounded py-px px-1`}>.pteroignore</code>{' '}
-                        文件. 此处列出的任何文件或目录都将从备份中排除。通配符支持
-                        使用星号 (<code css={tw`font-mono bg-black rounded py-px px-1`}>*</code>).
+                        你正在编辑一个 <code css={tw`font-mono bg-black rounded py-px px-1`}>.pteroignore</code> 文件.
+                        此处列出的任何文件或目录都将从备份中排除。通配符支持 使用星号 (
+                        <code css={tw`font-mono bg-black rounded py-px px-1`}>*</code>).
                         你可以通过在前面加上感叹号来否定先前的规则 (
                         <code css={tw`font-mono bg-black rounded py-px px-1`}>!</code>).
                     </p>

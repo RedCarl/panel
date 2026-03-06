@@ -105,9 +105,7 @@ const EditSubuserModal = ({ subuser }: Props) => {
             <Form>
                 <div css={tw`flex justify-between`}>
                     <h2 css={tw`text-2xl`} ref={ref}>
-                        {subuser
-                            ? `${canEditUser ? '修改' : '查看'} ${subuser.email} 的权限`
-                            : '创建新子用户'}
+                        {subuser ? `${canEditUser ? '修改' : '查看'} ${subuser.email} 的权限` : '创建新子用户'}
                     </h2>
                     <div>
                         <Button type={'submit'} css={tw`w-full sm:w-auto`}>
@@ -118,9 +116,7 @@ const EditSubuserModal = ({ subuser }: Props) => {
                 <FlashMessageRender byKey={'user:edit'} css={tw`mt-4`} />
                 {!isRootAdmin && loggedInPermissions[0] !== '*' && (
                     <div css={tw`mt-4 pl-4 py-2 border-l-4 border-cyan-400`}>
-                        <p css={tw`text-sm text-neutral-300`}>
-                            创建或修改其他用户时，只能选择您帐户当前分配的权限。
-                        </p>
+                        <p css={tw`text-sm text-neutral-300`}>创建或修改其他用户时，只能选择您帐户当前分配的权限。</p>
                     </div>
                 )}
                 {!subuser && (
@@ -128,9 +124,7 @@ const EditSubuserModal = ({ subuser }: Props) => {
                         <Field
                             name={'email'}
                             label={'用户邮箱地址'}
-                            description={
-                                '输入您希望邀请为该服务器子用户的用户的电子邮箱地址。'
-                            }
+                            description={'输入您希望邀请为该服务器子用户的用户的电子邮箱地址。'}
                         />
                     </div>
                 )}

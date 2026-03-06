@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Pterodactyl\Http\Controllers\Controller;
 use Pterodactyl\Extensions\Backups\BackupManager;
 use Pterodactyl\Extensions\Filesystem\S3Filesystem;
+use Pterodactyl\Exceptions\Http\HttpForbiddenException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -39,32 +40,28 @@ class BackupRemoteUploadController extends Controller
         // Get the size query parameter.
         $size = (int) $request->query('size');
         if (empty($size)) {
-            throw new BadRequestHttpException('A non-empty "size" query parameter must be provided.');
+            throw new BadRequestHttpException('必须提供非空的 "文件大小" 查询参数。');
         }
 
-        /** @var Backup $model */
-        $model = Backup::query()
-            ->where('uuid', $backup)
-            ->firstOrFail();
+        $model = Backup::query()->where('uuid', $backup)->firstOrFail();
 
         // Check that the backup is "owned" by the node making the request. This avoids other nodes
         // from messing with backups that they don't own.
-        /** @var \Pterodactyl\Models\Server $server */
         $server = $model->server;
         if ($server->node_id !== $node->id) {
-            throw new HttpForbiddenException('You do not have permission to access that backup.');
+            throw new HttpForbiddenException('请求节点无权访问此服务器。');
         }
 
         // Prevent backups that have already been completed from trying to
         // be uploaded again.
         if (!is_null($model->completed_at)) {
-            throw new ConflictHttpException('This backup is already in a completed state.');
+            throw new ConflictHttpException('此备份已处于完成状态。');
         }
 
         // Ensure we are using the S3 adapter.
         $adapter = $this->backupManager->adapter();
         if (!$adapter instanceof S3Filesystem) {
-            throw new BadRequestHttpException('The configured backup adapter is not an S3 compatible adapter.');
+            throw new BadRequestHttpException('当前配置的备份适配器不是 S3 兼容的适配器。');
         }
 
         // The path where backup will be uploaded to

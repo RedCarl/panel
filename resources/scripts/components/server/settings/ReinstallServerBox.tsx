@@ -49,9 +49,7 @@ export default () => {
             </Dialog.Confirm>
             <p css={tw`text-sm`}>
                 重新安装您的服务器将停止它，然后重新运行最初设置它的安装脚本.&nbsp;
-                <strong css={tw`font-medium`}>
-                    在此过程中可能会删除或修改某些文件，请在继续之前备份您的数据。
-                </strong>
+                <strong css={tw`font-medium`}>在此过程中可能会删除或修改某些文件，请在继续之前备份您的数据。</strong>
             </p>
             <div css={tw`mt-6 text-right`}>
                 <Button.Danger variant={Button.Variants.Secondary} onClick={() => setModalVisible(true)}>

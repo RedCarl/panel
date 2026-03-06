@@ -6,6 +6,7 @@ use Pterodactyl\Models\Server;
 use Illuminate\Http\JsonResponse;
 use Pterodactyl\Facades\Activity;
 use Pterodactyl\Models\Allocation;
+use Illuminate\Database\ConnectionInterface;
 use Pterodactyl\Exceptions\DisplayException;
 use Pterodactyl\Repositories\Eloquent\ServerRepository;
 use Pterodactyl\Transformers\Api\Client\AllocationTransformer;
@@ -23,6 +24,7 @@ class NetworkAllocationController extends ClientApiController
      * NetworkAllocationController constructor.
      */
     public function __construct(
+        protected readonly ConnectionInterface $connection,
         private FindAssignableAllocationService $assignableAllocationService,
         private ServerRepository $serverRepository,
     ) {
@@ -92,16 +94,39 @@ class NetworkAllocationController extends ClientApiController
      */
     public function store(NewAllocationRequest $request, Server $server): array
     {
-        if ($server->allocations()->count() >= $server->allocation_limit) {
-            throw new DisplayException('Cannot assign additional allocations to this server: limit has been reached.');
+        $count = (int) $request->input('count', 1);
+        $consecutiveEnabled = (bool) config('pterodactyl.client_features.allocations.consecutive_enabled', false);
+
+        if ($count > 1 && $consecutiveEnabled) {
+            $allocations = Activity::event('server:allocation.create')->transaction(function ($log) use ($server, $count) {
+                if ($server->allocations()->lockForUpdate()->count() + $count > $server->allocation_limit) {
+                    throw new DisplayException('无法为此服务器分配更多端口：已达到分配限制。');
+                }
+
+                $allocations = $this->assignableAllocationService->handleConsecutive($server, $count);
+
+                $ports = implode(', ', array_map(fn ($a) => $a->toString(), $allocations));
+                $log->property('allocation', $ports);
+
+                return $allocations;
+            });
+
+            return $this->fractal->collection($allocations)
+                ->transformWith($this->getTransformer(AllocationTransformer::class))
+                ->toArray();
         }
 
-        $allocation = $this->assignableAllocationService->handle($server);
+        $allocation = Activity::event('server:allocation.create')->transaction(function ($log) use ($server) {
+            if ($server->allocations()->lockForUpdate()->count() >= $server->allocation_limit) {
+                throw new DisplayException('无法为此服务器分配更多端口：已达到分配限制。');
+            }
 
-        Activity::event('server:allocation.create')
-            ->subject($allocation)
-            ->property('allocation', $allocation->toString())
-            ->log();
+            $allocation = $this->assignableAllocationService->handle($server);
+
+            $log->subject($allocation)->property('allocation', $allocation->toString());
+
+            return $allocation;
+        });
 
         return $this->fractal->item($allocation)
             ->transformWith($this->getTransformer(AllocationTransformer::class))

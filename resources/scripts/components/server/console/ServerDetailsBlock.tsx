@@ -15,7 +15,14 @@ import UptimeDuration from '@/components/server/UptimeDuration';
 import StatBlock from '@/components/server/console/StatBlock';
 import useWebsocketEvent from '@/plugins/useWebsocketEvent';
 import classNames from 'classnames';
-import { capitalize } from '@/lib/strings';
+import { ServerStatus } from '@/state/server';
+
+const statusMap: Record<NonNullable<ServerStatus>, string> = {
+    offline: '离线',
+    starting: '启动中',
+    stopping: '停止中',
+    running: '运行中',
+};
 
 type Stats = Record<'memory' | 'cpu' | 'disk' | 'uptime' | 'rx' | 'tx', number>;
 
@@ -103,7 +110,7 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
                 ) : stats.uptime > 0 ? (
                     <UptimeDuration uptime={stats.uptime / 1000} />
                 ) : (
-                    capitalize(status)
+                    statusMap[status] ?? '未知状态'
                 )}
             </StatBlock>
             <StatBlock icon={faMicrochip} title={'CPU'} color={getBackgroundColor(stats.cpu, limits.cpu)}>
@@ -124,7 +131,11 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
                     <Limit limit={textLimits.memory}>{bytesToString(stats.memory)}</Limit>
                 )}
             </StatBlock>
-            <StatBlock icon={faHdd} title={'存储空间'} color={getBackgroundColor(stats.disk / 1024, limits.disk * 1024)}>
+            <StatBlock
+                icon={faHdd}
+                title={'存储空间'}
+                color={getBackgroundColor(stats.disk / 1024, limits.disk * 1024)}
+            >
                 <Limit limit={textLimits.disk}>{bytesToString(stats.disk)}</Limit>
             </StatBlock>
             <StatBlock icon={faCloudDownloadAlt} title={'网络(入站)'}>

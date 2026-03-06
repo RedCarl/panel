@@ -34,6 +34,9 @@ export default () => {
 
         socket.on('auth success', () => setConnectionState(true));
         socket.on('SOCKET_CLOSE', () => setConnectionState(false));
+        socket.on('SOCKET_CONNECT_ERROR', () => {
+            setError('多次尝试后无法连接到 Websocket 实例，请尝试刷新页面。');
+        });
         socket.on('SOCKET_ERROR', () => {
             setError('connecting');
             setConnectionState(false);
@@ -53,9 +56,7 @@ export default () => {
             if (reconnectErrors.find((v) => error.toLowerCase().indexOf(v) >= 0)) {
                 updateToken(uuid, socket);
             } else {
-                setError(
-                    '验证为 WEBSOCKET 提供的凭证时出错。请刷新页面。'
-                );
+                setError('验证为 WEBSOCKET 提供的凭证时出错。请刷新页面。');
             }
         });
 
@@ -111,9 +112,7 @@ export default () => {
                     {error === 'connecting' ? (
                         <>
                             <Spinner size={'small'} />
-                            <p css={tw`ml-2 text-sm text-red-100`}>
-                                我们在连接到你的服务器时出现错误，请等待...
-                            </p>
+                            <p css={tw`ml-2 text-sm text-red-100`}>我们在连接到你的服务器时出现错误，请等待...</p>
                         </>
                     ) : (
                         <p css={tw`ml-2 text-sm text-white`}>{error}</p>

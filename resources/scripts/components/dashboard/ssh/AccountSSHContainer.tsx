@@ -34,9 +34,7 @@ export default () => {
                 <ContentBox title={'SSH 密钥'} css={tw`flex-1 overflow-hidden mt-8 md:mt-0 md:ml-8`}>
                     <SpinnerOverlay visible={!data && isValidating} />
                     {!data || !data.length ? (
-                        <p css={tw`text-center text-sm`}>
-                            {!data ? '加载中...' : '此账户下无可用 SSH 密钥.'}
-                        </p>
+                        <p css={tw`text-center text-sm`}>{!data ? '加载中...' : '此账户下无可用 SSH 密钥.'}</p>
                     ) : (
                         data.map((key, index) => (
                             <GreyRowBox
@@ -49,7 +47,7 @@ export default () => {
                                     <p css={tw`text-xs mt-1 font-mono truncate`}>SHA256:{key.fingerprint}</p>
                                     <p css={tw`text-xs mt-1 text-neutral-300 uppercase`}>
                                         添加于:&nbsp;
-                                        {format(key.createdAt, 'MMM do, yyyy HH:mm')}
+                                        {format(key.createdAt, 'yyyy年M月d日 HH:mm')}
                                     </p>
                                 </div>
                                 <DeleteSSHKeyButton name={key.name} fingerprint={key.fingerprint} />

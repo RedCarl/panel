@@ -75,7 +75,8 @@ const MassActionsBar = () => {
                 >
                     <p className={'mb-2'}>
                         你确定删除这些共计&nbsp;
-                        <span className={'font-semibold text-gray-50'}>{selectedFiles.length}个文件/目录</span> 吗? 这是不可逆转的操作，你将没有回头路！
+                        <span className={'font-semibold text-gray-50'}>{selectedFiles.length}个文件/目录</span> 吗?
+                        这是不可逆转的操作，你将没有回头路！
                     </p>
                     {selectedFiles.slice(0, 15).map((file) => (
                         <li key={file}>{file}</li>

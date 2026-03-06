@@ -97,8 +97,7 @@ export default () => {
                                 {files.length > 250 && (
                                     <div css={tw`rounded bg-yellow-400 mb-px p-3`}>
                                         <p css={tw`text-yellow-900 text-sm text-center`}>
-                                            此目录太大，无法在浏览器中显示，
-                                            将输出限制为前 250 个文件。
+                                            此目录太大，无法在浏览器中显示， 将输出限制为前 250 个文件。
                                         </p>
                                     </div>
                                 )}

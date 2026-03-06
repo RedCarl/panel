@@ -31,7 +31,8 @@ const CopyOnClick = ({ text, showInNotification = true, children }: CopyOnClickP
 
     const child = !text
         ? React.Children.only(children)
-        : React.cloneElement(React.Children.only(children) as React.ReactElement<any>, {
+        : React.cloneElement(React.Children.only(children), {
+              // @ts-expect-error todo: check on this
               className: classNames(children.props.className || '', 'cursor-pointer'),
               onClick: (e: React.MouseEvent<HTMLElement>) => {
                   e.preventDefault();
@@ -52,9 +53,7 @@ const CopyOnClick = ({ text, showInNotification = true, children }: CopyOnClickP
                         <div className={'fixed z-50 bottom-0 right-0 m-4'}>
                             <div className={'rounded-md py-3 px-4 text-gray-200 bg-neutral-600/95 shadow'}>
                                 <p>
-                                    {showInNotification
-                                        ? `已复制 "${String(text)}" 到剪贴板.`
-                                        : '已将文本复制到剪贴板'}
+                                    {showInNotification ? `已复制 "${String(text)}" 到剪切板.` : '已将文本复制到剪贴板'}
                                 </p>
                             </div>
                         </div>
