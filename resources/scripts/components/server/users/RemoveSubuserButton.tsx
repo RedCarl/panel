@@ -43,7 +43,7 @@ export default ({ subuser }: { subuser: Subuser }) => {
                 onConfirmed={() => doDeletion()}
                 onModalDismissed={() => setShowConfirmation(false)}
             >
-                您确定要删除此子用户吗？ 他们将立即失去对该实例的所有访问权限。
+                您确定要删除此子用户吗？ 他们将立即失去对该服务器的所有访问权限。
             </ConfirmationModal>
             <button
                 type={'button'}

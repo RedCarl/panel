@@ -146,7 +146,7 @@ class SftpAuthenticationController extends Controller
             if (!in_array(Permission::ACTION_FILE_SFTP, $permissions)) {
                 Activity::event('server:sftp.denied')->actor($user)->subject($server)->log();
 
-                throw new HttpForbiddenException('您无权访问此实例的 SFTP。');
+                throw new HttpForbiddenException('您无权访问此服务器的 SFTP。');
             }
         }
 

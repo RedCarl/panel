@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
 @section('title')
-    创建实例
+    创建服务器
 @endsection
 
 @section('content-header')
-    <h1>创建实例<small>创建一个新的实例.</small></h1>
+    <h1>创建服务器<small>创建一个新的服务器.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">实例</a></li>
-        <li class="active">创建实例</li>
+        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
+        <li class="active">创建服务器</li>
     </ol>
 @endsection
 
@@ -26,7 +26,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="pName">名称</label>
-                            <input type="text" class="form-control" id="pName" name="name" value="{{ old('name') }}" placeholder="实例名称">
+                            <input type="text" class="form-control" id="pName" name="name" value="{{ old('name') }}" placeholder="服务器名称">
                             <p class="small text-muted no-margin">字符限制: <code>a-z A-Z 0-9 _ - .</code> 和 <code>[空格]</code>.</p>
                         </div>
 
@@ -39,9 +39,9 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="pDescription" class="control-label">实例描述</label>
+                            <label for="pDescription" class="control-label">服务器描述</label>
                             <textarea id="pDescription" name="description" rows="3" class="form-control">{{ old('description') }}</textarea>
-                            <p class="text-muted small">实例的简单介绍.</p>
+                            <p class="text-muted small">服务器的简单介绍.</p>
                         </div>
 
                         <div class="form-group">
@@ -81,19 +81,19 @@
                             @endforeach
                         </select>
 
-                        <p class="small text-muted no-margin">该实例将被部署到的节点。</p>
+                        <p class="small text-muted no-margin">该服务器将被部署到的节点。</p>
                     </div>
 
                     <div class="form-group col-sm-4">
                         <label for="pAllocation">默认网络分配</label>
                         <select id="pAllocation" name="allocation_id" class="form-control"></select>
-                        <p class="small text-muted no-margin">此实例的默认网络分配.</p>
+                        <p class="small text-muted no-margin">此服务器的默认网络分配.</p>
                     </div>
 
                     <div class="form-group col-sm-4">
                         <label for="pAllocationAdditional">额外网络分配</label>
                         <select id="pAllocationAdditional" name="allocation_additional[]" class="form-control" multiple></select>
-                        <p class="small text-muted no-margin">此实例的额外网络分配.</p>
+                        <p class="small text-muted no-margin">此服务器的额外网络分配.</p>
                     </div>
                 </div>
             </div>
@@ -114,21 +114,21 @@
                         <div>
                             <input type="text" id="pDatabaseLimit" name="database_limit" class="form-control" value="{{ old('database_limit', 0) }}"/>
                         </div>
-                        <p class="text-muted small">允许用户为此实例创建的数据库总数.</p>
+                        <p class="text-muted small">允许用户为此服务器创建的数据库总数.</p>
                     </div>
                     <div class="form-group col-xs-6">
                         <label for="pAllocationLimit" class="control-label">网络分配限制</label>
                         <div>
                             <input type="text" id="pAllocationLimit" name="allocation_limit" class="form-control" value="{{ old('allocation_limit', 0) }}"/>
                         </div>
-                        <p class="text-muted small">允许用户为此实例创建的网络分配总数.</p>
+                        <p class="text-muted small">允许用户为此服务器创建的网络分配总数.</p>
                     </div>
                     <div class="form-group col-xs-6">
                         <label for="pBackupLimit" class="control-label">备份限制</label>
                         <div>
                             <input type="text" id="pBackupLimit" name="backup_limit" class="form-control" value="{{ old('backup_limit', 0) }}"/>
                         </div>
-                        <p class="text-muted small">可以为此实例创建的备份总数.</p>
+                        <p class="text-muted small">可以为此服务器创建的备份总数.</p>
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                             <span class="input-group-addon">%</span>
                         </div>
 
-                        <p class="text-muted small">如果您不想限制 CPU 使用率，请将值设置为 <code>0</code>. 要确定一个值，请将线程数乘以 100。例如，在没有超线程的四核系统上 <code>(4 * 100 = 400)</code> 填写 <code>400</code> . 要将实例限制为使用单个线程的一半，您可以将值设置为 <code>50</code>. 要允许实例最多使用两个线程，请将值设置为 <code>200</code>.<p>
+                        <p class="text-muted small">如果您不想限制 CPU 使用率，请将值设置为 <code>0</code>. 要确定一个值，请将线程数乘以 100。例如，在没有超线程的四核系统上 <code>(4 * 100 = 400)</code> 填写 <code>400</code> . 要将服务器限制为使用单个线程的一半，您可以将值设置为 <code>50</code>. 要允许服务器最多使用两个线程，请将值设置为 <code>200</code>.<p>
                     </div>
 
                     <div class="form-group col-xs-6">
@@ -173,7 +173,7 @@
                             <span class="input-group-addon">MiB</span>
                         </div>
 
-                        <p class="text-muted small">此容器允许的最大内存量。将此设置为 <code>0</code> 将允许此实例无限制使用内存.</p>
+                        <p class="text-muted small">此容器允许的最大内存量。将此设置为 <code>0</code> 将允许此服务器无限制使用内存.</p>
                     </div>
 
                     <div class="form-group col-xs-6">
@@ -184,7 +184,7 @@
                             <span class="input-group-addon">MiB</span>
                         </div>
 
-                        <p class="text-muted small">将此设置为 <code>0</code> 将禁用此实例上的交换内存. 将此设置为 <code>-1</code> 将允许此实例使用无限交换内存.</p>
+                        <p class="text-muted small">将此设置为 <code>0</code> 将禁用此服务器上的交换内存. 将此设置为 <code>-1</code> 将允许此服务器使用无限交换内存.</p>
                     </div>
                 </div>
 
@@ -197,7 +197,7 @@
                             <span class="input-group-addon">MiB</span>
                         </div>
 
-                        <p class="text-muted small">如果此实例使用的空间超过此数量，则将不允许它启动。如果实例在运行时超过此限制，它将安全停止并锁定，直到有足够的可用空间。调成 <code>0</code> 将允许此实例使用无限存储空间.</p>
+                        <p class="text-muted small">如果此服务器使用的空间超过此数量，则将不允许它启动。如果服务器在运行时超过此限制，它将安全停止并锁定，直到有足够的可用空间。调成 <code>0</code> 将允许此服务器使用无限存储空间.</p>
                     </div>
 
                     <div class="form-group col-xs-6">
@@ -207,7 +207,7 @@
                             <input type="text" id="pIO" name="io" class="form-control" value="{{ old('io', 500) }}" />
                         </div>
 
-                        <p class="text-muted small"><strong>高级</strong>: 此实例相对于其他 <em>运行中</em> 实例的 IO 性能 . 此值应介于 <code>10</code> 至 <code>1000</code>. 请查阅 <a href="https://docs.docker.com/engine/reference/run/#block-io-bandwidth-blkio-constraint" target="_blank">此文档</a> 了解更多.</p>
+                        <p class="text-muted small"><strong>高级</strong>: 此服务器相对于其他 <em>运行中</em> 服务器的 IO 性能 . 此值应介于 <code>10</code> 至 <code>1000</code>. 请查阅 <a href="https://docs.docker.com/engine/reference/run/#block-io-bandwidth-blkio-constraint" target="_blank">此文档</a> 了解更多.</p>
                     </div>
                     <div class="form-group col-xs-12">
                         <div class="checkbox checkbox-primary no-margin-bottom">
@@ -215,7 +215,7 @@
                             <label for="pOomDisabled" class="strong">启用 OOM Killer</label>
                         </div>
 
-                        <p class="small text-muted no-margin">如果实例超出内存限制，则终止实例。启用 OOM Killer 可能会导致实例进程意外退出.</p>
+                        <p class="small text-muted no-margin">如果服务器超出内存限制，则终止服务器。启用 OOM Killer 可能会导致服务器进程意外退出.</p>
                     </div>
                 </div>
             </div>
@@ -243,13 +243,13 @@
                             @endforeach
                         </select>
 
-                        <p class="small text-muted no-margin">选择此实例将归入的预设组.</p>
+                        <p class="small text-muted no-margin">选择此服务器将归入的预设组.</p>
                     </div>
 
                     <div class="form-group col-xs-12">
                         <label for="pEggId">预设</label>
                         <select id="pEggId" name="egg_id" class="form-control"></select>
-                        <p class="small text-muted no-margin">选择将定义此实例如何正确运行的预设.</p>
+                        <p class="small text-muted no-margin">选择将定义此服务器如何正确运行的预设.</p>
                     </div>
                     <div class="form-group col-xs-12">
                         <div class="checkbox checkbox-primary no-margin-bottom">
@@ -274,7 +274,7 @@
                         <label for="pDefaultContainer">Docker 镜像</label>
                         <select id="pDefaultContainer" name="image" class="form-control"></select>
                         <input id="pDefaultContainerCustom" name="custom_image" value="{{ old('custom_image') }}" class="form-control" placeholder="或输入自定义镜像..." style="margin-top:1rem"/>
-                        <p class="small text-muted no-margin">这是将用于运行此实例的默认 Docker 映像。从上面的下拉列表中选择一个镜像，或在上面的文本字段中输入一个自定义镜像.</p>
+                        <p class="small text-muted no-margin">这是将用于运行此服务器的默认 Docker 映像。从上面的下拉列表中选择一个镜像，或在上面的文本字段中输入一个自定义镜像.</p>
                     </div>
                 </div>
             </div>
@@ -292,7 +292,7 @@
                     <div class="form-group col-xs-12">
                         <label for="pStartup">启动指令</label>
                         <input type="text" id="pStartup" name="startup" value="{{ old('startup') }}" class="form-control" />
-                        <p class="small text-muted no-margin">以下变量可用于启动命令: <code>@{{SERVER_MEMORY}}</code>, <code>@{{SERVER_IP}}</code>, 和 <code>@{{SERVER_PORT}}</code>. 它们将分别替换为分配的内存、实例 IP 和实例端口的值.</p>
+                        <p class="small text-muted no-margin">以下变量可用于启动命令: <code>@{{SERVER_MEMORY}}</code>, <code>@{{SERVER_IP}}</code>, 和 <code>@{{SERVER_PORT}}</code>. 它们将分别替换为分配的内存、服务器 IP 和服务器端口的值.</p>
                     </div>
                 </div>
 
@@ -304,7 +304,7 @@
 
                 <div class="box-footer">
                     {!! csrf_field() !!}
-                    <input type="submit" class="btn btn-success pull-right" value="创建实例" />
+                    <input type="submit" class="btn btn-success pull-right" value="创建服务器" />
                 </div>
             </div>
         </div>

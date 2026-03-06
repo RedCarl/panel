@@ -54,9 +54,9 @@ class UpgradeCommand extends Command
                 $userDetails = posix_getpwuid(fileowner('public'));
                 $user = $userDetails['name'] ?? 'www-data';
 
-                if (!$this->confirm("您的 WEB 实例用户已被检测为 <fg=blue>[{$user}]:</> 是否正确?", true)) {
+                if (!$this->confirm("您的 WEB 服务器用户已被检测为 <fg=blue>[{$user}]:</> 是否正确?", true)) {
                     $user = $this->anticipate(
-                        '请输入运行您的 WEB 实例进程的用户名。这因系统而异，但通常是 "www-data"、"nginx" 或 "apache"。',
+                        '请输入运行您的 WEB 服务器进程的用户名。这因系统而异，但通常是 "www-data"、"nginx" 或 "apache"。',
                         [
                             'www-data',
                             'nginx',
@@ -70,9 +70,9 @@ class UpgradeCommand extends Command
                 $groupDetails = posix_getgrgid(filegroup('public'));
                 $group = $groupDetails['name'] ?? 'www-data';
 
-                if (!$this->confirm("您的 WEB 实例组已被检测为 <fg=blue>[{$group}]:</> 是否正确？", true)) {
+                if (!$this->confirm("您的 WEB 服务器组已被检测为 <fg=blue>[{$group}]:</> 是否正确？", true)) {
                     $group = $this->anticipate(
-                        '请输入运行您的 WEB 实例进程组名。通常这与 WEB 实例进程用户相同。',
+                        '请输入运行您的 WEB 服务器进程组名。通常这与 WEB 服务器进程用户相同。',
                         [
                             'www-data',
                             'nginx',
@@ -173,7 +173,7 @@ class UpgradeCommand extends Command
         });
 
         $this->newLine(2);
-        $this->info('面板已成功升级。请确保您还更新了所有 Wings 的实例：https://pterodactyl.top/wings/1.0/upgrading.html');
+        $this->info('面板已成功升级。请确保您还更新了所有 Wings 的服务器：https://pterodactyl.top/wings/1.0/upgrading.html');
     }
 
     protected function withProgress(ProgressBar $bar, \Closure $callback)

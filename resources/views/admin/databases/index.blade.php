@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-header')
-    <h1>数据库主机<small>实例可以在其上创建数据库的数据库主机。</small></h1>
+    <h1>数据库主机<small>服务器可以在其上创建数据库的数据库主机。</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
         <li class="active">数据库主机</li>
@@ -107,7 +107,7 @@
                                 </optgroup>
                             @endforeach
                         </select>
-                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的实例以外没有任何作用.</p>
+                        <p class="text-muted small">此设置除了将数据库默认添加到所选节点上的服务器以外没有任何作用.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

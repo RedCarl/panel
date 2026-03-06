@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    实例 — {{ $server->name }}: 数据库
+    服务器 — {{ $server->name }}: 数据库
 @endsection
 
 @section('content-header')
-    <h1>{{ $server->name }}<small>管理实例数据库.</small></h1>
+    <h1>{{ $server->name }}<small>管理服务器数据库.</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
-        <li><a href="{{ route('admin.servers') }}">实例</a></li>
+        <li><a href="{{ route('admin.servers') }}">服务器</a></li>
         <li><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></li>
         <li class="active">数据库</li>
     </ol>
@@ -19,7 +19,7 @@
 <div class="row">
     <div class="col-sm-7">
         <div class="alert alert-info">
-            数据库密码可以在 <a href="/server/{{ $server->uuidShort }}/databases">访问此实例</a> 用户界面时查看.
+            数据库密码可以在 <a href="/server/{{ $server->uuidShort }}/databases">访问此服务器</a> 用户界面时查看.
         </div>
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -70,7 +70,7 @@
                                 <option value="{{ $host->id }}">{{ $host->name }}</option>
                             @endforeach
                         </select>
-                        <p class="text-muted small">选择应在其上创建此数据库的主机数据库实例.</p>
+                        <p class="text-muted small">选择应在其上创建此数据库的主机数据库服务器.</p>
                     </div>
                     <div class="form-group">
                         <label for="pDatabaseName" class="control-label">数据库</label>

@@ -21,7 +21,7 @@ export default () => {
                 addFlash({
                     key: 'settings',
                     type: 'success',
-                    message: '您的实例已开始重新安装过程。',
+                    message: '您的服务器已开始重新安装过程。',
                 });
             })
             .catch((error) => {
@@ -37,25 +37,25 @@ export default () => {
     }, []);
 
     return (
-        <TitledGreyBox title={'重新安装实例'} css={tw`relative`}>
+        <TitledGreyBox title={'重新安装服务器'} css={tw`relative`}>
             <Dialog.Confirm
                 open={modalVisible}
-                title={'确认实例重新安装'}
-                confirm={'确认,重装实例'}
+                title={'确认服务器重新安装'}
+                confirm={'确认,重装服务器'}
                 onClose={() => setModalVisible(false)}
                 onConfirmed={reinstall}
             >
-                在此过程中，您的实例将停止运行，并且某些文件可能会被删除或修改，您确定要继续吗？
+                在此过程中，您的服务器将停止运行，并且某些文件可能会被删除或修改，您确定要继续吗？
             </Dialog.Confirm>
             <p css={tw`text-sm`}>
-                重新安装您的实例将停止它，然后重新运行最初设置它的安装脚本.&nbsp;
+                重新安装您的服务器将停止它，然后重新运行最初设置它的安装脚本.&nbsp;
                 <strong css={tw`font-medium`}>
                     在此过程中可能会删除或修改某些文件，请在继续之前备份您的数据。
                 </strong>
             </p>
             <div css={tw`mt-6 text-right`}>
                 <Button.Danger variant={Button.Variants.Secondary} onClick={() => setModalVisible(true)}>
-                    重新安装实例
+                    重新安装服务器
                 </Button.Danger>
             </div>
         </TitledGreyBox>

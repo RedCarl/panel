@@ -34,7 +34,7 @@ class AppSettingsCommand extends Command
 
     protected $signature = 'p:environment:setup
                             {--new-salt : 是否为 HashIDs 生成新 Salt,若生成新 Salt 当前用户所有密码验证都会失效，需要重设密码.}
-                            {--author= : 在此实例上创建的服务应链接到的电子邮箱.}
+                            {--author= : 在此服务器上创建的服务应链接到的电子邮箱.}
                             {--url= : 运行此面板的 URL 例如 https://pterodactyl.cn}
                             {--timezone= : 用于面板时间的时区 北京时区为 Asia/Shanghai.}
                             {--cache= : 要使用的缓存驱动程序后端 不懂就用默认值.}
@@ -165,7 +165,7 @@ class AppSettingsCommand extends Command
         }
 
         if ($askForRedisPassword) {
-            $this->output->comment('默认情况下，Redis 实例连接无需密码，因为它在本地运行并且不允许外部访问。在这种情况下，阁下只需直接按回车键表示留空.');
+            $this->output->comment('默认情况下，Redis 服务器连接无需密码，因为它在本地运行并且不允许外部访问。在这种情况下，阁下只需直接按回车键表示留空.');
             $this->variables['REDIS_PASSWORD'] = $this->option('redis-pass') ?? $this->output->askHidden(
                 'Redis 密码'
             );

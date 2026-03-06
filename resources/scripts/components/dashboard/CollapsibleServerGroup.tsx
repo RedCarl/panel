@@ -70,7 +70,7 @@ const ChildGroupsContainer = styled.div`
     ${tw`space-y-3 p-3 bg-neutral-900`}
 `;
 
-// 递归计算所有实例数量
+// 递归计算所有服务器数量
 const getTotalServerCount = (node: ServerGroupNode): number => {
     let count = node.servers.length;
     for (const child of node.children.values()) {
@@ -79,7 +79,7 @@ const getTotalServerCount = (node: ServerGroupNode): number => {
     return count;
 };
 
-// 递归收集所有实例
+// 递归收集所有服务器
 const getAllServers = (node: ServerGroupNode): GroupedServer[] => {
     let servers = [...node.servers];
     for (const child of node.children.values()) {
@@ -130,10 +130,10 @@ const CollapsibleServerGroup: React.FC<Props> = ({
     const totalServerCount = getTotalServerCount(groupNode);
     const allServers = getAllServers(groupNode);
 
-    // 检查是否为单级单实例组：只有一个实例且没有子组
+    // 检查是否为单级单服务器组：只有一个服务器且没有子组
     const isSingleServerGroup = groupNode.servers.length === 1 && groupNode.children.size === 0;
 
-    // 如果是单级单实例组，直接渲染实例并在上方显示组名
+    // 如果是单级单服务器组，直接渲染服务器并在上方显示组名
     if (isSingleServerGroup) {
         const server = groupNode.servers[0];
         return (
@@ -188,7 +188,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({
                         <GroupName>{groupNode.name}</GroupName>
                     </GroupLeftSection>
                     <GroupRightSection onClick={(e) => e.stopPropagation()}>
-                        <ServerCount>共{totalServerCount}个实例</ServerCount>
+                        <ServerCount>共{totalServerCount}个服务器</ServerCount>
                         {onBulkAction && <span className='text-neutral-400'>|</span>}
                         {onBulkAction && (
                             <div
@@ -245,7 +245,7 @@ const CollapsibleServerGroup: React.FC<Props> = ({
             </GroupHeader>
 
             <ContentContainer isExpanded={isExpanded}>
-                {/* 渲染直属实例 */}
+                {/* 渲染直属服务器 */}
                 {groupNode.servers.length > 0 && (
                     <ServersContainer>
                         {groupNode.servers.map((groupedServer) => (

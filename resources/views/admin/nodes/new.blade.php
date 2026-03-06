@@ -102,9 +102,9 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="pDaemonBase" class="form-label">守护程序实例文件目录</label>
+                            <label for="pDaemonBase" class="form-label">守护程序服务器文件目录</label>
                             <input type="text" name="daemonBase" id="pDaemonBase" class="form-control" value="/var/lib/pterodactyl/volumes" />
-                            <p class="text-muted small">输入存储实例使用的文件目录. <strong>如果您使用 OVH，您应该检查您的分区方案。你可能需要让 <code>/home/daemon-data</code> 有足够的空间.</strong></p>
+                            <p class="text-muted small">输入存储服务器使用的文件目录. <strong>如果您使用 OVH，您应该检查您的分区方案。你可能需要让 <code>/home/daemon-data</code> 有足够的空间.</strong></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="pMemory" class="form-label">总内存容量</label>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <p class="text-muted small">输入可用于新实例的内存总量。如果您希望允许过度分配内存，请输入您希望允许的百分比。要禁用检查过度分配，请输入 <code>-1</code> 于此处. 如果输入 <code>0</code> 这将在可能超出节点的最大内存总量时阻止创建新实例.</p>
+                            <p class="text-muted small">输入可用于新服务器的内存总量。如果您希望允许过度分配内存，请输入您希望允许的百分比。要禁用检查过度分配，请输入 <code>-1</code> 于此处. 如果输入 <code>0</code> 这将在可能超出节点的最大内存总量时阻止创建新服务器.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <p class="text-muted small">输入可用于新实例的存储空间总量。如果您希望允许过度分配存储空间，请输入您希望允许的百分比。要禁用检查过度分配，请输入 <code>-1</code> 于此处. 如果输入 <code>0</code> 这将在可能超出节点的最大存储空间总量时阻止创建新实例.(请注意,备份文件并不计入)</p>
+                            <p class="text-muted small">输入可用于新服务器的存储空间总量。如果您希望允许过度分配存储空间，请输入您希望允许的百分比。要禁用检查过度分配，请输入 <code>-1</code> 于此处. 如果输入 <code>0</code> 这将在可能超出节点的最大存储空间总量时阻止创建新服务器.(请注意,备份文件并不计入)</p>
                         </div>
                     </div>
                     <div class="row">
@@ -153,7 +153,7 @@
                             <input type="text" name="daemonSFTP" class="form-control" id="pDaemonSFTP" value="2022" />
                         </div>
                         <div class="col-md-12">
-                            <p class="text-muted small">守护进程运行自己的 SFTP 管理容器，并且不使用主物理实例上的 SSHd 进程。<Strong>不要使用为物理实例的 SSH 进程分配的相同端口。</strong> 如果您将在 CloudFlare 后面运行守护程序&reg; 您应该将守护程序端口设置为 <code>8443</code> 允许通过 SSL 进行 websocket 代理.</p>
+                            <p class="text-muted small">守护进程运行自己的 SFTP 管理容器，并且不使用主物理服务器上的 SSHd 进程。<Strong>不要使用为物理服务器的 SSH 进程分配的相同端口。</strong> 如果您将在 CloudFlare 后面运行守护程序&reg; 您应该将守护程序端口设置为 <code>8443</code> 允许通过 SSL 进行 websocket 代理.</p>
                         </div>
                     </div>
                 </div>

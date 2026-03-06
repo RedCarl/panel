@@ -1,7 +1,7 @@
 import { Server } from '@/api/server/getServer';
 
 /**
- * 实例分组信息
+ * 服务器分组信息
  */
 export interface ServerGroup {
     name: string; // 组名
@@ -10,7 +10,7 @@ export interface ServerGroup {
 }
 
 /**
- * 解析后的实例信息
+ * 解析后的服务器信息
  */
 export interface ParsedServerInfo {
     domain: string; // 域名
@@ -21,14 +21,14 @@ export interface ParsedServerInfo {
 }
 
 /**
- * 带分组信息的实例
+ * 带分组信息的服务器
  */
 export interface GroupedServer extends Server {
     parsedInfo: ParsedServerInfo;
 }
 
 /**
- * 实例分组树节点
+ * 服务器分组树节点
  */
 export interface ServerGroupNode {
     name: string;
@@ -50,7 +50,7 @@ export interface DomainGroup {
 }
 
 /**
- * 解析实例名称
+ * 解析服务器名称
  * 格式: 域#分组[权重]:分组[权重]
  * 例如: example.com#web[1]:frontend[2]
  * 权重如果没写，默认为999
@@ -116,7 +116,7 @@ export function parseServerName(serverName: string): ParsedServerInfo {
 }
 
 /**
- * 按优先级排序实例组
+ * 按优先级排序服务器组
  */
 export function sortGroupsByPriority(groups: ServerGroup[]): ServerGroup[] {
     return [...groups].sort((a, b) => a.priority - b.priority);
@@ -137,7 +137,7 @@ function createGroupNode(name: string, priority: number, level: number): ServerG
 }
 
 /**
- * 将实例添加到分组树中
+ * 将服务器添加到分组树中
  */
 function addServerToGroupTree(
     tree: Map<string, ServerGroupNode>,
@@ -146,7 +146,7 @@ function addServerToGroupTree(
     currentLevel = 0
 ): void {
     if (currentLevel >= groups.length) {
-        // 已到达最深层级，直接添加实例
+        // 已到达最深层级，直接添加服务器
         return;
     }
 
@@ -162,7 +162,7 @@ function addServerToGroupTree(
     node.serverCount++;
 
     if (currentLevel === groups.length - 1) {
-        // 最后一层，添加实例
+        // 最后一层，添加服务器
         node.servers.push(server);
     } else {
         // 继续递归到下一层
@@ -171,7 +171,7 @@ function addServerToGroupTree(
 }
 
 /**
- * 按域分组实例
+ * 按域分组服务器
  */
 export function groupServersByDomain(servers: Server[]): Map<string, DomainGroup> {
     const domainGroups = new Map<string, DomainGroup>();
@@ -235,7 +235,7 @@ export function sortGroupTree(tree: Map<string, ServerGroupNode>): Map<string, S
             node.children = sortGroupTree(node.children);
         }
 
-        // 排序实例列表
+        // 排序服务器列表
         node.servers.sort((a, b) => a.parsedInfo.sequence.localeCompare(b.parsedInfo.sequence));
 
         sortedTree.set(key, node);
@@ -265,7 +265,7 @@ export function getGroupPath(groups: ServerGroup[]): string {
 }
 
 /**
- * 检查实例名称是否符合分组格式
+ * 检查服务器名称是否符合分组格式
  */
 export function isValidGroupedServerName(serverName: string): boolean {
     const match = serverName.match(/^([^#]+)#(.+)$/);

@@ -48,7 +48,7 @@ export default () => {
             {!data && isValidating ? (
                 <Spinner centered />
             ) : !data?.items.length ? (
-                <p className={'text-sm text-center text-gray-400'}>此实例没有可用的活动日志。</p>
+                <p className={'text-sm text-center text-gray-400'}>此服务器没有可用的活动日志。</p>
             ) : (
                 <div className={'bg-gray-700'}>
                     {data?.items.map((activity) => (

@@ -288,7 +288,7 @@ export default ({
                                             <ActionButton
                                                 variant='start'
                                                 onClick={(e) => handlePowerAction('start', e)}
-                                                title='启动实例'
+                                                title='启动服务器'
                                                 style={isStartAlone ? { width: '132px' } : {}}
                                             >
                                                 <FontAwesomeIcon icon={faPlay} />
@@ -299,7 +299,7 @@ export default ({
                                             <ActionButton
                                                 variant='stop'
                                                 onClick={(e) => handlePowerAction('stop', e)}
-                                                title='停止实例'
+                                                title='停止服务器'
                                             >
                                                 <FontAwesomeIcon icon={faStop} />
                                                 <span>停止</span>
@@ -309,7 +309,7 @@ export default ({
                                             <ActionButton
                                                 variant='restart'
                                                 onClick={(e) => handlePowerAction('restart', e)}
-                                                title='重启实例'
+                                                title='重启服务器'
                                             >
                                                 <FontAwesomeIcon icon={faRedo} />
                                                 <span>重启</span>

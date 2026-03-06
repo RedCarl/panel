@@ -76,7 +76,7 @@ export default () => {
                                 id={'database_name'}
                                 name={'databaseName'}
                                 label={'数据库名'}
-                                description={'数据库实例的描述性名称。'}
+                                description={'数据库服务器的描述性名称。'}
                             />
                             <div css={tw`mt-6`}>
                                 <Field

@@ -18,7 +18,7 @@
     <div class="col-sm-6">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">实例组详情</h3>
+                <h3 class="box-title">服务器组详情</h3>
             </div>
             <form action="{{ route('admin.locations.view', $location->id) }}" method="POST">
                 <div class="box-body">
@@ -51,7 +51,7 @@
                         <th>ID</th>
                         <th>名称</th>
                         <th>域名</th>
-                        <th>实例</th>
+                        <th>服务器</th>
                     </tr>
                     @foreach($location->nodes as $node)
                         <tr>

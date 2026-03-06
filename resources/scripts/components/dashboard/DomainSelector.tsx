@@ -99,7 +99,7 @@ const DomainSelector: React.FC<Props> = ({
             <LeftContainer>
                 <ServerInfo>
                     <ServerIcon className='w-5 h-5 text-blue-400' />
-                    <span className='text-neutral-200 text-sm font-medium'>{serverCount} 个实例</span>
+                    <span className='text-neutral-200 text-sm font-medium'>{serverCount} 个服务器</span>
                 </ServerInfo>
             </LeftContainer>
 

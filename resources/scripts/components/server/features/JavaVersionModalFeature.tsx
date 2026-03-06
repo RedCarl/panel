@@ -78,7 +78,7 @@ const JavaVersionModalFeature = () => {
             <FlashMessageRender key={'feature:javaVersion'} css={tw`mb-4`} />
             <h2 css={tw`text-2xl mb-4 text-neutral-100`}>此服务端程序不兼容该 Java 版本，更换 Docker 镜像吗?</h2>
             <p css={tw`mt-4`}>
-                由于未满足所需的 Java 版本，此实例无法启动.
+                由于未满足所需的 Java 版本，此服务器无法启动.
                 <Can action={'startup.docker-image'}>
                     &nbsp;请在下方选择合适的 JDK 版本 Docker 镜像以启动服务端程序.
                 </Can>

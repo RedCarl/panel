@@ -58,7 +58,7 @@ class SubuserCreationService
                 $user = $this->userCreationService->handle([
                     'email' => $email,
                     'username' => $username,
-                    'name_first' => '实例',
+                    'name_first' => '服务器',
                     'name_last' => '子用户',
                     'root_admin' => false,
                 ]);

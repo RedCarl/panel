@@ -6,7 +6,7 @@
 @endsection
 
 @section('content-header')
-    <h1>挂载<small>配置和管理实例的附加挂载点。</small></h1>
+    <h1>挂载<small>配置和管理服务器的附加挂载点。</small></h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">管理</a></li>
         <li class="active">挂载</li>
@@ -35,7 +35,7 @@
                                 <th>挂载路径</th>
                                 <th class="text-center">预设</th>
                                 <th class="text-center">节点</th>
-                                <th class="text-center">实例</th>
+                                <th class="text-center">服务器</th>
                             </tr>
 
                             @foreach ($mounts as $mount)

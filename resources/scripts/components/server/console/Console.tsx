@@ -90,7 +90,7 @@ export default () => {
         );
 
     const handlePowerChangeEvent = (state: string) =>
-        terminal.writeln(TERMINAL_PRELUDE + '实例运行状态更新为: ' + state + '...\u001b[0m');
+        terminal.writeln(TERMINAL_PRELUDE + '服务器运行状态更新为: ' + state + '...\u001b[0m');
 
     const handleCommandKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'ArrowUp') {

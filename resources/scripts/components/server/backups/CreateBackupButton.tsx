@@ -28,7 +28,7 @@ const ModalContent = ({ ...props }: RequiredModalProps) => {
         <Modal {...props} showSpinnerOverlay={isSubmitting}>
             <Form>
                 <FlashMessageRender byKey={'backups:create'} css={tw`mb-4`} />
-                <h2 css={tw`text-2xl mb-6`}>创建实例备份</h2>
+                <h2 css={tw`text-2xl mb-6`}>创建服务器备份</h2>
                 <Field
                     name={'name'}
                     label={'备份名称'}
@@ -40,7 +40,7 @@ const ModalContent = ({ ...props }: RequiredModalProps) => {
                         label={'忽略的文件和目录'}
                         description={`
                             输入生成此备份时要忽略的文件或文件夹。留空使用
-                            实例目录根目录中 .pteroignore 文件的内容（如果存在）。
+                            服务器目录根目录中 .pteroignore 文件的内容（如果存在）。
                             除了通过以下方式否定规则外，还支持文件和文件夹的通配符匹配
                             用感叹号作为路径前缀。
                         `}

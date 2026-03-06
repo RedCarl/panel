@@ -59,7 +59,7 @@
                         <div class="form-group col-sm-4">
                             <label class="control-label">脚本容器</label>
                             <input type="text" name="script_container" class="form-control" value="{{ $egg->script_container }}" />
-                            <p class="text-muted small">在为实例运行此脚本时使用的 Docker 容器，以供脚本能够正常运行。</p>
+                            <p class="text-muted small">在为服务器运行此脚本时使用的 Docker 容器，以供脚本能够正常运行。</p>
                         </div>
                         <div class="form-group col-sm-4">
                             <label class="control-label">脚本入口命令</label>

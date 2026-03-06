@@ -75,7 +75,7 @@ const EulaModalFeature = () => {
                     href='https://www.minecraft.net/eula'
                 >
                     Minecraft&reg; EULA 协议
-                </a>。否则实例将无法正常启动
+                </a>。否则服务器将无法正常启动
                 。
             </p>
             <div css={tw`mt-8 sm:flex items-center justify-end`}>

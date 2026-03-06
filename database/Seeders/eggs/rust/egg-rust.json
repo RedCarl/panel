@@ -31,8 +31,8 @@
     },
     "variables": [
         {
-            "name": "实例名称",
-            "description": "您的实例在公共实例列表中的名称。",
+            "name": "服务器名称",
+            "description": "您的服务器在公共服务器列表中的名称。",
             "env_variable": "HOSTNAME",
             "default_value": "A Rust Server",
             "user_viewable": true,
@@ -42,7 +42,7 @@
         },
         {
             "name": "模组框架",
-            "description": "可以使用的模组框架: carbon, oxide, vanilla.\r\n对于非模组的，实例默认安装\"vanilla\"",
+            "description": "可以使用的模组框架: carbon, oxide, vanilla.\r\n对于非模组的，服务器默认安装\"vanilla\"",
             "env_variable": "FRAMEWORK",
             "default_value": "vanilla",
             "user_viewable": true,
@@ -62,7 +62,7 @@
         },
         {
             "name": "描述",
-            "description": "实例标题下的描述。通常用于规则&信息。使用 \\n 换行。",
+            "description": "服务器标题下的描述。通常用于规则&信息。使用 \\n 换行。",
             "env_variable": "DESCRIPTION",
             "default_value": "Powered by Pterodactyl",
             "user_viewable": true,
@@ -72,7 +72,7 @@
         },
         {
             "name": "URL",
-            "description": "实例的 URL。这是单击“访问网站”按钮时出现的内容。",
+            "description": "服务器的 URL。这是单击“访问网站”按钮时出现的内容。",
             "env_variable": "SERVER_URL",
             "default_value": "http:\/\/pterodactyl.io",
             "user_viewable": true,
@@ -102,7 +102,7 @@
         },
         {
             "name": "最大玩家数",
-            "description": "实例允许的最大玩家数量。",
+            "description": "服务器允许的最大玩家数量。",
             "env_variable": "MAX_PLAYERS",
             "default_value": "40",
             "user_viewable": true,
@@ -111,8 +111,8 @@
             "field_type": "text"
         },
         {
-            "name": "实例图片",
-            "description": "实例列表顶部的标题图像。",
+            "name": "服务器图片",
+            "description": "服务器列表顶部的标题图像。",
             "env_variable": "SERVER_IMG",
             "default_value": "",
             "user_viewable": true,
@@ -122,7 +122,7 @@
         },
         {
             "name": "查询端口",
-            "description": "实例查询端口。不能与游戏的主端口相同。",
+            "description": "服务器查询端口。不能与游戏的主端口相同。",
             "env_variable": "QUERY_PORT",
             "default_value": "27017",
             "user_viewable": true,
@@ -152,7 +152,7 @@
         },
         {
             "name": "保存时间间隔",
-            "description": "以秒为单位设置实例自动保存时间间隔。",
+            "description": "以秒为单位设置服务器自动保存时间间隔。",
             "env_variable": "SAVEINTERVAL",
             "default_value": "60",
             "user_viewable": true,
@@ -162,7 +162,7 @@
         },
         {
             "name": "附加参数",
-            "description": "向实例添加其他启动参数。",
+            "description": "向服务器添加其他启动参数。",
             "env_variable": "ADDITIONAL_ARGS",
             "default_value": "",
             "user_viewable": true,
@@ -181,8 +181,8 @@
             "field_type": "text"
         },
         {
-            "name": "实例 Logo",
-            "description": "Rust+ 应用程序的实例 Logo。",
+            "name": "服务器 Logo",
+            "description": "Rust+ 应用程序的服务器 Logo。",
             "env_variable": "SERVER_LOGO",
             "default_value": "",
             "user_viewable": true,
@@ -192,7 +192,7 @@
         },
         {
             "name": "自定义地图 URL",
-            "description": "从 URL 中下载的地图将会覆盖现有地图。无效的 URL 将导致实例崩溃。",
+            "description": "从 URL 中下载的地图将会覆盖现有地图。无效的 URL 将导致服务器崩溃。",
             "env_variable": "MAP_URL",
             "default_value": "",
             "user_viewable": true,

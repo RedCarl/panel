@@ -128,7 +128,7 @@
                                         <option value="false">禁用</option>
                                         <option value="true" @if(old('pterodactyl:client_features:allocations:enabled', config('pterodactyl.client_features.allocations.enabled'))) selected @endif>启用</option>
                                     </select>
-                                    <p class="text-muted small">如果启用，用户将可以选择通过前端自动为其实例创建新分配.</p>
+                                    <p class="text-muted small">如果启用，用户将可以选择通过前端自动为其服务器创建新分配.</p>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">

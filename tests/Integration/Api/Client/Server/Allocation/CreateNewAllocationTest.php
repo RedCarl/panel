@@ -67,7 +67,7 @@ class CreateNewAllocationTest extends ClientApiIntegrationTestCase
         $this->actingAs($user)->postJson($this->link($server, '/network/allocations'))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJsonPath('errors.0.code', 'AutoAllocationNotEnabledException')
-            ->assertJsonPath('errors.0.detail', '此实例未启用服务器自动分配功能。');
+            ->assertJsonPath('errors.0.detail', '此服务器未启用服务器自动分配功能。');
     }
 
     /**
