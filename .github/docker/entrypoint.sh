@@ -26,6 +26,17 @@ else
     echo -e "APP_KEY=$APP_KEY" > /app/var/.env
   fi
 
+  ## 如果未提供，则为哈希 ID 生成随机盐值。
+  if [ -z $HASHIDS_SALT ]; then
+     echo -e "生成哈希值盐。"
+     HASHIDS_SALT=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9!@#$%^&*()_+?><~' | fold -w 20 | head -n 1)
+     echo -e "生成的哈希值盐: $HASHIDS_SALT"
+     echo -e "HASHIDS_SALT=$HASHIDS_SALT" >> /app/var/.env
+  else
+    echo -e "使用在环境中的 HASHIDS_SALT 值。"
+    echo -e "HASHIDS_SALT=$HASHIDS_SALT" >> /app/var/.env
+  fi
+
   ln -s /app/var/.env /app/
 fi
 
@@ -60,8 +71,15 @@ if [[ -z $DB_PORT ]]; then
   DB_PORT=3306
 fi
 
+## 检查日志文件夹权限
+echo "修复日志文件夹权限。"
+if [ "$(stat -c %U:%G /app/storage/logs)" != "nginx" ]; then
+  echo "修复日志文件夹权限。"
+  chown -R nginx: /app/storage/logs/
+fi
+
 ## 在启动面板之前检查数据库
-echo "正在检查数据库状态."
+echo "正在检查数据库状态。"
 until nc -z -v -w30 $DB_HOST $DB_PORT
 do
   echo "正在等待数据库连接..."
