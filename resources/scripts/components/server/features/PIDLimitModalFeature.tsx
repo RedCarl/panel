@@ -64,8 +64,8 @@ const PIDLimitModalFeature = () => {
                     </div>
                     <p css={tw`mt-4`}>此服务器已达到最大进程或内存限制。</p>
                     <p css={tw`mt-4`}>
-                        在wings配置中增加 <code css={tw`font-mono bg-neutral-900`}>container_pid_limit</code> ,{' '}
-                        <code css={tw`font-mono bg-neutral-900`}>config.yml</code>, 可能有助于解决这个问题。
+                        在 wings 的配置文件 <code css={tw`font-mono bg-neutral-900`}>config.yml</code> 中增加{' '}
+                        <code css={tw`font-mono bg-neutral-900`}>container_pid_limit</code> 参数，可能有助于解决这个问题。
                     </p>
                     <p css={tw`mt-4`}>
                         <b>注意：必须重新启动 Wings 才能使配置文件更改生效</b>
