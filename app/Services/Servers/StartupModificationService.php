@@ -78,11 +78,12 @@ class StartupModificationService
                 'nest_id' => $egg->nest_id,
             ]);
 
-            // 切换预设时，若未明确提供 docker_image，或提供的镜像不在新预设
-            // 的可用列表中，则回退到新预设的第一个镜像（若无则为空字符串）。
-            // 防止服务器保留一个无法通过界面修改的镜像。
+            // 切换预设时，若未提供任何 docker_image（下拉框无选中值且无自定义镜像），
+            // 则回退到新预设的第一个镜像（若无则为空字符串）。
+            // 若管理员已显式提供镜像（来自下拉框或自定义字段），则予以保留。
+            // 这防止服务器在新预设无选中镜像时保留旧预设的镜像而导致无法通过界面修改。
             $eggImages = $egg->docker_images ?? [];
-            if (empty($data['docker_image']) || !in_array($data['docker_image'], $eggImages, true)) {
+            if (empty($data['docker_image'])) {
                 $data['docker_image'] = empty($eggImages) ? '' : array_values($eggImages)[0];
             }
         }
