@@ -102,9 +102,7 @@ const StartupContainer = () => {
                     const newImages = Object.values(response.dockerImages);
                     const currentImageLower = variables.dockerImage.toLowerCase();
                     const imageExists = newImages.some((img) => img.toLowerCase() === currentImageLower);
-                    const targetImage = imageExists
-                        ? variables.dockerImage
-                        : (newImages[0] || '');
+                    const targetImage = imageExists ? variables.dockerImage : newImages[0] || '';
 
                     setSelectedNestId(response.currentNestId);
                     mutate(
