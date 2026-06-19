@@ -133,10 +133,23 @@ class StartupController extends ClientApiController
         $server->loadMissing('egg');
         $originalEggName = $server->egg?->name ?? (string) $originalEggId;
 
+        // 确定新 Docker 镜像：若当前镜像存在于新预设的可用列表中则保留，
+        // 若不存在则使用新预设的第一个镜像（若新预设未定义任何镜像则设为空字符串）。
+        // 这可以防止服务器保留旧预设的镜像，而该镜像可能不在新预设的列表中，
+        // 导致用户在前台无法修改镜像。
+        $newImage = $server->image;
+        $eggImages = $egg->docker_images ?? [];
+        if (empty($eggImages)) {
+            $newImage = '';
+        } elseif (!in_array($server->image, $eggImages, true)) {
+            $newImage = array_values($eggImages)[0];
+        }
+
         $server->forceFill([
             'egg_id' => $egg->id,
             'nest_id' => $egg->nest_id,
             'startup' => $egg->startup,
+            'image' => $newImage,
         ])->saveOrFail();
 
         if ($originalEggId !== $egg->id) {
