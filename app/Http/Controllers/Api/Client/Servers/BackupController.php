@@ -203,7 +203,7 @@ class BackupController extends ClientApiController
             throw new BadRequestHttpException('此服务器处于不允许还原备份的状态。');
         }
 
-        if (!$backup->is_successful && is_null($backup->completed_at)) {
+        if (!$backup->is_successful || is_null($backup->completed_at)) {
             throw new BadRequestHttpException('此时无法还原该备份：未完成或失败。');
         }
 
