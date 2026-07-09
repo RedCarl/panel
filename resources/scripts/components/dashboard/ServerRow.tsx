@@ -219,7 +219,9 @@ export default ({
                                 </div>
                             ) : server.isNodeUnderMaintenance ? (
                                 <div css={tw`flex-1 text-center`}>
-                                    <span css={tw`bg-yellow-600 rounded px-3 py-1.5 text-yellow-50 text-sm font-medium`}>
+                                    <span
+                                        css={tw`bg-yellow-600 rounded px-3 py-1.5 text-yellow-50 text-sm font-medium`}
+                                    >
                                         节点维护中
                                     </span>
                                 </div>
