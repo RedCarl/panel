@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-05-07T12:55:58+00:00",
+    "exported_at": "2026-04-05T20:12:45+02:00",
     "name": "Vanilla Minecraft",
     "author": "support@pterodactyl.io",
     "description": "Minecraft 是一款关于放置积木和进行冒险的游戏。探索随机生成的世界，建造从最简单的房屋到最宏伟的城堡。在创造模式下用无限资源的玩游戏，或在生存模式中深入挖掘，制作武器和盔甲以抵御危险的怪物。独自或与朋友一起探险这个世界吧！",
@@ -14,6 +14,7 @@
         "pid_limit"
     ],
     "docker_images": {
+        "Java 25": "registry.cn-shanghai.aliyuncs.com\/pterodactyl-china\/yolks:java_25",
         "Java 21": "registry.cn-shanghai.aliyuncs.com\/pterodactyl-china\/yolks:java_21",
         "Java 17": "registry.cn-shanghai.aliyuncs.com\/pterodactyl-china\/yolks:java_17",
         "Java 16": "registry.cn-shanghai.aliyuncs.com\/pterodactyl-china\/yolks:java_16",

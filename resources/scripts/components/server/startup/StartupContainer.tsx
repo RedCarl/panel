@@ -97,8 +97,12 @@ const StartupContainer = () => {
 
             updateStartupEgg(uuid, eggId)
                 .then((response) => {
-                    // Pick first docker image from the new egg as the current image
-                    const firstDockerImage = Object.values(response.dockerImages)[0] || variables.dockerImage;
+                    // 确定要使用的 Docker 镜像：如果当前镜像存在于新预设的可用列表中，则保留；
+                    // 否则使用新预设的第一个镜像（若新预设无镜像则为空字符串）。
+                    const newImages = Object.values(response.dockerImages);
+                    const currentImageLower = variables.dockerImage.toLowerCase();
+                    const imageExists = newImages.some((img) => img.toLowerCase() === currentImageLower);
+                    const targetImage = imageExists ? variables.dockerImage : newImages[0] || '';
 
                     setSelectedNestId(response.currentNestId);
                     mutate(
@@ -113,13 +117,27 @@ const StartupContainer = () => {
                         }),
                         false
                     );
-                    // Fix: also update dockerImage so the Docker image section reflects the new egg
-                    setServerFromState((s) => ({
-                        ...s,
-                        invocation: response.invocation,
-                        variables: response.variables,
-                        dockerImage: firstDockerImage,
-                    }));
+
+                    const updateLocalState = (dockerImage?: string) =>
+                        setServerFromState((s) => ({
+                            ...s,
+                            invocation: response.invocation,
+                            variables: response.variables,
+                            ...(dockerImage !== undefined && { dockerImage }),
+                        }));
+
+                    // 当前镜像不在新预设列表中时，需要持久化新镜像到后端，
+                    // 防止镜像被标记为"管理员手动设置"导致用户无法通过界面修改。
+                    if (!imageExists) {
+                        setSelectedDockerImage(uuid, targetImage)
+                            .then(() => updateLocalState(targetImage))
+                            .catch((error) => {
+                                console.error('在预设变更后保存 Docker 镜像失败：', error);
+                                updateLocalState(targetImage);
+                            });
+                    } else {
+                        updateLocalState();
+                    }
                 })
                 .catch((error) => {
                     console.error(error);

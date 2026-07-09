@@ -140,7 +140,7 @@ export default ({
     useEffect(() => {
         // Don't waste a HTTP request if there is nothing important to show to the user because
         // the server is suspended.
-        if (isSuspended) return;
+        if (isSuspended || server.isNodeUnderMaintenance) return;
 
         getStats().then(() => {
             interval.current = setInterval(() => getStats(), 30000);
@@ -149,7 +149,7 @@ export default ({
         return () => {
             interval.current && clearInterval(interval.current);
         };
-    }, [isSuspended]);
+    }, [isSuspended, server.isNodeUnderMaintenance]);
 
     const alarms = { cpu: false, memory: false, disk: false };
     if (stats) {
@@ -210,11 +210,17 @@ export default ({
                 </CopyOnClick>
                 <ServerInfoCard>
                     <div css={tw`flex-1 flex items-center justify-center`}>
-                        {!stats || isSuspended ? (
+                        {!stats || isSuspended || server.isNodeUnderMaintenance ? (
                             isSuspended ? (
                                 <div css={tw`flex-1 text-center`}>
                                     <span css={tw`bg-red-600 rounded px-3 py-1.5 text-red-50 text-sm font-medium`}>
                                         {server.status === 'suspended' ? '已冻结' : '连接错误'}
+                                    </span>
+                                </div>
+                            ) : server.isNodeUnderMaintenance ? (
+                                <div css={tw`flex-1 text-center`}>
+                                    <span css={tw`bg-yellow-600 rounded px-3 py-1.5 text-yellow-50 text-sm font-medium`}>
+                                        节点维护中
                                     </span>
                                 </div>
                             ) : server.isTransferring || server.status ? (
