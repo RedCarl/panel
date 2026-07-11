@@ -69,7 +69,6 @@ export function parseServerName(serverName: string): ParsedServerInfo {
         const match = serverName.match(/^([^#]+)#(.+)$/);
 
         if (!match) {
-            console.log('匹配失败，返回默认信息');
             return defaultInfo;
         }
 
@@ -199,9 +198,13 @@ export function groupServersByDomain(servers: Server[]): Map<string, DomainGroup
         domainGroup.servers.push(groupedServer);
         domainGroup.serverCount++;
 
-        // 添加到分组树
+        // 添加到分组树；无 域#分组 格式时用显示名作为单层叶子组，保证首页能展示
         if (parsedInfo.groups.length > 0) {
             addServerToGroupTree(domainGroup.groupTree, groupedServer, parsedInfo.groups);
+        } else {
+            addServerToGroupTree(domainGroup.groupTree, groupedServer, [
+                { name: parsedInfo.displayName, priority: 999, level: 1 },
+            ]);
         }
     });
 
