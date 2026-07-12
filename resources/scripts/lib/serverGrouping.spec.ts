@@ -90,10 +90,7 @@ describe('@/lib/serverGrouping.ts', function () {
         });
 
         it('should mix ungrouped and grouped servers correctly', function () {
-            const servers = [
-                mockServer('SURVIVAL', 'uuid-1'),
-                mockServer('game.io#SURVIVAL[1]:main[1]', 'uuid-2'),
-            ];
+            const servers = [mockServer('SURVIVAL', 'uuid-1'), mockServer('game.io#SURVIVAL[1]:main[1]', 'uuid-2')];
             const groups = groupServersByDomain(servers);
 
             expect(getDomainList(groups)).toEqual(['default', 'game.io']);
