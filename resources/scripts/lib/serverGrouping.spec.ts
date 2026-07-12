@@ -16,7 +16,7 @@ function mockServer(name: string, uuid = 'uuid-1'): Server {
         invocation: '',
         dockerImage: '',
         description: '',
-        limits: { memory: 1024, swap: 0, disk: 1024, io: 500, cpu: 100, threads: null },
+        limits: { memory: 1024, swap: 0, disk: 1024, io: 500, cpu: 100, threads: '' },
         eggFeatures: [],
         featureLimits: { databases: 0, allocations: 1, backups: 0 },
         isTransferring: false,
