@@ -1,12 +1,9 @@
+# Docker push 已暂停：不需要自动构建/推送镜像。
+# 如需恢复，把 on 改回 push（1.0-develop）和 release.published。
 name: Docker
 
 on:
-  push:
-    branches:
-      - 1.0-develop
-  release:
-    types:
-      - published
+  workflow_dispatch:
 
 jobs:
   push:
